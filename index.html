@@ -511,9 +511,13 @@
 </footer>
 
 <script>
+  const GEMINI_API_KEY = 'AIzaSyBwWgKe6nGBDfpQC56WX7NgfIjnYHj49XU';
+  const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+
   let mode = 'fiche';
   let inputMode = 'text';
   let pdfBase64 = null;
+  let pdfMime = 'application/pdf';
   let quizData = null;
   let score = 0;
   let answers = {};
@@ -591,24 +595,23 @@ Sois pédagogue, direct, et va à l'essentiel. Réponds en français.`;
     result.innerHTML = `<div class="loading-state"><div class="spinner"></div>L'IA analyse ton cours...</div>`;
 
     try {
-      const content = [];
+      const parts = [];
       if (inputMode === 'pdf' && pdfBase64) {
-        content.push({ type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: pdfBase64 } });
+        parts.push({ inline_data: { mime_type: pdfMime, data: pdfBase64 } });
       }
-      content.push({ type: 'text', text: buildPrompt() });
+      parts.push({ text: buildPrompt() });
 
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
+      const res = await fetch(GEMINI_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 1000,
-          messages: [{ role: 'user', content }]
+          contents: [{ parts }],
+          generationConfig: { maxOutputTokens: 1500, temperature: 0.7 }
         })
       });
       const data = await res.json();
       if (data.error) throw new Error(data.error.message);
-      const raw = data.content.map(b => b.text || '').join('');
+      const raw = data.candidates?.[0]?.content?.parts?.map(p => p.text || '').join('') || '';
 
       if (mode === 'fiche') renderFiche(raw, result);
       else if (mode === 'quiz') renderQuiz(raw, result);
