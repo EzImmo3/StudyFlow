@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Français écrit — BacPremière</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<nav class="navbar">
+  <a class="logo" href="../index.html">BacPremière</a>
+  <div class="nav-links">
+    <a href="francais-ecrit.html" class="nav-link active">Français écrit</a>
+    <a href="francais-oral.html" class="nav-link">Français oral</a>
+    <a href="maths.html" class="nav-link">Mathématiques</a>
+  </div>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="page-hero">
+  <span class="fiche-badge badge-fr">Épreuve anticipée · 4h</span>
+  <h1>Français écrit ✍️</h1>
+  <p>4 parcours · 16 textes étudiés · Commentaire & dissertation</p>
+</div>
+
+<div class="tabs-container">
+  <div class="tabs">
+    <button class="tab-btn active">📋 Fiches</button>
+    <button class="tab-btn">❓ Quiz</button>
+    <button class="tab-btn">🃏 Flashcards</button>
+    <button class="tab-btn">📄 Annales</button>
+  </div>
+</div>
+
+<div class="content-area">
+
+  <!-- ══════════ FICHES ══════════ -->
+  <div class="panel active" id="p-fiches">
+    <!-- Méthode -->
+    <p class="section-label">Méthode générale</p>
+    <div class="fiche-grid" style="margin-bottom:2rem">
+      <div class="fiche-card">
+        <span class="fiche-badge badge-fr">Commentaire</span>
+        <h3>Structure du commentaire</h3>
+        <ul>
+          <li><b>Introduction :</b> présentation du texte, auteur, extrait + problématique + annonce du plan en 2 axes</li>
+          <li><b>Axe 1 :</b> 2-3 sous-parties avec procédés & effets</li>
+          <li><b>Axe 2 :</b> 2-3 sous-parties avec procédés & effets</li>
+          <li><b>Conclusion :</b> bilan des axes + ouverture</li>
+        </ul>
+      </div>
+      <div class="fiche-card">
+        <span class="fiche-badge badge-fr">Dissertation</span>
+        <h3>Plan dialectique</h3>
+        <ul>
+          <li><b>I. Thèse</b> — la réponse principale à défendre</li>
+          <li><b>II. Antithèse</b> — les limites ou contraires</li>
+          <li><b>III. Synthèse</b> — dépassement, nuance, position finale</li>
+        </ul>
+        <p style="margin-top:8px;font-size:13px;color:var(--muted)">Chaque partie = 2-3 sous-parties avec exemple tiré des textes du programme.</p>
+      </div>
+      <div class="fiche-card">
+        <span class="fiche-badge badge-fr">Figures de style</span>
+        <h3>Figures incontournables</h3>
+        <ul>
+          <li><b>Métaphore</b> — comparaison sans outil ("La vie est un combat")</li>
+          <li><b>Anaphore</b> — répétition en début de phrase/vers</li>
+          <li><b>Oxymore</b> — alliance de termes opposés</li>
+          <li><b>Hyperbole</b> — exagération</li>
+          <li><b>Litote</b> — dire moins pour suggérer plus</li>
+          <li><b>Ironie</b> — dire le contraire de ce qu'on pense</li>
+          <li><b>Chiasme</b> — inversion symétrique</li>
+          <li><b>Enjambement</b> — rejet du vers au suivant (poésie)</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- Sous-onglets parcours -->
+    <p class="section-label">Les 4 parcours au programme</p>
+    <div id="parcours-tabs">
+      <div class="sub-tabs">
+        <button class="sub-tab active">Parcours 1 — Émancipations poétiques</button>
+        <button class="sub-tab">Parcours 2 — Personnage en marge</button>
+        <button class="sub-tab">Parcours 3 — Défendre la liberté</button>
+        <button class="sub-tab">Parcours 4 — Théâtre et dispute</button>
+      </div>
+
+      <!-- PARCOURS 1 -->
+      <div class="sub-panel active">
+        <div class="fiche-grid">
+          <div class="fiche-card">
+            <span class="fiche-badge badge-fr">Rimbaud · Cahiers de Douai</span>
+            <h3>"Roman" — Arthur Rimbaud</h3>
+            <p class="author">Extrait des Cahiers de Douai (1870)</p>
+            <ul>
+              <li>Poème de jeunesse : fugue, liberté, ivresse du printemps</li>
+              <li>Structure en 4 quatrains d'alexandrins</li>
+              <li>Tonalité ironique et légère ("On n'est pas sérieux, quand on a dix-sept ans")</li>
+              <li>Thèmes : l'amour adolescent, le rejet de la bourgeoisie, l'errance</li>
+              <li>Procédés : apostrophe, répétition ("On n'est pas sérieux"), images sensuelles</li>
+            </ul>
+          </div>
+          <div class="fiche-card">
+            <span class="fiche-badge badge-fr">Rimbaud · Cahiers de Douai</span>
+            <h3>"Le Buffet" — Arthur Rimbaud</h3>
+            <p class="author">Extrait des Cahiers de Douai (1870)</p>
+            <ul>
+              <li>Sonnet : objet banal (un vieux buffet) devient symbole de mémoire et d'identité</li>
+              <li>Le buffet incarne le passé familial, les ancêtres</li>
+              <li>Accumulation d'objets : effet de liste, de trésor caché</li>
+              <li>Thèmes : temps, mémoire, héritage, intimité domestique</li>
+              <li>Procédés : personnification du buffet, enjambements, tons mélancolique</li>
+            </ul>
+          </div>
+          <div class="fiche-card">
+            <span class="fiche-badge badge-fr">Rimbaud · Cahiers de Douai</span>
+            <h3>"Ma Bohême" — Arthur Rimbaud</h3>
+            <p class="author">Extrait des Cahiers de Douai (1870)</p>
+            <ul>
+              <li>Sonnet célébrant l'errance libre et poétique</li>
+              <li>Le poète vagabond, pauvre mais heureux, en communion avec la nature</li>
+              <li>Rupture avec la société bourgeoise et les conventions</li>
+              <li>Thèmes : liberté, création poétique, nature, pauvreté joyeuse</li>
+              <li>Procédés : apostrophe (Muse), images de la route, métaphores de l'élasticité</li>
+            </ul>
+          </div>
+          <div class="fiche-card">
+            <span class="fiche-badge badge-fr">Apollinaire · Alcools</span>
+            <h3>"Automne malade" — Apollinaire</h3>
+            <p class="author">Extrait d'Alcools (1913)</p>
+            <ul>
+              <li>Poème en vers libres, sans ponctuation (caractéristique d'Alcools)</li>
+              <li>L'automne est personnifié : saison mourante associée à la mélancolie</li>
+              <li>Tension entre vie et mort, entre départ et nostalgie</li>
+              <li>Thèmes : fuite du temps, mélancolie, mort de la nature, amour perdu</li>
+              <li>Procédés : apostrophe ("Automne malade"), répétitions, images symbolistes</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fiche-card" style="margin-top:1rem">
+          <span class="fiche-badge badge-fr">Parcours 1 — Synthèse</span>
+          <h3>L'émancipation poétique : idées clés</h3>
+          <ul>
+            <li>Rimbaud incarne le "poète voyant" (lettre à Demeny, 1871) : la poésie doit dérègler les sens</li>
+            <li>Rejet des formes fixes (sonnet conservé mais subverti) et des conventions sociales</li>
+            <li>La nature est à la fois refuge et miroir du moi poétique</li>
+            <li>Apollinaire : modernité formelle (vers libres, absence de ponctuation) au service de l'émotion</li>
+            <li>Liens avec le symbolisme : synesthésies, images suggestives, musicale du vers</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PARCOURS 2 -->
+      <div class="sub-panel" style="display:none">
+        <div class="fiche-grid">
+          <div class="fiche-card">
+            <span class="fiche-badge badge-fr">Abbé Prévost</span>
+            <h3>Manon Lescaut — La rencontre</h3>
+            <p class="author">Extrait I : La rencontre entre Manon et Desgrieux</p>
+            <ul>
+              <li>Coup de foudre violent, instantané : Desgrieux perd sa raison</li>
+              <li>Manon : mystérieuse, belle, non-conformiste dès le premier regard</li>
+              <li>Thèmes : passion fatale, abandon de la vertu, désordre des sens</li>
+              <li>Procédés : narrateur homodiégétique, focalisation interne, hyperboles de l'amour</li>
+              <li>Intertexte : tradition du roman pastoral, mais irruption du romanesque noir</li>
+            </ul>
+          </div>
+          <div class="fiche-card">
+            <span class="fiche-badge badge-fr">Abbé Prévost</span>
+            <h3>Manon Lescaut — Débat passion/vertu</h3>
+            <p class="author">Extrait II : Débat entre Desgrieux et Tiberge</p>
+            <ul>
+              <li>Tiberge = voix de la raison et de la morale religieuse</li>
+              <li>Desgrieux = défend la passion comme nécessité naturelle</li>
+              <li>Structure dialoguée : joute rhétorique entre vertu et passion</li>
+              <li>Thèmes : libre arbitre, passion vs raison, fatalité amoureuse</li>
+              <li>Procédés : discours rapportés, arguments philosophiques, ironie dramatique</li>
+            </ul>
+          </div>
+          <div class="fiche-card">
+            <span class="fiche-badge badge-fr">Abbé Prévost</span>
+            <h3>Manon Lescaut — La mort de Manon</h3>
+            <p class="author">Extrait III : La mort de Manon dans le désert</p>
+            <ul>
+              <li>Scène pathétique : Manon meurt dans le désert américain, loin de tout</li>
+              <li>La mort purifiante : Manon retrouve sa vertu in extremis</li>
+              <li>Desgrieux : narrateur en deuil, récit émotionnel et lyrique</li>
+              <li>Thèmes : mort, rédemption, amour absolu, tragique du destin</li>
+              <li>Procédés : style lyrique, images du désert (solitude/purification), épiphrase</li>
+            </ul>
+          </div>
+          <div class="fiche-card">
+            <span class="fiche-badge badge-fr">Laclos · Les Liaisons dangereuses</span>
+            <h3>Lettre 81 — Merteuil à Valmont</h3>
+            <p class="author">Lettre 81 destinée au Vicomte de Valmont</p>
+            <ul>
+              <li>Merteuil expose sa "construction de soi" : maîtrise des apparences, dissimulation</li>
+              <li>Portrait d'une femme libre dans une société hypocrite</li>
+              <li>Thèmes : liberté féminine, libertinage, maîtrise de soi, manipulation sociale</li>
+              <li>Procédés : roman épistolaire, ironie distanciée, construction rhétorique rigoureuse</li>
+              <li>Lien avec le parcours : personnage en marge qui refuse les rôles imposés</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fiche-card" style="margin-top:1rem">
+          <span class="fiche-badge badge-fr">Parcours 2 — Synthèse</span>
+          <h3>Personnage en marge : idées clés</h3>
+          <ul>
+            <li>Manon et Desgrieux : marginaux par la passion, condamnés par la société</li>
+            <li>La Merteuil : marge volontaire et stratégique, féminisme avant l'heure</li>
+            <li>Le "romanesque" : goût du risque, de l'extraordinaire, de l'amour fou</li>
+            <li>XVIIIe siècle : tension entre Raison (Lumières) et Sentiment (préromantisme)</li>
+            <li>Enjeu moral : le roman comme espace de réflexion sur la vertu et la liberté</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PARCOURS 3 -->
+      <div class="sub-panel" style="display:none">
+        <div class="fiche-grid">
+          <div class="fiche-card">
+            <span class="fiche-badge badge-fr">La Boétie</span>
+            <h3>Discours de la servitude volontaire — Les animaux</h3>
+            <p class="author">Extrait I : La liberté naturelle démontrée par les animaux</p>
+            <ul>
+              <li>Les animaux refusent la captivité : ils naissent libres et le revendiquent</li>
+              <li>Argument a fortiori : si les bêtes aiment la liberté, les hommes le doivent encore plus</li>
+              <li>Thèmes : liberté naturelle, dignité humaine, critique de la soumission</li>
+              <li>Procédés : exemples animaliers, comparaison, indignation rhétorique, apostrophe</li>
+            </ul>
+          </div>
+          <div class="fiche-card">
+            <span class="fiche-badge badge-fr">La Boétie</span>
+            <h3>Discours de la servitude volontaire — Le tyran</h3>
+            <p class="author">Extrait II : Indignation contre le tyran et réfutation de la lâcheté</p>
+            <ul>
+              <li>La Boétie s'indigne : les hommes consentent à leur servitude</li>
+              <li>La servitude n'est pas la couardise mais une habitude, une coutume</li>
+              <li>Le tyran ne tient son pouvoir que du consentement des dominés</li>
+              <li>Thèmes : tyrannie, consentement, responsabilité civique</li>
+              <li>Procédés : questions rhétoriques, accumulation, vocabulaire de l'indignation</li>
+            </ul>
+          </div>
+          <div class="fiche-card">
+            <span class="fiche-badge badge-fr">Montaigne · Essais I, 23</span>
+            <h3>"De la coutume" — Montaigne</h3>
+            <p class="author">Extrait des Essais, livre I, chapitre 23</p>
+            <ul>
+              <li>La coutume tyrannise l'esprit : on accepte comme naturel ce qui n'est que convention</li>
+              <li>Montaigne invite à examiner les croyances héritées par habitude</li>
+              <li>Thèmes : relativisme culturel, liberté de penser, esprit critique</li>
+              <li>Procédés : "je" autobiographique, exemples divers, style essayistique (digression)</li>
+              <li>Lien avec La Boétie (ami de Montaigne) : critique du conformisme et de la soumission</li>
+            </ul>
+          </div>
+          <div class="fiche-card">
+            <span class="fiche-badge badge-fr">La Fontaine · Fables</span>
+            <h3>"Le Loup et le Chien" — La Fontaine</h3>
+            <p class="author">Fables, livre I, fable 5</p>
+            <ul>
+              <li>Le loup maigre refuse la sécurité dorée du chien bien nourri mais enchaîné</li>
+              <li>La liberté vaut mieux que le confort de la servitude</li>
+              <li>Thèmes : liberté vs sécurité, dignité, critique de la domestication</li>
+              <li>Procédés : apologue (récit + morale), dialogue vif, ironie (le collier détail révélateur)</li>
+              <li>Structure : séduction du chien → découverte du collier → refus du loup</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fiche-card" style="margin-top:1rem">
+          <span class="fiche-badge badge-fr">Parcours 3 — Synthèse</span>
+          <h3>Défendre la liberté : idées clés</h3>
+          <ul>
+            <li>Tous les textes questionnent la nature de la servitude : imposée ou consentie ?</li>
+            <li>La Boétie : la liberté est naturelle, la servitude est un choix (et donc un scandale)</li>
+            <li>Montaigne : la coutume est une prison mentale — il faut s'en affranchir par la raison</li>
+            <li>La Fontaine : l'apologue rend la leçon accessible et mémorable</li>
+            <li>Genres différents : discours politique, essai personnel, fable — même combat</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PARCOURS 4 -->
+      <div class="sub-panel" style="display:none">
+        <div class="fiche-grid">
+          <div class="fiche-card">
+            <span class="fiche-badge badge-fr">Sarraute · Pour un oui ou pour un non</span>
+            <h3>Extrait I — Le début : H2 peine à expliquer</h3>
+            <p class="author">Ouverture de la pièce</p>
+            <ul>
+              <li>H2 essaie d'expliquer pourquoi il s'est éloigné de H1 pour une raison infime</li>
+              <li>L'indicible : les mots manquent pour saisir une nuance de ton ou d'intonation</li>
+              <li>Thèmes : incommunicabilité, sous-conversation, relations humaines</li>
+              <li>Procédés : didascalies minimales, répliques courtes, silences signifiants, tropismes</li>
+            </ul>
+          </div>
+          <div class="fiche-card">
+            <span class="fiche-badge badge-fr">Sarraute · Pour un oui ou pour un non</span>
+            <h3>Extrait II — Le duel verbal</h3>
+            <p class="author">H1 et H2 s'affrontent</p>
+            <ul>
+              <li>H1 défend son bonheur, H2 y voit une critique implicite de sa propre vie</li>
+              <li>La jalousie de H2 vs la suffisance perçue de H1</li>
+              <li>Conflit sur les mots, les intentions, les sous-entendus</li>
+              <li>Thèmes : langage comme arme, orgueil blessé, ambiguïté des relations amicales</li>
+              <li>Procédés : répétitions, questions rhétoriques, ruptures de syntaxe, violence larvée</li>
+            </ul>
+          </div>
+          <div class="fiche-card">
+            <span class="fiche-badge badge-fr">Sarraute · Pour un oui ou pour un non</span>
+            <h3>Extrait III — L'impossible rupture</h3>
+            <p class="author">Envisager la fin de l'amitié</p>
+            <ul>
+              <li>H1 et H2 envisagent la séparation mais ne peuvent la justifier socialement</li>
+              <li>L'absurdité tragique : une amitié qui meurt pour un "rien" inavouable</li>
+              <li>Thèmes : absurde, fragilité du lien social, impossibilité du dire</li>
+              <li>Procédés : ironie tragique, humour noir, pièce du "non-dit"</li>
+            </ul>
+          </div>
+          <div class="fiche-card">
+            <span class="fiche-badge badge-fr">Catherine Anne · Comédies tragiques</span>
+            <h3>"Le vieil acteur, l'immaculé, la timide"</h3>
+            <p class="author">Extrait de Comédies tragiques</p>
+            <ul>
+              <li>Trois personnages symboliques : l'acteur vieillissant, la pureté, la timidité</li>
+              <li>Le théâtre comme espace de révélation des failles humaines</li>
+              <li>Mélange de comique et de tragique : la "comédie tragique"</li>
+              <li>Thèmes : vieillesse, pureté perdue, difficultés de communication</li>
+              <li>Procédés : personnages types, dialogue poétique, scènes courtes et intenses</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fiche-card" style="margin-top:1rem">
+          <span class="fiche-badge badge-fr">Parcours 4 — Synthèse</span>
+          <h3>Théâtre et dispute : idées clés</h3>
+          <ul>
+            <li>Sarraute invente le "nouveau roman" et le "nouveau théâtre" : les "tropismes" remplacent l'action</li>
+            <li>La querelle de théâtre n'est plus politique ou morale mais psychologique et intime</li>
+            <li>Les mots trahissent ou ne disent pas : crise du langage au XXe siècle</li>
+            <li>Catherine Anne s'inscrit dans cette tradition : le conflit comme révélateur</li>
+            <li>Lien avec Beckett, Ionesco : théâtre de l'absurde et de l'incommunicabilité</li>
+          </ul>
+        </div>
+      </div>
+    </div><!-- /parcours-tabs -->
+  </div>
+
+  <!-- ══════════ QUIZ ══════════ -->
+  <div class="panel" id="p-quiz">
+    <div class="sub-tabs">
+      <button class="sub-tab active" data-quiz="q1">Parcours 1 — Poésie</button>
+      <button class="sub-tab" data-quiz="q2">Parcours 2 — Roman</button>
+      <button class="sub-tab" data-quiz="q3">Parcours 3 — Liberté</button>
+      <button class="sub-tab" data-quiz="q4">Parcours 4 — Théâtre</button>
+      <button class="sub-tab" data-quiz="qm">Méthode générale</button>
+    </div>
+    <div id="quiz-container"></div>
+  </div>
+
+  <!-- ══════════ FLASHCARDS ══════════ -->
+  <div class="panel" id="p-flash">
+    <div class="sub-tabs">
+      <button class="sub-tab active" data-flash="f1">Poésie</button>
+      <button class="sub-tab" data-flash="f2">Roman XVIIIe</button>
+      <button class="sub-tab" data-flash="f3">Liberté</button>
+      <button class="sub-tab" data-flash="f4">Théâtre</button>
+      <button class="sub-tab" data-flash="fm">Figures de style</button>
+    </div>
+    <div id="flash-container"></div>
+  </div>
+
+  <!-- ══════════ ANNALES ══════════ -->
+  <div class="panel" id="p-annales">
+    <div class="annales-list">
+
+      <div class="annale-item">
+        <div class="annale-header">
+          <div>
+            <div class="annale-title">Commentaire — Rimbaud, "Ma Bohême"</div>
+            <div class="annale-meta">Type bac · Parcours 1 · Émancipations poétiques</div>
+          </div>
+          <span class="fiche-badge badge-fr">Commentaire</span>
+        </div>
+        <div class="annale-body">
+          Vous ferez un commentaire littéraire du sonnet "Ma Bohême" de Rimbaud. Vous montrerez comment le poète fait de l'errance une expérience fondatrice de la liberté poétique et personnelle.
+        </div>
+        <button class="toggle-corr-btn" onclick="toggleCorr(this)">Voir la correction ↓</button>
+        <div class="corr-panel">
+          <b>Problématique possible :</b> En quoi l'errance devient-elle chez Rimbaud une condition de la création poétique ?<br><br>
+          <b>Axe 1 — L'errance comme liberté totale :</b> Le poète vagabond marche seul, sans argent, heureux. Images de la route, des poches trouées (ironie joyeuse). Apostrophe à la Muse : la poésie naît du mouvement.<br><br>
+          <b>Axe 2 — La nature comme partenaire poétique :</b> La nature répond au poète (étoiles qui parlent, forêt complice). Synesthésies, métaphores de l'élasticité. Communion entre corps et cosmos.<br><br>
+          <b>Conclusion :</b> Rimbaud pose l'équivalence entre liberté de vie et liberté de créer. Ouvrir sur le "poète voyant" (lettre du Voyant, 1871).
+        </div>
+      </div>
+
+      <div class="annale-item">
+        <div class="annale-header">
+          <div>
+            <div class="annale-title">Dissertation — La passion dans Manon Lescaut</div>
+            <div class="annale-meta">Type bac · Parcours 2 · Personnage en marge</div>
+          </div>
+          <span class="fiche-badge badge-fr">Dissertation</span>
+        </div>
+        <div class="annale-body">
+          « La passion conduit-elle nécessairement à la marginalité dans Manon Lescaut de l'Abbé Prévost ? » Vous répondrez en vous appuyant sur les extraits étudiés et vos connaissances de l'œuvre.
+        </div>
+        <button class="toggle-corr-btn" onclick="toggleCorr(this)">Voir la correction ↓</button>
+        <div class="corr-panel">
+          <b>I. La passion comme rupture sociale :</b> Desgrieux abandonne sa famille, sa carrière, sa vertu. La passion arrache les personnages à leur monde d'origine. La fuite, l'exil, la prison : marginalité subie.<br><br>
+          <b>II. Une marginalité revendiquée :</b> Desgrieux défend sa passion face à Tiberge avec des arguments philosophiques. La marge devient identité : refus du conformisme bourgeois.<br><br>
+          <b>III. Limite : la mort comme résolution tragique :</b> La mort de Manon "purifiante" laisse entendre que la passion n'est viable que hors du monde. Le roman interroge les limites du romanesque.
+        </div>
+      </div>
+
+      <div class="annale-item">
+        <div class="annale-header">
+          <div>
+            <div class="annale-title">Commentaire — La Fontaine, "Le Loup et le Chien"</div>
+            <div class="annale-meta">Type bac · Parcours 3 · Défendre la liberté</div>
+          </div>
+          <span class="fiche-badge badge-fr">Commentaire</span>
+        </div>
+        <div class="annale-body">
+          Vous ferez un commentaire de la fable "Le Loup et le Chien" de La Fontaine. Vous montrerez comment La Fontaine fait de l'apologue un outil de défense de la liberté.
+        </div>
+        <button class="toggle-corr-btn" onclick="toggleCorr(this)">Voir la correction ↓</button>
+        <div class="corr-panel">
+          <b>Axe 1 — La séduction du confort :</b> Le chien incarne la tentation : nourriture, sécurité, appartenance. Le loup est d'abord tenté. La Fontaine montre que la servitude peut se présenter sous des atours séduisants.<br><br>
+          <b>Axe 2 — Le réveil de la conscience libre :</b> Le collier = symbole de la servitude. Rupture dramatique : le loup refuse et repart. La liberté vaut plus que le confort.<br><br>
+          <b>Procédés :</b> Dialogue vivant, ironie du détail révélateur (le collier), morale implicite dans le geste final du loup, brièveté efficace de l'apologue.
+        </div>
+      </div>
+
+      <div class="annale-item">
+        <div class="annale-header">
+          <div>
+            <div class="annale-title">Commentaire — Sarraute, extrait du duel verbal (Extrait II)</div>
+            <div class="annale-meta">Type bac · Parcours 4 · Théâtre et dispute</div>
+          </div>
+          <span class="fiche-badge badge-fr">Commentaire</span>
+        </div>
+        <div class="annale-body">
+          Commentez l'extrait du duel verbal entre H1 et H2 dans "Pour un oui ou pour un non" de Nathalie Sarraute. Vous montrerez comment la langue théâtrale rend visible l'invisible de la relation humaine.
+        </div>
+        <button class="toggle-corr-btn" onclick="toggleCorr(this)">Voir la correction ↓</button>
+        <div class="corr-panel">
+          <b>Axe 1 — La crise du langage :</b> Les mots ne disent pas ce qu'ils veulent dire. Les répétitions, les silences, les ruptures de réplique illustrent l'incommunicabilité. Sarraute invente les "tropismes" : mouvements intérieurs indicibles.<br><br>
+          <b>Axe 2 — La violence sous le quotidien :</b> Le conflit porte sur une intonation, un "c'est bien, ça" qui blesse. La dispute révèle l'orgueil, la jalousie, la fragilité du lien amical. Violence sourde sous l'apparente banalité.<br><br>
+          <b>Conclusion :</b> Relier au théâtre de l'absurde (Beckett, Ionesco) et à la modernité du Nouveau Roman.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /content-area -->
+
+<footer class="footer">
+  <div class="container">
+    <a class="logo" href="../index.html">BacPremière</a>
+    <p>Bonne chance pour ton bac de Première ! 🍀</p>
+  </div>
+</footer>
+
+<script src="../js/app.js"></script>
+<script>
+// ── INIT MAIN TABS ──
+const tabBtns = document.querySelectorAll('.tab-btn');
+const panels = [
+  document.getElementById('p-fiches'),
+  document.getElementById('p-quiz'),
+  document.getElementById('p-flash'),
+  document.getElementById('p-annales')
+];
+initTabs(tabBtns, panels);
+
+// ── INIT SOUS-ONGLETS PARCOURS ──
+initSubTabs(document.getElementById('parcours-tabs'));
+
+// ── DONNEES QUIZ ──
+const quizData = {
+  q1: [
+    { q:"Dans quel recueil sont publiés 'Roman', 'Le Buffet' et 'Ma Bohême' ?", opts:["Les Fleurs du Mal","Alcools","Les Cahiers de Douai","Illuminations"], ans:2, exp:"Les Cahiers de Douai sont un recueil de poèmes de jeunesse de Rimbaud (1870), retrouvés par Paul Demeny." },
+    { q:"Quel est le thème central de 'Ma Bohême' de Rimbaud ?", opts:["La mort et la douleur","L'errance joyeuse et la liberté poétique","La nostalgie de l'enfance","L'amour romantique"], ans:1, exp:"'Ma Bohême' célèbre l'errance libre, la pauvreté joyeuse et la création poétique née du voyage." },
+    { q:"Quelle figure de style est centrale dans 'Automne malade' d'Apollinaire ?", opts:["La litote","La personnification de l'automne","L'antithèse","L'anaphore"], ans:1, exp:"L'automne est traité comme un être vivant et souffrant ('malade'), ce qui est une personnification." },
+    { q:"L'absence de ponctuation dans Alcools est caractéristique de :", opts:["La poésie symboliste","La modernité poétique d'Apollinaire","Le surréalisme de Breton","La tradition classique"], ans:1, exp:"Apollinaire a délibérément supprimé la ponctuation d'Alcools (1913) pour libérer le rythme et multiplier les sens." },
+    { q:"Quel est l'incipit célèbre du poème 'Roman' de Rimbaud ?", opts:["'Ô saisons, ô châteaux'","'On n'est pas sérieux, quand on a dix-sept ans'","'Je est un autre'","'Il pleure dans mon cœur'"], ans:1, exp:"'On n'est pas sérieux, quand on a dix-sept ans' ouvre le poème et donne son ton ironique et léger." },
+  ],
+  q2: [
+    { q:"Qui est Tiberge dans Manon Lescaut ?", opts:["Le père de Desgrieux","L'ami vertueux et moral de Desgrieux","Le rival amoureux de Desgrieux","Le père de Manon"], ans:1, exp:"Tiberge est l'ami fidèle et vertueux de Desgrieux qui incarne la raison et la morale contre la passion." },
+    { q:"Où meurt Manon dans le roman de l'Abbé Prévost ?", opts:["À Paris","En prison","Dans le désert américain","À Londres"], ans:2, exp:"Manon meurt dans le désert de Louisiane, loin de tout, dans les bras de Desgrieux. Cette mort 'purifiante' clôt le roman." },
+    { q:"Sous quelle forme est écrit 'Les Liaisons dangereuses' de Laclos ?", opts:["Roman autobiographique","Roman épistolaire","Roman picaresque","Roman policier"], ans:1, exp:"'Les Liaisons dangereuses' est un roman épistolaire (1782) : il se compose entièrement de lettres échangées entre les personnages." },
+    { q:"Que révèle la Lettre 81 de la Marquise de Merteuil ?", opts:["Son amour pour Valmont","Sa construction stratégique de soi et sa maîtrise des apparences","Ses regrets d'une vie dissolue","Son intention de se marier"],ans:1, exp:"Dans la Lettre 81, Merteuil expose comment elle s'est 'construite' elle-même : maîtrise du corps, du visage, du discours — une autobiographie de la manipulation." },
+    { q:"Le débat entre Desgrieux et Tiberge porte sur :", opts:["L'argent et la corruption","La passion amoureuse versus la vertu morale","Le destin des pauvres","La politique de l'époque"], ans:1, exp:"Desgrieux défend la passion comme force naturelle irrépressible, Tiberge représente la vertu et la raison des Lumières." },
+  ],
+  q3: [
+    { q:"Selon La Boétie, d'où vient la tyrannie ?", opts:["De la force du tyran","Du consentement volontaire des dominés","De la peur des soldats","De la richesse du roi"], ans:1, exp:"La Boétie affirme que le tyran ne peut rien sans le consentement de ceux qu'il domine : c'est une 'servitude volontaire'." },
+    { q:"Quel argument La Boétie tire-t-il des animaux ?", opts:["Les animaux obéissent naturellement","Les animaux montrent que la liberté est naturelle car ils refusent la captivité","Les animaux sont plus courageux que les hommes","Les animaux n'ont pas de raison"], ans:1, exp:"Les animaux, même sauvages, résistent à la captivité — ils préfèrent mourir libres. A fortiori, les hommes doués de raison doivent refuser la servitude." },
+    { q:"Quel est le thème principal de 'De la coutume' de Montaigne ?", opts:["La guerre et la violence","Les habitudes sociales tyrannisent l'esprit libre","L'amitié et la loyauté","La nature humaine et la bonté"], ans:1, exp:"Montaigne montre que la coutume impose des croyances que l'on croit naturelles : il faut s'en affranchir par l'esprit critique." },
+    { q:"Dans 'Le Loup et le Chien', que symbolise le collier du chien ?", opts:["La richesse et la noblesse","La servitude et la perte de liberté","L'amour du maître","La protection contre les dangers"], ans:1, exp:"Le collier révèle que le chien, malgré son confort, est enchaîné. Il symbolise la servitude consentie pour la sécurité matérielle." },
+    { q:"Montaigne est l'ami proche de :", opts:["Voltaire","La Fontaine","La Boétie","Rousseau"], ans:2, exp:"La Boétie et Montaigne étaient des amis proches d'une intensité légendaire. Montaigne a célébré cette amitié dans ses Essais ('parce que c'était lui, parce que c'était moi')." },
+  ],
+  q4: [
+    { q:"Comment s'appellent les personnages principaux dans 'Pour un oui ou pour un non' ?", opts:["Antigone et Créon","H1 et H2","Victor et Hermione","Pierre et Jean"], ans:1, exp:"Sarraute nomme ses personnages H1 et H2 (Homme 1, Homme 2) pour les dépersonnaliser et universaliser le conflit." },
+    { q:"Qu'est-ce qu'un 'tropisme' chez Sarraute ?", opts:["Un procédé de rime","Un mouvement intérieur infime et indicible qui anime les personnages","Une figure de style rhétorique","Un genre théâtral du XVIIe siècle"], ans:1, exp:"Les 'tropismes' sont des mouvements psychologiques souterrains, presque inconscients, que Sarraute tente de rendre visibles dans son œuvre." },
+    { q:"Pourquoi H1 et H2 ne peuvent-ils pas expliquer leur rupture ?", opts:["Par lâcheté morale","Parce que la raison est trop grave","Parce que la cause est une nuance infime, inavouable socialement","Parce qu'ils ne se comprennent pas la langue"], ans:2, exp:"La pièce explore l'absurde tragique : une amitié meurt à cause d'une intonation, d'un 'c'est bien, ça' — une cause impossible à justifier socialement." },
+    { q:"Dans 'Comédies tragiques' de Catherine Anne, quel personnage est 'le vieil acteur' ?", opts:["Un héros romantique","Un personnage symbolisant l'art face à la vieillesse et à l'oubli","Un tyran","Un amant jaloux"], ans:1, exp:"Le vieil acteur incarne la figure de l'artiste face au temps qui passe, à l'art qui s'efface, au théâtre comme espace de révélation des failles humaines." },
+  ],
+  qm: [
+    { q:"Dans un commentaire littéraire, combien d'axes développe-t-on en général ?", opts:["1 axe","2 à 3 axes","4 axes","Autant que possible"], ans:1, exp:"Le commentaire se structure en 2 à 3 axes (le plus souvent 2), chacun décomposé en 2-3 sous-parties avec procédés et effets." },
+    { q:"L'oxymore est :", opts:["Une répétition en début de phrase","Une alliance de deux termes contradictoires","Une exagération stylistique","Une comparaison sans outil"], ans:1, exp:"Exemple d'oxymore : 'une obscure clarté', 'une douce violence'. Deux mots opposés créent une tension sémantique." },
+    { q:"Dans une dissertation, le plan dialectique se compose de :", opts:["Introduction, développement, conclusion","Thèse, antithèse, synthèse","Récit, analyse, évaluation","Problème, causes, solutions"], ans:1, exp:"Le plan dialectique (thèse/antithèse/synthèse) est le plus courant pour les sujets polémiques au bac de français." },
+    { q:"Qu'est-ce qu'un enjambement en poésie ?", opts:["Un vers qui rime avec le suivant","Le rejet de la fin d'une phrase ou d'une idée sur le vers suivant","Une strophe de 4 vers","Une répétition de consonnes"], ans:1, exp:"L'enjambement crée une tension entre le rythme syntaxique et le rythme métrique, produisant un effet de fluidité ou de surprise." },
+    { q:"La litote consiste à :", opts:["Exagérer pour frapper","Dire moins pour suggérer plus","Employer une image inattendue","Répéter un mot clé"], ans:1, exp:"Exemple classique : 'Va, je ne te hais point' (Corneille) = 'je t'aime encore'. La litote atténue pour mieux suggérer." },
+  ]
+};
+
+// ── DONNEES FLASHCARDS ──
+const flashData = {
+  f1: [
+    { q:"Dans quel recueil Rimbaud écrit-il 'Roman', 'Le Buffet' et 'Ma Bohême' ?", a:"Les Cahiers de Douai (1870) — recueil de jeunesse envoyé à Paul Demeny." },
+    { q:"Quel est le thème principal d''Automne malade' d'Apollinaire ?", a:"La mélancolie de l'automne mourant : fuite du temps, séparation, mort de la nature. L'automne est personnifié." },
+    { q:"Qu'est-ce que le 'poète voyant' selon Rimbaud ?", a:"Le poète qui 'dérègle tous les sens' pour atteindre une vision supérieure (Lettre du Voyant à Demeny, 1871)." },
+    { q:"Quelle est la particularité formelle d'Alcools d'Apollinaire ?", a:"L'absence totale de ponctuation, qui libère le rythme et multiplie les interprétations du texte." },
+  ],
+  f2: [
+    { q:"Qui est Tiberge dans Manon Lescaut ?", a:"L'ami fidèle et vertueux de Desgrieux, voix de la raison et de la morale religieuse contre la passion." },
+    { q:"Que révèle la Lettre 81 des Liaisons dangereuses ?", a:"La Merteuil y expose sa 'construction de soi' : maîtrise des apparences, du corps et du discours pour dominer la société." },
+    { q:"Où et comment meurt Manon Lescaut ?", a:"Dans le désert de Louisiane, dans les bras de Desgrieux. Une mort 'purifiante' qui clôt le roman de façon pathétique." },
+    { q:"Sous quelle forme est écrit 'Les Liaisons dangereuses' ?", a:"Roman épistolaire (1782) : uniquement composé de lettres échangées entre les personnages." },
+  ],
+  f3: [
+    { q:"Quelle est la thèse centrale du Discours de la servitude volontaire de La Boétie ?", a:"Les hommes consentent à leur propre servitude. Le tyran ne tient son pouvoir que du consentement des dominés." },
+    { q:"Que symbolise le collier dans 'Le Loup et le Chien' de La Fontaine ?", a:"La servitude consentie pour la sécurité matérielle : le chien est nourri mais enchaîné. La liberté vaut mieux que le confort." },
+    { q:"Quel est l'argument de Montaigne dans 'De la coutume' ?", a:"La coutume tyrannise l'esprit : on accepte comme naturel ce qui n'est que convention héritée. Il faut s'en affranchir par la raison." },
+    { q:"La Boétie et Montaigne : quel lien les unit ?", a:"Une amitié légendaire. Montaigne lui dédie ses Essais : 'parce que c'était lui, parce que c'était moi'." },
+  ],
+  f4: [
+    { q:"Comment Sarraute nomme-t-elle ses personnages dans 'Pour un oui ou pour un non' ? Pourquoi ?", a:"H1 et H2 (Homme 1, Homme 2) — anonymat pour universaliser le conflit psychologique et effacer le particulier." },
+    { q:"Qu'est-ce qu'un 'tropisme' chez Sarraute ?", a:"Un mouvement intérieur infime, presque inconscient — une sensation, une pulsion — que le théâtre tente de rendre visible." },
+    { q:"Pour quelle raison absurde H1 et H2 envisagent-ils de se séparer ?", a:"Pour une nuance de ton, un 'c'est bien, ça' prononcé d'une certaine façon — une raison inavouable socialement." },
+    { q:"À quel courant théâtral se rattache Sarraute ?", a:"Au Nouveau Roman et au Nouveau Théâtre (années 1950-60), proche du théâtre de l'absurde de Beckett et Ionesco." },
+  ],
+  fm: [
+    { q:"Définir la métaphore", a:"Comparaison sans outil comparatif (sans 'comme', 'tel que'). Ex : 'La vie est un combat'." },
+    { q:"Définir l'anaphore", a:"Répétition d'un même mot ou groupe en début de phrase ou de vers — effet de rythme et d'insistance." },
+    { q:"Définir l'oxymore", a:"Alliance de deux termes contradictoires dans un même groupe. Ex : 'une obscure clarté', 'douce violence'." },
+    { q:"Définir la litote", a:"Dire moins pour suggérer plus. Ex : 'Ce n'est pas mal' = c'est très bien." },
+    { q:"Définir l'hyperbole", a:"Exagération stylistique pour frapper l'imagination. Ex : 'Je t'ai dit mille fois'." },
+    { q:"Définir le chiasme", a:"Inversion symétrique de deux groupes. Ex : 'Il faut manger pour vivre et non vivre pour manger'." },
+    { q:"Définir l'enjambement", a:"Rejet de la fin d'une idée ou d'une phrase sur le vers suivant — crée tension entre syntaxe et métrique." },
+    { q:"Définir l'ironie", a:"Dire le contraire de ce qu'on pense, pour se moquer. Repose sur un décalage entre le sens littéral et le sens réel." },
+  ]
+};
+
+// ── INIT QUIZ & FLASHCARDS ──
+let currentQuiz = null;
+let currentFlash = null;
+
+function loadQuiz(key) {
+  currentQuiz = new Quiz(document.getElementById('quiz-container'), quizData[key]);
+}
+function loadFlash(key) {
+  currentFlash = new Flashcards(document.getElementById('flash-container'), flashData[key]);
+}
+
+// Quiz sub-tabs
+document.querySelectorAll('[data-quiz]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-quiz]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    loadQuiz(btn.dataset.quiz);
+  });
+});
+// Flash sub-tabs
+document.querySelectorAll('[data-flash]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-flash]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    loadFlash(btn.dataset.flash);
+  });
+});
+
+// Auto-load when switching to quiz/flash panels
+tabBtns[1].addEventListener('click', () => { if (!currentQuiz) loadQuiz('q1'); });
+tabBtns[2].addEventListener('click', () => { if (!currentFlash) loadFlash('f1'); });
+
+function toggleMenu() { document.querySelector('.nav-links').classList.toggle('open'); }
+</script>
+</body>
+</html>

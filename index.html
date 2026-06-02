@@ -1,736 +1,147 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>StudyFlow — Révise avec l'IA</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet" />
-<style>
-  :root {
-    --bg: #0f0f13;
-    --surface: #18181f;
-    --surface2: #22222c;
-    --border: rgba(255,255,255,0.08);
-    --border2: rgba(255,255,255,0.14);
-    --text: #f0f0f5;
-    --muted: rgba(240,240,245,0.5);
-    --hint: rgba(240,240,245,0.28);
-    --cyan: #3bf0e4;
-    --violet: #a855f7;
-    --pink: #f472b6;
-    --amber: #fbbf24;
-    --green: #34d399;
-    --radius: 16px;
-    --radius-sm: 10px;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  /* ---- BACKGROUND BLOBS ---- */
-  .bg-blobs {
-    position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
-  }
-  .blob {
-    position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.18;
-    animation: blobFloat 12s ease-in-out infinite alternate;
-  }
-  .blob-1 { width: 600px; height: 600px; background: var(--violet); top: -200px; left: -150px; animation-delay: 0s; }
-  .blob-2 { width: 500px; height: 500px; background: var(--cyan); top: 30%; right: -200px; animation-delay: -4s; }
-  .blob-3 { width: 400px; height: 400px; background: var(--pink); bottom: -100px; left: 30%; animation-delay: -8s; }
-  @keyframes blobFloat { from { transform: translate(0,0) scale(1); } to { transform: translate(30px, 40px) scale(1.05); } }
-
-  /* ---- LAYOUT ---- */
-  .wrap { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: 0 24px; }
-
-  /* ---- NAV ---- */
-  nav {
-    position: sticky; top: 0; z-index: 100;
-    backdrop-filter: blur(20px);
-    background: rgba(15,15,19,0.8);
-    border-bottom: 1px solid var(--border);
-    padding: 16px 0;
-  }
-  .nav-inner {
-    max-width: 860px; margin: 0 auto; padding: 0 24px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800; font-size: 22px;
-    background: linear-gradient(135deg, var(--cyan), var(--violet));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    letter-spacing: -0.5px;
-  }
-  .nav-badge {
-    font-size: 12px; padding: 4px 12px;
-    background: rgba(168,85,247,0.15);
-    border: 1px solid rgba(168,85,247,0.3);
-    border-radius: 99px; color: var(--violet);
-    font-family: 'DM Sans', sans-serif; font-weight: 500;
-  }
-
-  /* ---- HERO ---- */
-  .hero {
-    padding: 80px 0 60px;
-    text-align: center;
-    animation: fadeUp 0.7s ease both;
-  }
-  .hero-eyebrow {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 13px; font-weight: 500;
-    padding: 6px 16px; border-radius: 99px;
-    background: rgba(59,240,228,0.08);
-    border: 1px solid rgba(59,240,228,0.2);
-    color: var(--cyan); margin-bottom: 28px;
-  }
-  .hero-eyebrow span { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); animation: pulse 2s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-
-  h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(36px, 6vw, 64px);
-    font-weight: 800; line-height: 1.1;
-    letter-spacing: -1.5px; margin-bottom: 20px;
-  }
-  h1 .grad {
-    background: linear-gradient(135deg, var(--cyan) 0%, var(--violet) 50%, var(--pink) 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  }
-  .hero-sub {
-    font-size: 18px; color: var(--muted); line-height: 1.7;
-    max-width: 520px; margin: 0 auto 40px;
-  }
-  .hero-cta {
-    display: inline-flex; align-items: center; gap: 10px;
-    padding: 14px 32px; border-radius: 99px;
-    background: linear-gradient(135deg, var(--cyan), var(--violet));
-    color: #0f0f13; font-weight: 600; font-size: 16px;
-    border: none; cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 0 40px rgba(59,240,228,0.2);
-  }
-  .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(59,240,228,0.35); }
-
-  /* ---- FEATURE PILLS ---- */
-  .pills {
-    display: flex; justify-content: center; flex-wrap: wrap; gap: 10px;
-    margin: 48px 0 64px; animation: fadeUp 0.7s 0.2s ease both;
-  }
-  .pill {
-    display: flex; align-items: center; gap: 8px;
-    padding: 8px 16px; border-radius: 99px;
-    border: 1px solid var(--border2);
-    background: var(--surface); font-size: 14px; color: var(--muted);
-  }
-  .pill-dot { width: 8px; height: 8px; border-radius: 50%; }
-
-  /* ---- APP CARD ---- */
-  .app-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    overflow: hidden;
-    animation: fadeUp 0.7s 0.3s ease both;
-    box-shadow: 0 40px 120px rgba(0,0,0,0.5);
-  }
-  .app-header {
-    padding: 20px 24px;
-    border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; gap: 12px;
-  }
-  .traffic-lights { display: flex; gap: 6px; }
-  .tl { width: 12px; height: 12px; border-radius: 50%; }
-  .tl-r { background: #ff5f57; }
-  .tl-y { background: #febc2e; }
-  .tl-g { background: #28c840; }
-  .app-title { font-size: 14px; color: var(--muted); margin-left: 8px; }
-
-  /* ---- TABS ---- */
-  .mode-tabs {
-    display: flex; gap: 4px; padding: 20px 24px 0;
-  }
-  .mode-tab {
-    padding: 10px 20px; border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-    font-size: 14px; font-weight: 500; cursor: pointer;
-    border: 1px solid transparent; border-bottom: none;
-    background: transparent; color: var(--muted);
-    transition: all 0.2s; font-family: 'DM Sans', sans-serif;
-  }
-  .mode-tab:hover { color: var(--text); }
-  .mode-tab.active {
-    background: var(--surface2);
-    border-color: var(--border);
-    color: var(--text);
-  }
-  .tab-icon { margin-right: 6px; }
-
-  /* ---- CONTENT AREA ---- */
-  .content-area {
-    background: var(--surface2);
-    border-top: 1px solid var(--border);
-    padding: 28px 24px;
-    min-height: 420px;
-  }
-
-  /* ---- INPUT GROUP ---- */
-  .input-group { margin-bottom: 20px; }
-  .input-type-toggle {
-    display: flex; gap: 0; margin-bottom: 14px;
-    background: var(--surface); border-radius: var(--radius-sm);
-    padding: 4px; width: fit-content;
-  }
-  .toggle-btn {
-    padding: 7px 18px; border-radius: 7px;
-    font-size: 13px; font-weight: 500; cursor: pointer;
-    border: none; background: transparent; color: var(--muted);
-    transition: all 0.2s; font-family: 'DM Sans', sans-serif;
-  }
-  .toggle-btn.active { background: var(--surface2); color: var(--text); box-shadow: 0 1px 8px rgba(0,0,0,0.3); }
-
-  textarea {
-    width: 100%; min-height: 130px;
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius-sm); padding: 14px 16px;
-    font-family: 'DM Sans', sans-serif; font-size: 14px;
-    color: var(--text); resize: vertical; line-height: 1.7;
-    transition: border-color 0.2s;
-  }
-  textarea:focus { outline: none; border-color: rgba(59,240,228,0.4); }
-  textarea::placeholder { color: var(--hint); }
-
-  .file-drop {
-    border: 1.5px dashed var(--border2);
-    border-radius: var(--radius-sm); padding: 36px;
-    text-align: center; cursor: pointer;
-    background: var(--surface); transition: border-color 0.2s;
-  }
-  .file-drop:hover { border-color: rgba(59,240,228,0.4); }
-  .file-drop-icon { font-size: 28px; margin-bottom: 10px; }
-  .file-drop p { font-size: 14px; color: var(--muted); }
-  .file-drop small { font-size: 12px; color: var(--hint); }
-  #file-input { display: none; }
-  .file-chosen { font-size: 13px; color: var(--cyan); margin-top: 10px; }
-
-  /* ---- EXPLAIN INPUT ---- */
-  .explain-input {
-    display: flex; gap: 10px; margin-bottom: 16px;
-  }
-  .explain-input input {
-    flex: 1; background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius-sm); padding: 12px 16px;
-    font-family: 'DM Sans', sans-serif; font-size: 14px;
-    color: var(--text); transition: border-color 0.2s;
-  }
-  .explain-input input:focus { outline: none; border-color: rgba(59,240,228,0.4); }
-  .explain-input input::placeholder { color: var(--hint); }
-
-  /* ---- GENERATE BTN ---- */
-  .gen-btn {
-    width: 100%; padding: 14px;
-    background: linear-gradient(135deg, var(--cyan), var(--violet));
-    border: none; border-radius: var(--radius-sm);
-    font-family: 'Syne', sans-serif; font-weight: 700;
-    font-size: 15px; color: #0f0f13; cursor: pointer;
-    transition: transform 0.2s, opacity 0.2s, box-shadow 0.2s;
-    letter-spacing: 0.3px;
-    box-shadow: 0 4px 20px rgba(59,240,228,0.15);
-  }
-  .gen-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 30px rgba(59,240,228,0.25); }
-  .gen-btn:active { transform: scale(0.99); }
-  .gen-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
-
-  /* ---- RESULT ---- */
-  .result-area { margin-top: 24px; }
-
-  .loading-state {
-    text-align: center; padding: 40px 20px;
-    color: var(--muted); font-size: 15px;
-  }
-  .spinner {
-    width: 32px; height: 32px; border-radius: 50%;
-    border: 2px solid var(--border2);
-    border-top-color: var(--cyan);
-    animation: spin 0.8s linear infinite;
-    margin: 0 auto 16px;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* FICHE */
-  .fiche-block {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 24px;
-    line-height: 1.8; font-size: 14px;
-  }
-  .fiche-block h2 {
-    font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700;
-    color: var(--cyan); margin: 20px 0 10px;
-    padding-bottom: 6px; border-bottom: 1px solid var(--border);
-  }
-  .fiche-block h2:first-child { margin-top: 0; }
-  .fiche-block strong { color: var(--text); font-weight: 500; }
-  .fiche-block p { color: rgba(240,240,245,0.8); margin-bottom: 8px; }
-
-  /* QUIZ */
-  .score-strip {
-    display: flex; align-items: center; justify-content: space-between;
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius-sm); padding: 14px 20px; margin-bottom: 20px;
-  }
-  .score-strip .label { font-size: 13px; color: var(--muted); }
-  .score-strip .score-num {
-    font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 800;
-    background: linear-gradient(135deg, var(--cyan), var(--violet));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  }
-  .questions-list { display: flex; flex-direction: column; gap: 14px; }
-  .q-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius-sm); padding: 20px;
-  }
-  .q-num { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--violet); margin-bottom: 8px; }
-  .q-text { font-size: 15px; font-weight: 500; line-height: 1.6; margin-bottom: 14px; }
-  .options-list { display: flex; flex-direction: column; gap: 8px; }
-  .opt-btn {
-    padding: 11px 16px; border-radius: 8px;
-    border: 1px solid var(--border); background: var(--surface2);
-    color: var(--muted); font-size: 14px; text-align: left;
-    cursor: pointer; font-family: 'DM Sans', sans-serif;
-    transition: all 0.15s;
-  }
-  .opt-btn:hover:not(:disabled) { border-color: var(--border2); color: var(--text); }
-  .opt-btn.correct { border-color: var(--green); background: rgba(52,211,153,0.1); color: var(--green); }
-  .opt-btn.wrong { border-color: #f87171; background: rgba(248,113,113,0.08); color: #f87171; }
-  .opt-btn:disabled { cursor: default; }
-  .q-feedback {
-    margin-top: 12px; padding: 10px 14px;
-    border-radius: 8px; font-size: 13px; line-height: 1.6;
-    display: none;
-  }
-  .q-feedback.correct { background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.2); color: var(--green); }
-  .q-feedback.wrong { background: rgba(248,113,113,0.06); border: 1px solid rgba(248,113,113,0.2); color: #f87171; }
-  .q-feedback.show { display: block; }
-
-  .open-ans {
-    width: 100%; background: var(--surface2); border: 1px solid var(--border);
-    border-radius: 8px; padding: 12px 14px; font-family: 'DM Sans', sans-serif;
-    font-size: 14px; color: var(--text); resize: none; min-height: 80px; margin-top: 4px;
-  }
-  .open-ans:focus { outline: none; border-color: rgba(59,240,228,0.3); }
-  .check-open-btn {
-    margin-top: 8px; padding: 9px 18px; border-radius: 8px;
-    border: 1px solid var(--border2); background: transparent;
-    color: var(--muted); font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif;
-    transition: all 0.15s;
-  }
-  .check-open-btn:hover { border-color: var(--cyan); color: var(--cyan); }
-
-  /* EXPLAIN */
-  .explain-block {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 24px;
-    font-size: 15px; line-height: 1.9; color: rgba(240,240,245,0.85);
-  }
-  .explain-block strong { color: var(--cyan); font-weight: 500; }
-
-  /* ERROR */
-  .error-block {
-    background: rgba(248,113,113,0.06); border: 1px solid rgba(248,113,113,0.2);
-    border-radius: var(--radius-sm); padding: 16px 20px;
-    font-size: 14px; color: #f87171;
-  }
-
-  /* ---- HOW IT WORKS ---- */
-  .section { padding: 80px 0; }
-  .section-title {
-    font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800;
-    text-align: center; margin-bottom: 12px; letter-spacing: -0.5px;
-  }
-  .section-sub { text-align: center; color: var(--muted); font-size: 16px; margin-bottom: 48px; }
-
-  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
-  .step-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 28px 22px;
-    position: relative; overflow: hidden;
-    transition: border-color 0.2s, transform 0.2s;
-  }
-  .step-card:hover { border-color: var(--border2); transform: translateY(-3px); }
-  .step-num {
-    font-family: 'Syne', sans-serif; font-size: 48px; font-weight: 800;
-    opacity: 0.06; position: absolute; top: 10px; right: 16px; line-height: 1;
-  }
-  .step-icon { font-size: 24px; margin-bottom: 14px; }
-  .step-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; margin-bottom: 8px; }
-  .step-desc { font-size: 14px; color: var(--muted); line-height: 1.7; }
-
-  /* ---- FOOTER ---- */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 32px 0; text-align: center;
-    font-size: 13px; color: var(--hint);
-  }
-  footer span { color: var(--violet); }
-
-  /* ---- UTILS ---- */
-  .hidden { display: none !important; }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-  .fade-in { animation: fadeIn 0.4s ease both; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BacPremière — Révisions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-<div class="bg-blobs">
-  <div class="blob blob-1"></div>
-  <div class="blob blob-2"></div>
-  <div class="blob blob-3"></div>
-</div>
-
-<!-- NAV -->
-<nav>
-  <div class="nav-inner">
-    <div class="logo">StudyFlow</div>
-    <div class="nav-badge">Propulsé par l'IA</div>
-  </div>
-</nav>
-
-<!-- HERO -->
-<div class="wrap">
-  <div class="hero">
-    <div class="hero-eyebrow">
-      <span></span> Assistant de révision BAC
+  <!-- NAV -->
+  <nav class="navbar">
+    <a class="logo" href="index.html">BacPremière</a>
+    <div class="nav-links">
+      <a href="pages/francais-ecrit.html" class="nav-link">Français écrit</a>
+      <a href="pages/francais-oral.html" class="nav-link">Français oral</a>
+      <a href="pages/maths.html" class="nav-link">Mathématiques</a>
     </div>
-    <h1>Révise plus vite,<br><span class="grad">retiens mieux.</span></h1>
-    <p class="hero-sub">Colle ton cours ou uploade un PDF. L'IA génère des fiches, des quiz et des explications adaptées au BAC.</p>
-    <button class="hero-cta" onclick="document.getElementById('app').scrollIntoView({behavior:'smooth'})">
-      Commencer à réviser →
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
     </button>
-  </div>
+  </nav>
 
-  <div class="pills">
-    <div class="pill"><div class="pill-dot" style="background:var(--cyan)"></div>Fiches de révision</div>
-    <div class="pill"><div class="pill-dot" style="background:var(--violet)"></div>Quiz interactif</div>
-    <div class="pill"><div class="pill-dot" style="background:var(--pink)"></div>Explications simples</div>
-    <div class="pill"><div class="pill-dot" style="background:var(--amber)"></div>PDF supporté</div>
-    <div class="pill"><div class="pill-dot" style="background:var(--green)"></div>Toutes matières</div>
-  </div>
-
-  <!-- APP -->
-  <div class="app-card" id="app">
-    <div class="app-header">
-      <div class="traffic-lights">
-        <div class="tl tl-r"></div>
-        <div class="tl tl-y"></div>
-        <div class="tl tl-g"></div>
-      </div>
-      <div class="app-title">studyflow.app — assistant de révision</div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="orb orb1"></div>
+      <div class="orb orb2"></div>
+      <div class="orb orb3"></div>
     </div>
-
-    <div class="mode-tabs">
-      <button class="mode-tab active" onclick="switchMode('fiche',this)"><span class="tab-icon">📄</span>Fiche</button>
-      <button class="mode-tab" onclick="switchMode('quiz',this)"><span class="tab-icon">🎯</span>Quiz</button>
-      <button class="mode-tab" onclick="switchMode('explain',this)"><span class="tab-icon">💡</span>Explique-moi</button>
-    </div>
-
-    <div class="content-area">
-      <!-- EXPLAIN CONCEPT INPUT -->
-      <div id="explain-row" class="explain-input hidden">
-        <input type="text" id="concept-inp" placeholder="Ex : la photosynthèse, la Révolution française, les logarithmes..." />
+    <div class="hero-content">
+      <span class="hero-eyebrow">Bac Général · Première</span>
+      <h1 class="hero-title">Révise.<br>Progresse.<br><em>Réussis.</em></h1>
+      <p class="hero-sub">Fiches, quiz, flashcards et annales pour maîtriser le Français écrit, l'Oral et les Mathématiques.</p>
+      <div class="hero-cta">
+        <a href="pages/francais-ecrit.html" class="btn-primary">Commencer à réviser</a>
+        <a href="#matieres" class="btn-ghost">Voir les matières ↓</a>
       </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-n">16</span><span class="stat-l">Textes étudiés</span></div>
+      <div class="stat"><span class="stat-n">4</span><span class="stat-l">Parcours</span></div>
+      <div class="stat"><span class="stat-n">6</span><span class="stat-l">Notions maths</span></div>
+    </div>
+  </section>
 
-      <!-- COURSE INPUT -->
-      <div class="input-group">
-        <div class="input-type-toggle">
-          <button class="toggle-btn active" onclick="switchInput('text',this)">Texte</button>
-          <button class="toggle-btn" onclick="switchInput('pdf',this)">PDF</button>
+  <!-- MATIERES -->
+  <section class="matieres" id="matieres">
+    <div class="container">
+      <h2 class="section-title">Les matières</h2>
+      <div class="cards-grid">
+
+        <a href="pages/francais-ecrit.html" class="subject-card card-fr">
+          <div class="card-icon">✍️</div>
+          <div class="card-tag">Épreuve anticipée</div>
+          <h3>Français écrit</h3>
+          <p>4 parcours · 16 textes · Commentaire, dissertation, fiches & quiz</p>
+          <ul class="card-list">
+            <li>Émancipations poétiques — Rimbaud, Apollinaire</li>
+            <li>Personnage en marge — Manon Lescaut, Liaisons dangereuses</li>
+            <li>Défendre la liberté — La Boétie, Montaigne, La Fontaine</li>
+            <li>Théâtre et dispute — Sarraute, Catherine Anne</li>
+          </ul>
+          <span class="card-cta">Explorer →</span>
+        </a>
+
+        <a href="pages/francais-oral.html" class="subject-card card-oral">
+          <div class="card-icon">🎤</div>
+          <div class="card-tag">Épreuve anticipée</div>
+          <h3>Français oral</h3>
+          <p>La Princesse de Clèves · Explication linéaire · Question de grammaire</p>
+          <ul class="card-list">
+            <li>Présentation de l'œuvre et du contexte</li>
+            <li>Méthode d'explication linéaire</li>
+            <li>Entraînement à la question de grammaire</li>
+            <li>Conseils pour l'entretien</li>
+          </ul>
+          <span class="card-cta">Explorer →</span>
+        </a>
+
+        <a href="pages/maths.html" class="subject-card card-maths">
+          <div class="card-icon">📐</div>
+          <div class="card-tag">Bac de fin d'année</div>
+          <h3>Mathématiques</h3>
+          <p>6 chapitres · Formules, exercices guidés & quiz</p>
+          <ul class="card-list">
+            <li>Équations du second degré</li>
+            <li>Suites numériques</li>
+            <li>Trigonométrie & produits scalaires</li>
+            <li>Probabilités & Exponentielle</li>
+          </ul>
+          <span class="card-cta">Explorer →</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- METHODES -->
+  <section class="methodes">
+    <div class="container">
+      <h2 class="section-title">Comment réviser ?</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h4>Lis les fiches</h4>
+          <p>Commence par les fiches de révision pour consolider tes connaissances sur chaque texte ou notion.</p>
         </div>
-
-        <div id="text-zone">
-          <textarea id="course-text" placeholder="Colle ici ton cours, tes notes, un paragraphe de manuel..."></textarea>
+        <div class="step-arrow">→</div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h4>Teste-toi avec les flashcards</h4>
+          <p>Retourne les cartes pour vérifier ta mémorisation des figures de style, formules et oeuvres.</p>
         </div>
-
-        <div id="pdf-zone" class="hidden">
-          <div class="file-drop" onclick="document.getElementById('file-input').click()">
-            <div class="file-drop-icon">📎</div>
-            <p>Clique pour choisir un PDF</p>
-            <small>Cours, manuel, fiche déjà existante</small>
-          </div>
-          <input type="file" id="file-input" accept=".pdf" onchange="handlePDF(event)" />
-          <div class="file-chosen hidden" id="file-chosen"></div>
+        <div class="step-arrow">→</div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h4>Quiz interactif</h4>
+          <p>Mesure tes progrès avec des QCM et obtiens une correction détaillée pour chaque réponse.</p>
         </div>
-      </div>
-
-      <button class="gen-btn" id="gen-btn" onclick="generate()">✦ Générer</button>
-
-      <div class="result-area" id="result-area"></div>
-    </div>
-  </div>
-
-  <!-- HOW IT WORKS -->
-  <div class="section">
-    <h2 class="section-title">Comment ça marche ?</h2>
-    <p class="section-sub">Trois étapes, quelques secondes, des résultats concrets.</p>
-    <div class="steps">
-      <div class="step-card">
-        <div class="step-num">1</div>
-        <div class="step-icon">📚</div>
-        <div class="step-title">Donne ton cours</div>
-        <div class="step-desc">Colle du texte directement ou uploade ton PDF. Toutes les matières sont supportées.</div>
-      </div>
-      <div class="step-card">
-        <div class="step-num">2</div>
-        <div class="step-icon">⚡</div>
-        <div class="step-title">Choisis un mode</div>
-        <div class="step-desc">Fiche structurée, quiz avec score ou explication simplifiée d'un concept.</div>
-      </div>
-      <div class="step-card">
-        <div class="step-num">3</div>
-        <div class="step-icon">🎓</div>
-        <div class="step-title">Révise efficacement</div>
-        <div class="step-desc">L'IA génère un contenu adapté au niveau BAC en quelques secondes.</div>
+        <div class="step-arrow">→</div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <h4>Annales corrigées</h4>
+          <p>Entraîne-toi sur des sujets proches du bac et consulte les éléments de correction.</p>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+  </section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="wrap">
-    Fait pour les lycéens — <span>StudyFlow</span> × IA
-  </div>
-</footer>
+  <footer class="footer">
+    <div class="container">
+      <span class="logo">BacPremière</span>
+      <p>Créé pour réussir le bac de Première générale · Bonne chance ! 🍀</p>
+    </div>
+  </footer>
 
-<script>
-  const GEMINI_API_KEY = 'AIzaSyBcPzlol7qLGA4CZce_1bdl4K5a3F7xLNg';
-  const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
-
-  let mode = 'fiche';
-  let inputMode = 'text';
-  let pdfBase64 = null;
-  let pdfMime = 'application/pdf';
-  let quizData = null;
-  let score = 0;
-  let answers = {};
-
-  function switchMode(m, btn) {
-    mode = m;
-    document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('explain-row').classList.toggle('hidden', m !== 'explain');
-    document.getElementById('result-area').innerHTML = '';
-  }
-
-  function switchInput(m, btn) {
-    inputMode = m;
-    document.querySelectorAll('.toggle-btn').forEach(t => t.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('text-zone').classList.toggle('hidden', m !== 'text');
-    document.getElementById('pdf-zone').classList.toggle('hidden', m !== 'pdf');
-  }
-
-  function handlePDF(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-    const el = document.getElementById('file-chosen');
-    el.textContent = '📎 ' + file.name;
-    el.classList.remove('hidden');
-    const reader = new FileReader();
-    reader.onload = () => { pdfBase64 = reader.result.split(',')[1]; };
-    reader.readAsDataURL(file);
-  }
-
-  function buildPrompt() {
-    const text = document.getElementById('course-text').value.trim();
-    const concept = document.getElementById('concept-inp').value.trim();
-    const source = inputMode === 'pdf' ? '[Voir le PDF joint]' : text;
-
-    if (mode === 'fiche') {
-      return `Tu es un assistant pédagogique expert pour lycéens français préparant le BAC.
-Cours fourni : """${source}"""
-Génère une fiche de révision claire et structurée avec :
-## Titre du chapitre
-## Notions clés (avec définitions concises)
-## Points essentiels à retenir
-## Résumé (3-4 phrases maximum)
-Sois précis, synthétique, niveau BAC. Réponds en français.`;
+  <script>
+    function toggleMenu() {
+      document.querySelector('.nav-links').classList.toggle('open');
     }
-    if (mode === 'quiz') {
-      return `Tu es un assistant pédagogique pour lycéens français préparant le BAC.
-Cours : """${source}"""
-Génère 5 questions variées (2 QCM, 2 vrai/faux, 1 question ouverte).
-Réponds UNIQUEMENT en JSON valide sans backticks ni texte autour :
-{"questions":[{"type":"mcq","question":"...","options":["A. ...","B. ...","C. ...","D. ..."],"correct":0,"explanation":"..."},{"type":"truefalse","question":"...","correct":true,"explanation":"..."},{"type":"open","question":"...","suggested_answer":"..."}]}`;
-    }
-    if (mode === 'explain') {
-      const ctx = (source && inputMode === 'text' && source.length > 10) ? `Contexte du cours : """${source}"""\n\n` : '';
-      return `${ctx}Tu es un prof bienveillant qui explique simplement à un lycéen.
-Explique ce concept de façon claire, avec une analogie concrète et des exemples du quotidien : "${concept}"
-Sois pédagogue, direct, et va à l'essentiel. Réponds en français.`;
-    }
-  }
-
-  async function generate() {
-    const text = document.getElementById('course-text').value.trim();
-    const concept = document.getElementById('concept-inp').value.trim();
-
-    if (mode !== 'explain' && inputMode === 'text' && !text) { alert('Colle ton cours d\'abord !'); return; }
-    if (mode !== 'explain' && inputMode === 'pdf' && !pdfBase64) { alert('Uploade un PDF d\'abord !'); return; }
-    if (mode === 'explain' && !concept) { alert('Indique le concept à expliquer !'); return; }
-
-    const btn = document.getElementById('gen-btn');
-    btn.disabled = true;
-    btn.textContent = '⏳ Génération en cours...';
-
-    const result = document.getElementById('result-area');
-    result.innerHTML = `<div class="loading-state"><div class="spinner"></div>L'IA analyse ton cours...</div>`;
-
-    try {
-      const parts = [];
-      if (inputMode === 'pdf' && pdfBase64) {
-        parts.push({ inline_data: { mime_type: pdfMime, data: pdfBase64 } });
-      }
-      parts.push({ text: buildPrompt() });
-
-      const res = await fetch(GEMINI_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts }],
-          generationConfig: { maxOutputTokens: 1500, temperature: 0.7 }
-        })
-      });
-      const data = await res.json();
-      if (data.error) throw new Error(data.error.message);
-      const raw = data.candidates?.[0]?.content?.parts?.map(p => p.text || '').join('') || '';
-
-      if (mode === 'fiche') renderFiche(raw, result);
-      else if (mode === 'quiz') renderQuiz(raw, result);
-      else renderExplain(raw, result);
-    } catch (e) {
-      result.innerHTML = `<div class="error-block">Erreur : ${e.message}</div>`;
-    }
-
-    btn.disabled = false;
-    btn.textContent = '✦ Générer';
-  }
-
-  function renderFiche(text, el) {
-    let html = text
-      .replace(/^## (.+)$/gm, '<h2>$1</h2>')
-      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\n\n/g, '</p><p>')
-      .replace(/\n/g, '<br>');
-    el.innerHTML = `<div class="fiche-block fade-in"><p>${html}</p></div>`;
-  }
-
-  function renderExplain(text, el) {
-    let html = text
-      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\n\n/g, '</p><p>')
-      .replace(/\n/g, '<br>');
-    el.innerHTML = `<div class="explain-block fade-in"><p>${html}</p></div>`;
-  }
-
-  function renderQuiz(raw, el) {
-    try {
-      const clean = raw.replace(/```json|```/g, '').trim();
-      quizData = JSON.parse(clean);
-      score = 0; answers = {};
-      buildQuiz(el);
-    } catch(e) {
-      el.innerHTML = `<div class="error-block">Erreur de parsing. Réessaie.</div>`;
-    }
-  }
-
-  function buildQuiz(el) {
-    const total = quizData.questions.length;
-    let html = `<div class="score-strip"><div><div class="label">Score actuel</div><div class="score-num" id="score-disp">${score}/${total}</div></div><div style="font-size:13px;color:var(--muted)">${total} questions</div></div>`;
-    html += '<div class="questions-list">';
-    quizData.questions.forEach((q, i) => {
-      html += `<div class="q-card" id="qcard-${i}">`;
-      html += `<div class="q-num">Question ${i+1}</div>`;
-      html += `<div class="q-text">${q.question}</div>`;
-      if (q.type === 'mcq') {
-        html += '<div class="options-list">';
-        q.options.forEach((opt, j) => {
-          html += `<button class="opt-btn" id="opt-${i}-${j}" onclick="answerMCQ(${i},${j})">${opt}</button>`;
-        });
-        html += '</div>';
-      } else if (q.type === 'truefalse') {
-        html += '<div class="options-list">';
-        html += `<button class="opt-btn" id="opt-${i}-true" onclick="answerTF(${i},true)">✓ Vrai</button>`;
-        html += `<button class="opt-btn" id="opt-${i}-false" onclick="answerTF(${i},false)">✗ Faux</button>`;
-        html += '</div>';
-      } else {
-        html += `<textarea class="open-ans" id="open-${i}" placeholder="Ta réponse..."></textarea>`;
-        html += `<button class="check-open-btn" onclick="checkOpen(${i})">Voir la réponse modèle</button>`;
-      }
-      html += `<div class="q-feedback" id="fb-${i}"></div>`;
-      html += '</div>';
-    });
-    html += '</div>';
-    el.innerHTML = `<div class="fade-in">${html}</div>`;
-  }
-
-  function answerMCQ(qi, chosen) {
-    if (answers[qi] !== undefined) return;
-    answers[qi] = chosen;
-    const q = quizData.questions[qi];
-    const ok = chosen === q.correct;
-    if (ok) score++;
-    q.options.forEach((_, j) => {
-      const b = document.getElementById(`opt-${qi}-${j}`);
-      b.disabled = true;
-      if (j === q.correct) b.classList.add('correct');
-      else if (j === chosen) b.classList.add('wrong');
-    });
-    showFeedback(qi, ok, q.explanation);
-    updateScore();
-  }
-
-  function answerTF(qi, chosen) {
-    if (answers[qi] !== undefined) return;
-    answers[qi] = chosen;
-    const q = quizData.questions[qi];
-    const ok = chosen === q.correct;
-    if (ok) score++;
-    ['true','false'].forEach(v => {
-      const b = document.getElementById(`opt-${qi}-${v}`);
-      b.disabled = true;
-      if (v === String(q.correct)) b.classList.add('correct');
-      else if (v === String(chosen)) b.classList.add('wrong');
-    });
-    showFeedback(qi, ok, q.explanation);
-    updateScore();
-  }
-
-  function checkOpen(qi) {
-    const q = quizData.questions[qi];
-    const fb = document.getElementById(`fb-${qi}`);
-    fb.className = 'q-feedback correct show';
-    fb.innerHTML = '<strong>Réponse modèle :</strong> ' + q.suggested_answer;
-    document.querySelector(`#qcard-${qi} .check-open-btn`).disabled = true;
-  }
-
-  function showFeedback(qi, ok, explanation) {
-    const fb = document.getElementById(`fb-${qi}`);
-    fb.className = `q-feedback ${ok ? 'correct' : 'wrong'} show`;
-    fb.innerHTML = (ok ? '<strong>✓ Correct !</strong> ' : '<strong>✗ Incorrect.</strong> ') + (explanation || '');
-  }
-
-  function updateScore() {
-    document.getElementById('score-disp').textContent = `${score}/${quizData.questions.length}`;
-  }
-</script>
+  </script>
 </body>
 </html>
