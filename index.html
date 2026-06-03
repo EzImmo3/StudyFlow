@@ -3,145 +3,86 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BacPremière — Révisions</title>
+  <title>BacPremière — Révise ton bac</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-
-  <!-- NAV -->
-  <nav class="navbar">
-    <a class="logo" href="index.html">BacPremière</a>
-    <div class="nav-links">
-      <a href="pages/francais-ecrit.html" class="nav-link">Français écrit</a>
-      <a href="pages/francais-oral.html" class="nav-link">Français oral</a>
-      <a href="pages/maths.html" class="nav-link">Mathématiques</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">BAC<span>1ère</span></a>
+      <nav class="main-nav">
+        <a href="pages/francais-ecrit.html">Français écrit</a>
+        <a href="pages/francais-oral.html">Français oral</a>
+        <a href="pages/mathematiques.html">Mathématiques</a>
+      </nav>
+      <div class="nav-badge">Terminale Générale</div>
     </div>
-    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-bg">
-      <div class="orb orb1"></div>
-      <div class="orb orb2"></div>
-      <div class="orb orb3"></div>
-    </div>
-    <div class="hero-content">
-      <span class="hero-eyebrow">Bac Général · Première</span>
-      <h1 class="hero-title">Révise.<br>Progresse.<br><em>Réussis.</em></h1>
-      <p class="hero-sub">Fiches, quiz, flashcards et annales pour maîtriser le Français écrit, l'Oral et les Mathématiques.</p>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="hero-tag">Bac de Première · Session 2025</div>
+      <h1>Révise.<br/>Comprends.<br/><em>Réussis.</em></h1>
+      <p class="hero-sub">Fiches, quiz, flashcards et annales pour le bac de première — Français écrit, Français oral, Mathématiques.</p>
       <div class="hero-cta">
         <a href="pages/francais-ecrit.html" class="btn-primary">Commencer à réviser</a>
-        <a href="#matieres" class="btn-ghost">Voir les matières ↓</a>
+        <a href="#matieres" class="btn-ghost">Voir les matières</a>
       </div>
-    </div>
-    <div class="hero-stats">
-      <div class="stat"><span class="stat-n">16</span><span class="stat-l">Textes étudiés</span></div>
-      <div class="stat"><span class="stat-n">4</span><span class="stat-l">Parcours</span></div>
-      <div class="stat"><span class="stat-n">6</span><span class="stat-l">Notions maths</span></div>
-    </div>
-  </section>
-
-  <!-- MATIERES -->
-  <section class="matieres" id="matieres">
-    <div class="container">
-      <h2 class="section-title">Les matières</h2>
-      <div class="cards-grid">
-
-        <a href="pages/francais-ecrit.html" class="subject-card card-fr">
-          <div class="card-icon">✍️</div>
-          <div class="card-tag">Épreuve anticipée</div>
-          <h3>Français écrit</h3>
-          <p>4 parcours · 16 textes · Commentaire, dissertation, fiches & quiz</p>
-          <ul class="card-list">
-            <li>Émancipations poétiques — Rimbaud, Apollinaire</li>
-            <li>Personnage en marge — Manon Lescaut, Liaisons dangereuses</li>
-            <li>Défendre la liberté — La Boétie, Montaigne, La Fontaine</li>
-            <li>Théâtre et dispute — Sarraute, Catherine Anne</li>
-          </ul>
-          <span class="card-cta">Explorer →</span>
-        </a>
-
-        <a href="pages/francais-oral.html" class="subject-card card-oral">
-          <div class="card-icon">🎤</div>
-          <div class="card-tag">Épreuve anticipée</div>
-          <h3>Français oral</h3>
-          <p>La Princesse de Clèves · Explication linéaire · Question de grammaire</p>
-          <ul class="card-list">
-            <li>Présentation de l'œuvre et du contexte</li>
-            <li>Méthode d'explication linéaire</li>
-            <li>Entraînement à la question de grammaire</li>
-            <li>Conseils pour l'entretien</li>
-          </ul>
-          <span class="card-cta">Explorer →</span>
-        </a>
-
-        <a href="pages/maths.html" class="subject-card card-maths">
-          <div class="card-icon">📐</div>
-          <div class="card-tag">Bac de fin d'année</div>
-          <h3>Mathématiques</h3>
-          <p>6 chapitres · Formules, exercices guidés & quiz</p>
-          <ul class="card-list">
-            <li>Équations du second degré</li>
-            <li>Suites numériques</li>
-            <li>Trigonométrie & produits scalaires</li>
-            <li>Probabilités & Exponentielle</li>
-          </ul>
-          <span class="card-cta">Explorer →</span>
-        </a>
-
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-n">16</span><span class="stat-l">textes au programme</span></div>
+        <div class="stat"><span class="stat-n">4</span><span class="stat-l">parcours littéraires</span></div>
+        <div class="stat"><span class="stat-n">6</span><span class="stat-l">chapitres de maths</span></div>
       </div>
-    </div>
-  </section>
-
-  <!-- METHODES -->
-  <section class="methodes">
-    <div class="container">
-      <h2 class="section-title">Comment réviser ?</h2>
-      <div class="steps">
-        <div class="step">
-          <div class="step-num">01</div>
-          <h4>Lis les fiches</h4>
-          <p>Commence par les fiches de révision pour consolider tes connaissances sur chaque texte ou notion.</p>
+    </section>
+    <section class="matieres" id="matieres">
+      <a href="pages/francais-ecrit.html" class="matiere-card card-fr">
+        <div class="card-label">Matière 01</div>
+        <h2>Français<br/>Écrit</h2>
+        <p>4 parcours · 16 textes · Commentaire · Dissertation · Quiz & Flashcards</p>
+        <div class="card-arrow">→</div>
+        <div class="card-parcours">
+          <span>Émancipations poétiques</span>
+          <span>Personnage en marge</span>
+          <span>Défendre la liberté</span>
+          <span>Théâtre & Dispute</span>
         </div>
-        <div class="step-arrow">→</div>
-        <div class="step">
-          <div class="step-num">02</div>
-          <h4>Teste-toi avec les flashcards</h4>
-          <p>Retourne les cartes pour vérifier ta mémorisation des figures de style, formules et oeuvres.</p>
+      </a>
+      <a href="pages/francais-oral.html" class="matiere-card card-oral">
+        <div class="card-label">Matière 02</div>
+        <h2>Français<br/>Oral</h2>
+        <p>La Princesse de Clèves · Explication linéaire · Grammaire · Entretien</p>
+        <div class="card-arrow">→</div>
+        <div class="card-parcours">
+          <span>Explication linéaire</span>
+          <span>Question de grammaire</span>
+          <span>Préparation entretien</span>
+          <span>Flashcards œuvre</span>
         </div>
-        <div class="step-arrow">→</div>
-        <div class="step">
-          <div class="step-num">03</div>
-          <h4>Quiz interactif</h4>
-          <p>Mesure tes progrès avec des QCM et obtiens une correction détaillée pour chaque réponse.</p>
+      </a>
+      <a href="pages/mathematiques.html" class="matiere-card card-math">
+        <div class="card-label">Matière 03</div>
+        <h2>Mathé-<br/>matiques</h2>
+        <p>6 chapitres · Fiches · Quiz · Annales corrigées</p>
+        <div class="card-arrow">→</div>
+        <div class="card-parcours">
+          <span>Équation 2nd degré</span>
+          <span>Suites numériques</span>
+          <span>Probabilités</span>
+          <span>Exponentielle & ln</span>
         </div>
-        <div class="step-arrow">→</div>
-        <div class="step">
-          <div class="step-num">04</div>
-          <h4>Annales corrigées</h4>
-          <p>Entraîne-toi sur des sujets proches du bac et consulte les éléments de correction.</p>
-        </div>
+      </a>
+    </section>
+    <section class="outils-section">
+      <h2 class="section-title">Tous les outils de révision</h2>
+      <div class="outils-grid">
+        <div class="outil-card"><div class="outil-icon">📄</div><h3>Fiches de révision</h3><p>Synthèses claires et structurées pour chaque texte, notion et chapitre.</p></div>
+        <div class="outil-card"><div class="outil-icon">✅</div><h3>Quiz interactifs</h3><p>Questions à choix multiples avec correction immédiate et explication détaillée.</p></div>
+        <div class="outil-card"><div class="outil-icon">🃏</div><h3>Flashcards</h3><p>Cartes retournables pour mémoriser les notions clés, figures de style et formules.</p></div>
+        <div class="outil-card"><div class="outil-icon">📝</div><h3>Annales corrigées</h3><p>Sujets type bac avec éléments de correction détaillés, à révéler à la demande.</p></div>
       </div>
-    </div>
-  </section>
-
-  <footer class="footer">
-    <div class="container">
-      <span class="logo">BacPremière</span>
-      <p>Créé pour réussir le bac de Première générale · Bonne chance ! 🍀</p>
-    </div>
-  </footer>
-
-  <script>
-    function toggleMenu() {
-      document.querySelector('.nav-links').classList.toggle('open');
-    }
-  </script>
+    </section>
+  </main>
+  <footer class="site-footer"><p>BacPremière · Révision Terminale Générale · 2025</p></footer>
 </body>
 </html>

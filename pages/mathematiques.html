@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mathématiques — BacPremière</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo">BAC<span>1ère</span></a>
+    <nav class="main-nav">
+      <a href="francais-ecrit.html">Français écrit</a>
+      <a href="francais-oral.html">Français oral</a>
+      <a href="mathematiques.html" class="active">Mathématiques</a>
+    </nav>
+    <div class="nav-badge">Terminale Générale</div>
+  </div>
+</header>
+
+<div class="page-header">
+  <div class="page-tag">Matière 03 · Mathématiques</div>
+  <h1>Mathématiques</h1>
+  <p>6 chapitres · Fiches · Quiz · Flashcards · Annales corrigées</p>
+</div>
+
+<div class="page-content">
+
+  <div class="tab-bar" id="main-tabs">
+    <button class="tab-btn active" data-tab="tm-fiches">📄 Fiches</button>
+    <button class="tab-btn" data-tab="tm-quiz">✅ Quiz</button>
+    <button class="tab-btn" data-tab="tm-flash">🃏 Flashcards</button>
+    <button class="tab-btn" data-tab="tm-annales">📝 Annales</button>
+  </div>
+
+  <!-- FICHES -->
+  <div class="tab-panel active" id="tm-fiches">
+    <div class="sub-tabs" id="sub-math-f">
+      <button class="sub-tab active-math" data-sub="mf1">Équation 2nd degré</button>
+      <button class="sub-tab" data-sub="mf2">Suites</button>
+      <button class="sub-tab" data-sub="mf3">Trigonométrie</button>
+      <button class="sub-tab" data-sub="mf4">Produit scalaire</button>
+      <button class="sub-tab" data-sub="mf5">Probabilités</button>
+      <button class="sub-tab" data-sub="mf6">Exponentielle</button>
+    </div>
+
+    <div class="sub-panel active" id="mf1">
+      <div class="fiches-grid">
+        <div class="fiche fiche-accent-math">
+          <span class="fiche-badge badge-math">Équation 2nd degré</span>
+          <h3>Résolution : ax² + bx + c = 0</h3>
+          <div class="formula-box">Δ = b² - 4ac
+
+Si Δ > 0 → 2 racines : x₁ = (-b - √Δ) / 2a
+                         x₂ = (-b + √Δ) / 2a
+Si Δ = 0 → 1 racine : x₀ = -b / 2a
+Si Δ < 0 → Pas de racine réelle</div>
+        </div>
+        <div class="fiche fiche-accent-math">
+          <span class="fiche-badge badge-math">Équation 2nd degré</span>
+          <h3>Forme factorisée & canonique</h3>
+          <div class="formula-box">Forme factorisée (si Δ ≥ 0) :
+f(x) = a(x - x₁)(x - x₂)
+
+Forme canonique :
+f(x) = a(x - α)² + β
+  α = -b/2a  (sommet)
+  β = f(α)   (valeur minimale/maximale)</div>
+          <ul>
+            <li>α est l'axe de symétrie de la parabole</li>
+            <li>Si a > 0 : parabole "souriante", minimum en α</li>
+            <li>Si a &lt; 0 : parabole "triste", maximum en α</li>
+          </ul>
+        </div>
+        <div class="fiche fiche-accent-math">
+          <span class="fiche-badge badge-math">Équation 2nd degré</span>
+          <h3>Signe de ax² + bx + c</h3>
+          <ul>
+            <li><strong>Δ > 0 :</strong> f(x) du signe de a à l'extérieur des racines, signe opposé à a entre les racines</li>
+            <li><strong>Δ = 0 :</strong> f(x) du signe de a, s'annule en x₀</li>
+            <li><strong>Δ &lt; 0 :</strong> f(x) toujours du signe de a (jamais nul)</li>
+          </ul>
+          <div class="formula-box">Somme des racines : x₁ + x₂ = -b/a
+Produit des racines : x₁ × x₂ = c/a</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-panel" id="mf2">
+      <div class="fiches-grid">
+        <div class="fiche fiche-accent-math">
+          <span class="fiche-badge badge-math">Suites</span>
+          <h3>Suite arithmétique</h3>
+          <div class="formula-box">Raison r = uₙ₊₁ - uₙ (constante)
+
+Terme général : uₙ = u₀ + n·r
+               uₙ = u₁ + (n-1)·r
+
+Somme de n+1 termes (u₀ à uₙ) :
+S = (n+1) × (u₀ + uₙ) / 2</div>
+        </div>
+        <div class="fiche fiche-accent-math">
+          <span class="fiche-badge badge-math">Suites</span>
+          <h3>Suite géométrique</h3>
+          <div class="formula-box">Raison q = uₙ₊₁ / uₙ (constante, q ≠ 0)
+
+Terme général : uₙ = u₀ × qⁿ
+
+Somme de n+1 termes (u₀ à uₙ) :
+S = u₀ × (1 - qⁿ⁺¹) / (1 - q)  si q ≠ 1</div>
+          <ul>
+            <li>Si |q| &lt; 1 → uₙ → 0 (suite converge vers 0)</li>
+            <li>Si q > 1 → uₙ → +∞</li>
+            <li>Si q &lt; -1 → |uₙ| → +∞ (diverge)</li>
+          </ul>
+        </div>
+        <div class="fiche fiche-accent-math">
+          <span class="fiche-badge badge-math">Suites</span>
+          <h3>Sens de variation</h3>
+          <ul>
+            <li><strong>Arithmétique :</strong> croissante si r > 0, décroissante si r &lt; 0</li>
+            <li><strong>Géométrique :</strong> Dépend du signe de q et de u₀</li>
+            <li><strong>Méthode :</strong> Calculer uₙ₊₁ - uₙ (arithm.) ou uₙ₊₁/uₙ (géom.) et étudier le signe</li>
+            <li><strong>Suite définie par récurrence :</strong> chercher une suite auxiliaire vₙ = uₙ - L (L = limite présumée)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-panel" id="mf3">
+      <div class="fiches-grid">
+        <div class="fiche fiche-accent-math">
+          <span class="fiche-badge badge-math">Trigonométrie</span>
+          <h3>Valeurs remarquables</h3>
+          <div class="formula-box">  θ   |  0   | π/6  | π/4  | π/3  | π/2
+cos θ |  1   | √3/2 | √2/2 | 1/2  |  0
+sin θ |  0   | 1/2  | √2/2 | √3/2 |  1
+tan θ |  0   | 1/√3 |  1   |  √3  |  ∞</div>
+        </div>
+        <div class="fiche fiche-accent-math">
+          <span class="fiche-badge badge-math">Trigonométrie</span>
+          <h3>Formules fondamentales</h3>
+          <div class="formula-box">cos²θ + sin²θ = 1
+
+cos(a+b) = cos a·cos b - sin a·sin b
+sin(a+b) = sin a·cos b + cos a·sin b
+
+cos(2a) = cos²a - sin²a = 1 - 2sin²a
+sin(2a) = 2·sin a·cos a</div>
+        </div>
+        <div class="fiche fiche-accent-math">
+          <span class="fiche-badge badge-math">Trigonométrie</span>
+          <h3>Cercle trigonométrique & angles</h3>
+          <ul>
+            <li>Cercle de rayon 1 centré en O</li>
+            <li>M(cos θ, sin θ) sur le cercle</li>
+            <li>cos est pair : cos(-θ) = cos(θ)</li>
+            <li>sin est impair : sin(-θ) = -sin(θ)</li>
+            <li>Période 2π : cos(θ+2π) = cos(θ)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-panel" id="mf4">
+      <div class="fiches-grid">
+        <div class="fiche fiche-accent-math">
+          <span class="fiche-badge badge-math">Produit scalaire</span>
+          <h3>Définitions</h3>
+          <div class="formula-box">u⃗·v⃗ = |u⃗|·|v⃗|·cos(θ)  (θ = angle entre u⃗ et v⃗)
+
+Si u⃗(x;y) et v⃗(x';y') :
+u⃗·v⃗ = xx' + yy'
+
+Si A, B, C sont des points :
+AB⃗·AC⃗ = (xB-xA)(xC-xA) + (yB-yA)(yC-yA)</div>
+        </div>
+        <div class="fiche fiche-accent-math">
+          <span class="fiche-badge badge-math">Produit scalaire</span>
+          <h3>Applications géométriques</h3>
+          <ul>
+            <li><strong>Orthogonalité :</strong> u⃗ ⊥ v⃗ ⟺ u⃗·v⃗ = 0</li>
+            <li><strong>Norme :</strong> |u⃗|² = u⃗·u⃗ = x² + y²</li>
+            <li><strong>Angle entre deux vecteurs :</strong> cos θ = u⃗·v⃗ / (|u⃗|·|v⃗|)</li>
+            <li><strong>Distance AB :</strong> AB = √((xB-xA)² + (yB-yA)²)</li>
+          </ul>
+          <div class="formula-box">Identités remarquables :
+|u⃗+v⃗|² = |u⃗|² + 2u⃗·v⃗ + |v⃗|²
+|u⃗-v⃗|² = |u⃗|² - 2u⃗·v⃗ + |v⃗|²</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-panel" id="mf5">
+      <div class="fiches-grid">
+        <div class="fiche fiche-accent-math">
+          <span class="fiche-badge badge-math">Probabilités</span>
+          <h3>Probabilités de base</h3>
+          <div class="formula-box">P(A ∪ B) = P(A) + P(B) - P(A ∩ B)
+P(Ā) = 1 - P(A)
+P(A ∩ B) = P(A) × P(B|A)
+
+Si A et B indépendants :
+P(A ∩ B) = P(A) × P(B)</div>
+        </div>
+        <div class="fiche fiche-accent-math">
+          <span class="fiche-badge badge-math">Probabilités</span>
+          <h3>Probabilité conditionnelle</h3>
+          <div class="formula-box">P(B|A) = P(A ∩ B) / P(A)  (si P(A) ≠ 0)
+
+Formule des probabilités totales :
+Si B₁, B₂... partition de Ω :
+P(A) = P(A|B₁)P(B₁) + P(A|B₂)P(B₂) + ...</div>
+        </div>
+        <div class="fiche fiche-accent-math">
+          <span class="fiche-badge badge-math">Probabilités</span>
+          <h3>Loi binomiale B(n, p)</h3>
+          <div class="formula-box">X ~ B(n, p)
+P(X = k) = C(n,k) × pᵏ × (1-p)ⁿ⁻ᵏ
+
+C(n,k) = n! / (k! × (n-k)!)
+
+Espérance : E(X) = n·p
+Variance  : V(X) = n·p·(1-p)</div>
+          <ul>
+            <li>n répétitions identiques et indépendantes</li>
+            <li>p = probabilité de succès à chaque répétition</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-panel" id="mf6">
+      <div class="fiches-grid">
+        <div class="fiche fiche-accent-math">
+          <span class="fiche-badge badge-math">Exponentielle</span>
+          <h3>Fonction exponentielle eˣ</h3>
+          <div class="formula-box">Propriétés algébriques :
+eᵃ⁺ᵇ = eᵃ × eᵇ
+eᵃ⁻ᵇ = eᵃ / eᵇ
+(eᵃ)ᵇ = eᵃᵇ
+e⁰ = 1 ,  e¹ = e ≈ 2,718
+
+Dérivée : (eˣ)' = eˣ
+(e^u)' = u'·eᵘ  (dérivée composée)</div>
+        </div>
+        <div class="fiche fiche-accent-math">
+          <span class="fiche-badge badge-math">Logarithme</span>
+          <h3>Fonction logarithme ln(x)</h3>
+          <div class="formula-box">ln est la réciproque de eˣ :
+eˡⁿ⁽ˣ⁾ = x  et  ln(eˣ) = x
+
+ln(ab) = ln a + ln b
+ln(a/b) = ln a - ln b
+ln(aⁿ) = n·ln a
+ln(1) = 0 ,  ln(e) = 1
+
+Dérivée : (ln x)' = 1/x
+(ln u)' = u'/u</div>
+        </div>
+        <div class="fiche fiche-accent-math">
+          <span class="fiche-badge badge-math">Exponentielle & ln</span>
+          <h3>Variations & limites</h3>
+          <ul>
+            <li><strong>eˣ :</strong> croissante sur ℝ, toujours positive, lim(x→-∞) = 0, lim(x→+∞) = +∞</li>
+            <li><strong>ln x :</strong> croissante sur ]0;+∞[, lim(x→0⁺) = -∞, lim(x→+∞) = +∞</li>
+            <li><strong>Croissances comparées :</strong> eˣ/xⁿ → +∞ et xⁿ·ln x → 0 quand x→+∞</li>
+            <li><strong>Résoudre eˣ = a :</strong> x = ln a (si a > 0)</li>
+            <li><strong>Résoudre ln x = a :</strong> x = eᵃ</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="tab-panel" id="tm-quiz">
+    <div class="sub-tabs" id="sub-math-q">
+      <button class="sub-tab active-math" data-sub="mq1">2nd degré</button>
+      <button class="sub-tab" data-sub="mq2">Suites</button>
+      <button class="sub-tab" data-sub="mq3">Trigo & Prod. scalaire</button>
+      <button class="sub-tab" data-sub="mq4">Probabilités</button>
+      <button class="sub-tab" data-sub="mq5">Exponentielle & ln</button>
+    </div>
+    <div class="sub-panel active" id="mq1"><div id="quiz-m1"></div></div>
+    <div class="sub-panel" id="mq2"><div id="quiz-m2"></div></div>
+    <div class="sub-panel" id="mq3"><div id="quiz-m3"></div></div>
+    <div class="sub-panel" id="mq4"><div id="quiz-m4"></div></div>
+    <div class="sub-panel" id="mq5"><div id="quiz-m5"></div></div>
+  </div>
+
+  <!-- FLASHCARDS -->
+  <div class="tab-panel" id="tm-flash">
+    <div id="flash-math"></div>
+  </div>
+
+  <!-- ANNALES -->
+  <div class="tab-panel" id="tm-annales">
+    <div class="annales-list">
+      <div class="annale annale-math">
+        <div class="annale-head"><h3>Exercice — Équation du 2nd degré</h3><span class="annale-year">Type bac</span></div>
+        <div class="annale-subject">Soit f(x) = 2x² - 7x + 3.<br>1) Calculer le discriminant et les racines de f.<br>2) Donner la forme factorisée de f.<br>3) Résoudre f(x) ≤ 0.</div>
+        <button class="annale-toggle">Voir la correction ↓</button>
+        <div class="annale-corr">
+          <strong>1) Discriminant :</strong> Δ = (-7)² - 4×2×3 = 49 - 24 = 25 > 0<br>
+          x₁ = (7 - 5) / 4 = 1/2 &nbsp;&nbsp; x₂ = (7 + 5) / 4 = 3<br><br>
+          <strong>2) Forme factorisée :</strong> f(x) = 2(x - 1/2)(x - 3)<br><br>
+          <strong>3) Signe de f :</strong> a = 2 > 0, donc f ≤ 0 entre les racines.<br>
+          Solution : <strong>x ∈ [1/2 ; 3]</strong>
+        </div>
+      </div>
+      <div class="annale annale-math">
+        <div class="annale-head"><h3>Exercice — Suite définie par récurrence</h3><span class="annale-year">Type bac</span></div>
+        <div class="annale-subject">Soit (uₙ) définie par u₀ = 5 et uₙ₊₁ = 0,4·uₙ + 3.<br>1) Montrer que vₙ = uₙ - 5 est géométrique.<br>2) Exprimer uₙ en fonction de n.<br>3) Calculer la limite de (uₙ).</div>
+        <button class="annale-toggle">Voir la correction ↓</button>
+        <div class="annale-corr">
+          <strong>1)</strong> vₙ₊₁ = uₙ₊₁ - 5 = 0,4uₙ + 3 - 5 = 0,4uₙ - 2 = 0,4(uₙ - 5) = 0,4·vₙ<br>
+          → vₙ est géométrique de raison q = 0,4<br><br>
+          <strong>2)</strong> v₀ = u₀ - 5 = 0 → vₙ = 0 × 0,4ⁿ = 0<br>
+          Donc <strong>uₙ = 5</strong> pour tout n (suite constante)<br><br>
+          <em>Variante si u₀ = 2 :</em> v₀ = -3, vₙ = -3×0,4ⁿ → uₙ = 5 - 3×0,4ⁿ<br>
+          <strong>3)</strong> |q| = 0,4 &lt; 1 donc 0,4ⁿ → 0, <strong>lim uₙ = 5</strong>
+        </div>
+      </div>
+      <div class="annale annale-math">
+        <div class="annale-head"><h3>Exercice — Loi binomiale</h3><span class="annale-year">Type bac</span></div>
+        <div class="annale-subject">Un joueur marque un penalty avec une probabilité de 0,8. Il tire 6 penalties indépendants.<br>1) Quelle loi suit le nombre X de penaltys marqués ? Préciser les paramètres.<br>2) Calculer P(X = 5).<br>3) Calculer P(X ≥ 5).</div>
+        <button class="annale-toggle">Voir la correction ↓</button>
+        <div class="annale-corr">
+          <strong>1)</strong> X suit une loi binomiale <strong>B(6 ; 0,8)</strong><br>
+          (6 épreuves de Bernoulli indépendantes, p = 0,8)<br><br>
+          <strong>2)</strong> P(X=5) = C(6,5) × 0,8⁵ × 0,2¹<br>
+          = 6 × 0,32768 × 0,2 = <strong>≈ 0,393</strong><br><br>
+          <strong>3)</strong> P(X≥5) = P(X=5) + P(X=6)<br>
+          P(X=6) = 0,8⁶ ≈ 0,262<br>
+          P(X≥5) ≈ 0,393 + 0,262 = <strong>≈ 0,655</strong>
+        </div>
+      </div>
+      <div class="annale annale-math">
+        <div class="annale-head"><h3>Exercice — Exponentielle et dérivée</h3><span class="annale-year">Type bac</span></div>
+        <div class="annale-subject">Soit f(x) = (2x - 1)·eˣ.<br>1) Calculer f'(x).<br>2) Étudier les variations de f.<br>3) Dresser le tableau de variations complet.</div>
+        <button class="annale-toggle">Voir la correction ↓</button>
+        <div class="annale-corr">
+          <strong>1)</strong> f est un produit : u = 2x-1, v = eˣ → u' = 2, v' = eˣ<br>
+          f'(x) = 2·eˣ + (2x-1)·eˣ = eˣ(2 + 2x - 1) = <strong>eˣ(2x + 1)</strong><br><br>
+          <strong>2)</strong> eˣ > 0 toujours → signe de f'(x) = signe de (2x+1)<br>
+          f'(x) = 0 pour x = -1/2<br>
+          f'(x) &lt; 0 si x &lt; -1/2 → f décroissante<br>
+          f'(x) > 0 si x > -1/2 → f croissante<br><br>
+          <strong>3)</strong> Minimum en x = -1/2 : f(-1/2) = (2×(-1/2)-1)×e^(-1/2) = -2/√e ≈ -1,21
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer"><p>BacPremière · Mathématiques · 2025</p></footer>
+
+<script src="../js/app.js"></script>
+<script>
+const quizM1 = [
+  { q:"Pour f(x) = x² - 5x + 6, quel est le discriminant ?", opts:["1","4","25","36"], ans:0, exp:"Δ = b² - 4ac = (-5)² - 4×1×6 = 25 - 24 = 1. Donc deux racines réelles distinctes." },
+  { q:"Si Δ < 0 pour ax² + bx + c = 0, alors :", opts:["Il y a deux racines égales","Il n'y a pas de racine réelle","Il y a deux racines distinctes","Il y a une racine nulle"], ans:1, exp:"Δ < 0 signifie que le discriminant est négatif — la parabole ne coupe pas l'axe des abscisses. Pas de racine réelle." },
+  { q:"La somme des racines de 3x² - 9x + 2 = 0 vaut :", opts:["-3","3","2/3","-2/3"], ans:1, exp:"Somme des racines = -b/a = -(-9)/3 = 3." },
+  { q:"Si a > 0 et Δ > 0, le trinôme est négatif :", opts:["Pour tout x","À l'extérieur des racines","Entre les deux racines","Pour aucun x"], ans:2, exp:"Quand a > 0, la parabole est 'souriante' : elle est en dessous de l'axe des x entre les deux racines x₁ et x₂." },
+];
+
+const quizM2 = [
+  { q:"(uₙ) est arithmétique de raison r = -3, u₀ = 10. Que vaut u₄ ?", opts:["-2","-8","22","10"], ans:0, exp:"u₄ = u₀ + 4r = 10 + 4×(-3) = 10 - 12 = -2." },
+  { q:"Si uₙ est géométrique avec q = 2 et u₀ = 3, alors u₃ = ?", opts:["9","12","24","6"], ans:2, exp:"u₃ = u₀ × q³ = 3 × 2³ = 3 × 8 = 24." },
+  { q:"Une suite géométrique de raison q = 0,5 converge vers :", opts:["+∞","1","0","0,5"], ans:2, exp:"|q| = 0,5 < 1, donc qⁿ → 0. La suite uₙ = u₀ × 0,5ⁿ tend vers 0." },
+  { q:"La somme S = 1 + 2 + 3 + … + 100 vaut :", opts:["5000","5050","5100","4950"], ans:1, exp:"Suite arithmétique : S = 100 × (1 + 100) / 2 = 100 × 101 / 2 = 5050." },
+];
+
+const quizM3 = [
+  { q:"Que vaut cos(π/3) ?", opts:["√3/2","1/2","√2/2","1"], ans:1, exp:"cos(π/3) = 1/2. À retenir : π/3 = 60°. Dans le triangle équilatéral, le cosinus de 60° est 1/2." },
+  { q:"Deux vecteurs u⃗ et v⃗ sont orthogonaux si et seulement si :", opts:["u⃗·v⃗ = 1","u⃗·v⃗ = -1","u⃗·v⃗ = 0","|u⃗| = |v⃗|"], ans:2, exp:"Orthogonalité ⟺ produit scalaire nul. Si u⃗·v⃗ = 0, l'angle entre les vecteurs est π/2 (cos(π/2) = 0)." },
+  { q:"sin²(θ) + cos²(θ) = ?", opts:["0","2","1","sin(2θ)"], ans:2, exp:"C'est la relation fondamentale de trigonométrie, liée au cercle trigonométrique de rayon 1 : cos²θ + sin²θ = 1 toujours." },
+  { q:"Le produit scalaire u⃗(2;3)·v⃗(1;-1) vaut :", opts:["5","-1","2","1"], ans:1, exp:"u⃗·v⃗ = 2×1 + 3×(-1) = 2 - 3 = -1." },
+];
+
+const quizM4 = [
+  { q:"P(Ā) = ?", opts:["P(A) - 1","1 + P(A)","1 - P(A)","P(A)"], ans:2, exp:"La probabilité du complémentaire : P(Ā) = 1 - P(A). La somme des probabilités de A et de son contraire vaut toujours 1." },
+  { q:"X ~ B(10 ; 0,3). L'espérance E(X) vaut :", opts:["3","7","0,3","30"], ans:0, exp:"E(X) = n × p = 10 × 0,3 = 3. L'espérance d'une loi binomiale est le produit du nombre d'épreuves par la probabilité de succès." },
+  { q:"P(B|A) se lit :", opts:["Probabilité de A sachant B","Probabilité de B et A","Probabilité de B sachant A","Probabilité de A ou B"], ans:2, exp:"La barre verticale signifie 'sachant que'. P(B|A) = probabilité que B se réalise, sachant que A s'est réalisé." },
+  { q:"Pour que X ~ B(n;p) soit valide, les épreuves doivent être :", opts:["Dépendantes","Identiques et indépendantes","Continues","De probabilité variable"], ans:1, exp:"La loi binomiale modélise n répétitions d'une épreuve de Bernoulli : toujours la même probabilité p, et les épreuves sont indépendantes." },
+];
+
+const quizM5 = [
+  { q:"La dérivée de f(x) = e^(3x) est :", opts:["e^(3x)","3e^(3x)","3xe^(3x-1)","e^(3x)/3"], ans:1, exp:"Par dérivation composée (e^u)' = u'·e^u, avec u = 3x, u' = 3. Donc f'(x) = 3·e^(3x)." },
+  { q:"ln(e²) = ?", opts:["e","2","2e","1/e²"], ans:1, exp:"ln et exp sont des fonctions réciproques : ln(eˣ) = x. Donc ln(e²) = 2." },
+  { q:"Pour quel x a-t-on eˣ = 5 ?", opts:["x = 5","x = ln(5)","x = e·5","x = 1/5"], ans:1, exp:"eˣ = 5 ⟺ x = ln(5). Le logarithme est la réciproque de l'exponentielle." },
+  { q:"La fonction eˣ est :", opts:["Décroissante et parfois négative","Croissante et toujours positive","Croissante et parfois négative","Décroissante et toujours positive"], ans:1, exp:"eˣ est strictement croissante sur ℝ, et toujours strictement positive (eˣ > 0 pour tout x réel)." },
+];
+
+const flashMath = [
+  { q:"Formule du discriminant", a:"Δ = b² - 4ac. Pour ax² + bx + c = 0 : si Δ > 0 → 2 racines, si Δ = 0 → 1 racine double, si Δ < 0 → pas de racine réelle." },
+  { q:"Terme général d'une suite arithmétique", a:"uₙ = u₀ + n·r (r = raison = différence entre deux termes consécutifs). Ou uₙ = u₁ + (n-1)·r." },
+  { q:"Terme général d'une suite géométrique", a:"uₙ = u₀ × qⁿ (q = raison = rapport entre deux termes consécutifs). Si |q| < 1, la suite converge vers 0." },
+  { q:"cos(π/6), cos(π/4), cos(π/3)", a:"cos(π/6) = √3/2 ≈ 0,866 / cos(π/4) = √2/2 ≈ 0,707 / cos(π/3) = 1/2 = 0,5. Pensez au triangle 30-60-90 !" },
+  { q:"Orthogonalité et produit scalaire", a:"u⃗ ⊥ v⃗ ⟺ u⃗·v⃗ = 0. En coordonnées : u⃗(x;y)·v⃗(x';y') = xx' + yy'. C'est le critère d'orthogonalité en géométrie analytique." },
+  { q:"Loi binomiale B(n,p) — formule", a:"P(X=k) = C(n,k) × pᵏ × (1-p)ⁿ⁻ᵏ. Espérance E(X) = np. Variance V(X) = np(1-p)." },
+  { q:"Dérivée de e^u", a:"(e^u)' = u'·e^u. Cas particulier : (eˣ)' = eˣ (l'exponentielle est sa propre dérivée)." },
+  { q:"Résoudre ln(x) = a", a:"ln(x) = a ⟺ x = eᵃ. Et eˣ = a (avec a > 0) ⟺ x = ln(a). Les deux fonctions sont réciproques l'une de l'autre." },
+  { q:"Probabilité conditionnelle P(B|A)", a:"P(B|A) = P(A∩B) / P(A). Se lit : probabilité de B sachant que A est réalisé. Utile pour les arbres de probabilités." },
+  { q:"Somme d'une suite géométrique", a:"S = u₀ + u₁ + … + uₙ = u₀ × (1 - qⁿ⁺¹) / (1 - q) si q ≠ 1. Si q = 1 : S = (n+1) × u₀." },
+];
+
+document.addEventListener('DOMContentLoaded', () => {
+  function wireSubTabs(subId, panelIds, activeClass) {
+    const tabs = document.querySelectorAll('#' + subId + ' .sub-tab');
+    const panels = panelIds.map(id => document.getElementById(id));
+    tabs.forEach((t, i) => t.addEventListener('click', () => {
+      tabs.forEach(x => x.className = 'sub-tab');
+      panels.forEach(p => p && p.classList.remove('active'));
+      t.classList.add('sub-tab', activeClass);
+      if (panels[i]) panels[i].classList.add('active');
+    }));
+  }
+
+  wireSubTabs('sub-math-f', ['mf1','mf2','mf3','mf4','mf5','mf6'], 'active-math');
+  wireSubTabs('sub-math-q', ['mq1','mq2','mq3','mq4','mq5'], 'active-math');
+  initTabs('#main-tabs', '.tab-panel');
+
+  createQuiz('quiz-m1', quizM1);
+  createQuiz('quiz-m2', quizM2);
+  createQuiz('quiz-m3', quizM3);
+  createQuiz('quiz-m4', quizM4);
+  createQuiz('quiz-m5', quizM5);
+  createFlashcards('flash-math', flashMath, 'fc-back-math');
+});
+</script>
+</body>
+</html>
