@@ -3,33 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudyFlow - Ton espace de révision sur-mesure</title>
-    <!-- Tailwind CSS CDN -->
+    <title>StudyFlow 2.0 - Objectif Mention</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="p-4 md:p-8 min-h-screen">
-    <div class="max-w-6xl mx-auto space-y-8">
+    <div class="max-w-7xl mx-auto space-y-6">
         
-        <!-- Header -->
+        <!-- Header Amélioré -->
         <header class="glass rounded-2xl p-6 shadow-xl flex flex-col md:flex-row justify-between items-center gap-4 border border-white/20">
             <div class="flex items-center space-x-3">
-                <div class="p-3 bg-indigo-600 rounded-xl text-white shadow-lg shadow-indigo-500/30">
+                <div class="p-3 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl text-white shadow-lg shadow-indigo-500/30">
                     <i class="fa-solid fa-graduation-cap text-2xl"></i>
                 </div>
                 <div>
                     <h1 class="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">StudyFlow</h1>
-                    <p class="text-xs text-slate-500 font-medium">Espace révision - Terminale</p>
+                    <p class="text-xs text-slate-500 font-medium">Objectif Mention Très Bien</p>
                 </div>
             </div>
             
-            <div class="flex items-center gap-3">
-                <span id="dateDisplay" class="text-xs font-semibold px-3 py-1.5 rounded-full bg-slate-100/80 text-slate-600"></span>
+            <!-- Compte à rebours & Objectif -->
+            <div class="flex flex-wrap items-center gap-4">
+                <div class="flex flex-col items-end">
+                    <span id="dateDisplay" class="text-sm font-semibold text-slate-700"></span>
+                    <span id="bacCountdown" class="text-xs font-bold text-rose-500 mt-1 bg-rose-50 px-2 py-1 rounded-md"></span>
+                </div>
+                <div class="h-10 w-px bg-slate-200 hidden md:block"></div>
+                <div class="flex items-center gap-2 bg-emerald-50 px-4 py-2 rounded-xl border border-emerald-100">
+                    <i class="fa-solid fa-bullseye text-emerald-600"></i>
+                    <div class="flex flex-col">
+                        <span class="text-[10px] font-bold text-emerald-600 uppercase tracking-wider">Objectif</span>
+                        <span class="text-sm font-black text-emerald-700">16.0 / 20</span>
+                    </div>
+                </div>
             </div>
         </header>
 
@@ -41,102 +49,108 @@
         </section>
 
         <!-- Main Content Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             
-            <!-- Column 1 & 2: Flashcards & Active Learning -->
+            <!-- Column 1 & 2: Apprentissage -->
             <main class="lg:col-span-2 space-y-6">
                 <div class="glass rounded-2xl p-6 shadow-xl space-y-6 border border-white/20">
-                    <div class="flex justify-between items-center flex-wrap gap-2">
-                        <div>
-                            <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
-                                <i class="fa-solid fa-layer-group text-indigo-600"></i>
-                                Cartes de Révision
-                            </h2>
-                            <p class="text-sm text-slate-500" id="currentSubjectLabel">Chargement...</p>
-                        </div>
-                        <span id="cardCounter" class="text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-600">
-                            0 / 0
-                        </span>
-                    </div>
-
-                    <!-- Flashcard 3D Container -->
-                    <div class="flashcard-container min-h-[260px] cursor-pointer" id="flashcard">
-                        <div class="flashcard-inner relative w-full h-full min-h-[260px] transition-transform duration-500 rounded-2xl">
-                            <!-- Recto -->
-                            <div class="flashcard-front absolute inset-0 glass rounded-2xl p-8 flex flex-col justify-between items-center text-center shadow-md bg-white/70 border border-indigo-100">
-                                <span id="cardSubjectBadge" class="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-indigo-100 text-indigo-700">Matière</span>
-                                <p id="cardQuestion" class="text-lg md:text-xl font-medium text-slate-800 my-auto">Sélectionne une matière pour démarrer</p>
-                                <span class="text-xs text-slate-400 flex items-center gap-1">
-                                    <i class="fa-solid fa-rotate text-xs"></i> Clique pour retourner la carte
-                                </span>
-                            </div>
-                            <!-- Verso -->
-                            <div class="flashcard-back absolute inset-0 glass rounded-2xl p-8 flex flex-col justify-between items-center text-center shadow-lg bg-indigo-900 text-white border border-indigo-700">
-                                <span class="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-indigo-800 text-indigo-200">Réponse / Définition</span>
-                                <p id="cardAnswer" class="text-base md:text-lg font-medium text-indigo-50 my-auto">--</p>
-                                <span class="text-xs text-indigo-300/60">Consolidé dans ta mémoire !</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Flashcard Controls -->
-                    <div class="flex justify-between items-center gap-4 pt-2">
-                        <button id="prevBtn" class="flex-1 py-3 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold transition flex items-center justify-center gap-2 text-sm disabled:opacity-40">
-                            <i class="fa-solid fa-arrow-left"></i> Précédent
+                    
+                    <!-- Onglets (Tabs) -->
+                    <div class="flex border-b border-slate-200 gap-6">
+                        <button class="tab-btn active text-indigo-600 font-bold pb-2 border-b-2 border-indigo-600 flex items-center gap-2 transition" data-target="flashcards">
+                            <i class="fa-solid fa-layer-group"></i> Flashcards
                         </button>
-                        <button id="nextBtn" class="flex-1 py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition shadow-md shadow-indigo-500/20 flex items-center justify-center gap-2 text-sm">
-                            Suivant <i class="fa-solid fa-arrow-right"></i>
+                        <button class="tab-btn text-slate-500 hover:text-slate-700 font-semibold pb-2 border-b-2 border-transparent flex items-center gap-2 transition" data-target="courses">
+                            <i class="fa-solid fa-book-open"></i> Fiches de Cours
+                        </button>
+                        <button class="tab-btn text-slate-500 hover:text-slate-700 font-semibold pb-2 border-b-2 border-transparent flex items-center gap-2 transition" data-target="methods">
+                            <i class="fa-solid fa-brain"></i> Méthodes d'Excellence
                         </button>
                     </div>
+
+                    <!-- Contenu : Flashcards -->
+                    <div id="flashcards" class="tab-content active space-y-4">
+                        <div class="flex justify-between items-center">
+                            <h2 class="text-lg font-bold text-slate-800" id="currentSubjectLabel">Chargement...</h2>
+                            <span id="cardCounter" class="text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-600">0 / 0</span>
+                        </div>
+                        <div class="flashcard-container min-h-[300px] cursor-pointer" id="flashcard">
+                            <div class="flashcard-inner relative w-full h-full min-h-[300px] transition-transform duration-500 rounded-2xl">
+                                <div class="flashcard-front absolute inset-0 glass rounded-2xl p-8 flex flex-col justify-between items-center text-center shadow-md bg-white/70 border border-indigo-100">
+                                    <span id="cardSubjectBadge" class="text-xs font-bold uppercase px-3 py-1 rounded-full bg-indigo-100 text-indigo-700">Matière</span>
+                                    <p id="cardQuestion" class="text-xl font-medium text-slate-800 my-auto">Sélectionne une matière</p>
+                                    <span class="text-xs text-slate-400"><i class="fa-solid fa-rotate"></i> Clique pour retourner</span>
+                                </div>
+                                <div class="flashcard-back absolute inset-0 glass rounded-2xl p-8 flex flex-col justify-between items-center text-center shadow-lg bg-indigo-900 text-white border border-indigo-700 overflow-y-auto">
+                                    <span class="text-xs font-bold uppercase px-3 py-1 rounded-full bg-indigo-800 text-indigo-200">Réponse</span>
+                                    <p id="cardAnswer" class="text-lg font-medium text-indigo-50 my-auto whitespace-pre-line">--</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <button id="prevBtn" class="flex-1 py-3 bg-slate-100 hover:bg-slate-200 rounded-xl font-semibold transition flex items-center justify-center gap-2 text-sm disabled:opacity-40"><i class="fa-solid fa-arrow-left"></i></button>
+                            <button id="nextBtn" class="flex-1 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold transition flex items-center justify-center gap-2 text-sm"><i class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Contenu : Fiches de cours -->
+                    <div id="courses" class="tab-content hidden space-y-4">
+                        <div class="bg-white/60 p-6 rounded-2xl border border-white/40 shadow-inner h-[400px] overflow-y-auto" id="courseContent">
+                            <!-- Injected via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Contenu : Méthodes -->
+                    <div id="methods" class="tab-content hidden space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-white/80 p-5 rounded-2xl shadow-sm border border-slate-100">
+                                <h3 class="font-bold text-indigo-600 flex items-center gap-2 mb-2"><i class="fa-solid fa-user-graduate"></i> La technique Feynman</h3>
+                                <p class="text-sm text-slate-600">Explique le concept à voix haute comme si tu parlais à un enfant de 10 ans. Si tu bloques, retourne voir ton cours. C'est la clé pour les notions complexes (Spé Maths, Philo).</p>
+                            </div>
+                            <div class="bg-white/80 p-5 rounded-2xl shadow-sm border border-slate-100">
+                                <h3 class="font-bold text-rose-500 flex items-center gap-2 mb-2"><i class="fa-solid fa-repeat"></i> Répétition Espacée</h3>
+                                <p class="text-sm text-slate-600">Revois tes fiches à J+1, J+3, J+7, J+15. Ton cerveau oublie naturellement. Cette méthode force la création de connexions neuronales durables.</p>
+                            </div>
+                            <div class="bg-white/80 p-5 rounded-2xl shadow-sm border border-slate-100">
+                                <h3 class="font-bold text-amber-500 flex items-center gap-2 mb-2"><i class="fa-solid fa-bolt"></i> Active Recall</h3>
+                                <p class="text-sm text-slate-600">Ne relis jamais ton cours passivement. Ferme le cahier et écris tout ce dont tu te souviens sur une feuille blanche, puis compare. (Idéal pour l'Histoire-Géo et SES).</p>
+                            </div>
+                            <div class="bg-white/80 p-5 rounded-2xl shadow-sm border border-slate-100">
+                                <h3 class="font-bold text-emerald-500 flex items-center gap-2 mb-2"><i class="fa-solid fa-bed"></i> Le Sommeil (Le secret du 16)</h3>
+                                <p class="text-sm text-slate-600">Le cerveau consolide la mémoire pendant la nuit. Une nuit de 5h après 4h de révision est moins efficace qu'une nuit de 8h après 1h de révision active.</p>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </main>
 
             <!-- Column 3: Productivity Tools -->
             <aside class="space-y-6">
-                <!-- Pomodoro Timer -->
+                <!-- Pomodoro -->
                 <div class="glass rounded-2xl p-6 shadow-xl border border-white/20 text-center space-y-4">
                     <div class="flex items-center justify-between">
-                        <h3 class="font-bold text-slate-800 flex items-center gap-2">
-                            <i class="fa-solid fa-clock text-indigo-600"></i> Session Focus
-                        </h3>
-                        <span id="timerMode" class="text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700">Travail</span>
+                        <h3 class="font-bold text-slate-800 flex items-center gap-2"><i class="fa-solid fa-stopwatch text-indigo-600"></i> Mode Deep Work</h3>
                     </div>
-
-                    <div class="text-5xl font-black text-slate-800 tracking-tight my-2 font-mono" id="timerDisplay">
-                        25:00
-                    </div>
-
+                    <div class="text-6xl font-black text-slate-800 tracking-tight my-4 font-mono drop-shadow-sm" id="timerDisplay">25:00</div>
                     <div class="flex justify-center gap-2">
-                        <button id="startTimer" class="py-2.5 px-5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow-md shadow-indigo-500/20 transition text-sm flex items-center gap-2">
-                            <i class="fa-solid fa-play"></i> Lancer
-                        </button>
-                        <button id="resetTimer" class="py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl font-semibold transition text-sm">
-                            <i class="fa-solid fa-rotate-right"></i>
-                        </button>
+                        <button id="startTimer" class="py-3 px-6 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold transition flex-1 shadow-md shadow-indigo-500/20"><i class="fa-solid fa-play"></i> Go</button>
+                        <button id="resetTimer" class="py-3 px-4 bg-white hover:bg-slate-50 text-slate-600 rounded-xl font-bold transition shadow-sm border border-slate-200"><i class="fa-solid fa-rotate-right"></i></button>
                     </div>
                 </div>
 
                 <!-- To-Do List -->
                 <div class="glass rounded-2xl p-6 shadow-xl border border-white/20 space-y-4">
-                    <h3 class="font-bold text-slate-800 flex items-center gap-2">
-                        <i class="fa-solid fa-list-check text-indigo-600"></i> Objectifs de Révision
-                    </h3>
-
+                    <h3 class="font-bold text-slate-800 flex items-center gap-2"><i class="fa-solid fa-list-check text-indigo-600"></i> Plan d'attaque du jour</h3>
                     <form id="todoForm" class="flex gap-2">
-                        <input type="text" id="todoInput" placeholder="Ex: Réviser la récurrence..." required class="flex-1 px-3 py-2 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white/50">
-                        <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-3 py-2 rounded-xl text-sm transition">
-                            <i class="fa-solid fa-plus"></i>
-                        </button>
+                        <input type="text" id="todoInput" placeholder="Ex: Faire annale Maths Asie 2023..." required class="flex-1 px-3 py-2 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white/50">
+                        <button type="submit" class="bg-indigo-600 text-white font-bold px-3 py-2 rounded-xl text-sm transition"><i class="fa-solid fa-plus"></i></button>
                     </form>
-
-                    <ul id="todoList" class="space-y-2 max-h-48 overflow-y-auto pr-1">
-                        <!-- Items dynamiques -->
-                    </ul>
+                    <ul id="todoList" class="space-y-2 max-h-48 overflow-y-auto pr-1"></ul>
                 </div>
             </aside>
         </div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
