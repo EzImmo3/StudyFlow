@@ -4,16 +4,30 @@ export const enseignementScientifiqueData = {
   icon: "🔬",
   sections: [
     {
-      name: "🌡️ Climat",
-      chapters: ["Le climat de la Terre", "Le bilan radiatif", "L'effet de serre", "Le cycle du carbone", "Évolution climatique passée", "Modélisation climatique", "Changements climatiques actuels et futurs"]
+      name: "Science, climat et société",
+      chapters: [
+        "Le bilan radiatif de la Terre et l'effet de serre naturel",
+        "Le cycle biogéochimique du carbone",
+        "L'odyssée de la Terre : paléoclimats et modélisations climatiques",
+        "Le futur climatique : impacts sur la biosphère et l'humanité"
+      ]
     },
     {
-      name: "⚡ Énergie",
-      chapters: ["Formes et conversions d'énergie", "Ressources énergétiques", "Production d'électricité", "Énergie nucléaire", "Énergies renouvelables", "Transport de l'électricité", "Transition énergétique"]
+      name: "Le futur de l'énergie",
+      chapters: [
+        "Formes, conversions et principe de conservation de l'énergie",
+        "La production d'électricité : choix technologiques (nucléaire, renouvelables) et réseaux",
+        "L'efficacité énergétique et les défis du stockage de l'énergie"
+      ]
     },
     {
-      name: "🧬 Vivant & Physique-Chimie",
-      chapters: ["Évolution et biodiversité", "Génétique des populations", "Modèles démographiques", "Hardy-Weinberg", "Sélection naturelle", "Intelligence artificielle et vivant", "Modélisation et incertitudes"]
+      name: "Une histoire du vivant & Physique-Chimie",
+      chapters: [
+        "La biodiversité et son évolution (sélection naturelle, dérive génétique)",
+        "L'évolution humaine (arbres phylogénétiques, innovations culturelles)",
+        "La vision : structure de l'œil, traitement cérébral et ondes électromagnétiques",
+        "Le son et la musique : acoustique, haute fidélité et psychoacoustique"
+      ]
     }
   ]
 };

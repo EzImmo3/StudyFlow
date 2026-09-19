@@ -7,7 +7,7 @@ export const mathsExpertesData = {
       name: "Nombres complexes",
       chapters: [
         "Forme algébrique", "Conjugué", "Module", "Argument", 
-        "Forme trigonométrique", "Forme exponentielle", "Équations dans ℂ", 
+        "Forme trigonométrique", "Forme exponentielle", "Équations dans C", 
         "Interprétation géométrique", "Racines n-ièmes de l'unité"
       ]
     },

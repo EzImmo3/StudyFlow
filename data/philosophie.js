@@ -5,19 +5,39 @@ export const philosophieData = {
   sections: [
     {
       name: "L'existence humaine",
-      chapters: ["La conscience", "L'inconscient", "Le temps", "Le bonheur", "La liberté", "Le devoir"]
+      chapters: [
+        "La conscience (sujet, Descartes, Sartre)",
+        "L'inconscient (Freud, déterminisme psychique)",
+        "Le temps et la mémoire (Bergson, saint Augustin)",
+        "Le bonheur (épicurisme, stoïcisme, utilitarisme)",
+        "La liberté (libre arbitre, déterminisme de Spinoza)",
+        "Le devoir (Kant, impératif catégorique)"
+      ]
     },
     {
       name: "La connaissance",
-      chapters: ["La raison", "La vérité", "La science", "L'expérience", "La démonstration"]
+      chapters: [
+        "La raison et la croyance",
+        "La vérité (adéquation, certitude, scepticisme)",
+        "La science et la méthode expérimentale (Popper, Bachelard)",
+        "L'art et l'esthétique (Kant, beau vs utile)"
+      ]
     },
     {
-      name: "La société",
-      chapters: ["L'État", "La justice", "Le droit", "La politique", "Le travail", "Les échanges"]
+      name: "La société et la politique",
+      chapters: [
+        "L'État (Hobbes, Rousseau, légitimité de la violence légitime)",
+        "La justice et le droit (équité, lois positives vs naturelles)",
+        "Le travail et la technique (alienation, maîtrise de la nature)",
+        "Les échanges (monnaie, don, lien social)"
+      ]
     },
     {
       name: "La culture",
-      chapters: ["La technique", "L'art", "La religion", "Le langage", "La nature"]
+      chapters: [
+        "La nature et la culture (ce qui est inné vs acquis)",
+        "Le langage (communication, pensée, pouvoir des mots)"
+      ]
     }
   ]
 };

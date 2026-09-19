@@ -6,31 +6,39 @@ export const mathsData = {
     {
       name: "Analyse",
       chapters: [
-        "Suites", "Limites des suites", "Limites de fonctions", "Continuité", 
-        "Dérivation", "Convexité", "Fonction logarithme népérien", "Primitives", 
-        "Équations différentielles", "Intégration"
+        "Suites (récurrence, limites, théorèmes de convergence)",
+        "Limites de fonctions et asymptotes",
+        "Continuité et théorème des valeurs intermédiaires (TVI)",
+        "Dérivation, convexité et points d'inflexion",
+        "Fonction logarithme népérien et fonctions composées",
+        "Primitives et équations différentielles (y' = ay + b)",
+        "Calcul intégral (intégration par parties, aire, valeur moyenne)"
       ]
     },
     {
-      name: "Géométrie",
+      name: "Géométrie dans l'espace",
       chapters: [
-        "Vecteurs, droites et plans de l'espace", 
-        "Orthogonalité et distances dans l'espace", 
+        "Vecteurs, droites et plans de l'espace",
+        "Orthogonalité et produit scalaire dans l'espace",
         "Représentations paramétriques et équations cartésiennes"
       ]
     },
     {
-      name: "Probabilités",
+      name: "Probabilités et Statistiques",
       chapters: [
-        "Combinatoire et dénombrement", "Succession d'épreuves indépendantes", 
-        "Schéma de Bernoulli", "Loi binomiale", "Variables aléatoires", 
-        "Espérance, variance, écart-type", "Lois à densité", "Loi uniforme", 
-        "Loi normale", "Estimation"
+        "Conditionnement, indépendance et formule des probabilités totales",
+        "Variables aléatoires et loi de probabilité",
+        "Schéma de Bernoulli et loi binomiale",
+        "Concentration, loi des grands nombres",
+        "Lois à densité (loi uniforme, loi normale centrée réduite)"
       ]
     },
     {
-      name: "Algorithmique / logique",
-      chapters: ["Raisonnement et démonstration", "Algorithmique et programmation"]
+      name: "Algorithmique et Logique",
+      chapters: [
+        "Raisonnement par récurrence, par l'absurde et par contre-exemple",
+        "Algorithmes de dichotomie, de calcul de seuil et méthodes numériques"
+      ]
     }
   ]
 };

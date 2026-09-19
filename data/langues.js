@@ -4,8 +4,14 @@ export const languesData = {
     title: "Anglais",
     icon: "🇬🇧",
     sections: [
-      { name: "Axes du programme", chapters: ["Identités et échanges", "Espace privé et espace public", "Art et pouvoir", "Citoyenneté et mondes virtuels", "Fictions et réalités", "Innovations scientifiques et responsabilité"] },
-      { name: "Compétences", chapters: ["Vocabulaire", "Grammaire", "Listening", "Reading", "Writing", "Speaking"] }
+      { 
+        name: "Notions et Axes culturels", 
+        chapters: ["Identités et échanges", "Espace privé et espace public", "Art et pouvoir", "Citoyenneté et mondes virtuels", "Fictions et réalités", "Innovations scientifiques et responsabilité"] 
+      },
+      { 
+        name: "Méthodologie d'épreuve", 
+        chapters: ["Compte-rendu de documents (Synthesis)", "Essai argumenté (Essay)", "Compréhension orale (Listening)", "Expression orale (Grand Oral / Entretien)"] 
+      }
     ]
   },
   espagnol: {
@@ -13,8 +19,14 @@ export const languesData = {
     title: "Espagnol",
     icon: "🇪🇸",
     sections: [
-      { name: "Axes du programme", chapters: ["Identités et échanges", "Espace privé et espace public", "Art et pouvoir", "Citoyenneté et mondes virtuels", "Fictions et réalités", "Innovations scientifiques et responsabilité"] },
-      { name: "Compétences", chapters: ["Vocabulaire", "Grammaire", "Expression écrite et orale"] }
+      { 
+        name: "Notions et Axes culturels", 
+        chapters: ["Identités et échanges", "Espace privé et espace public", "Art et pouvoir", "Citoyenneté et mondes virtuels", "Fictions et réalités", "Innovations scientifiques et responsabilité"] 
+      },
+      { 
+        name: "Méthodologie d'épreuve", 
+        chapters: ["Compte-rendu (Comprensión y expresión escrita)", "Essai (Redacción)", "Interaction orale"] 
+      }
     ]
   }
 };

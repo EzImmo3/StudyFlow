@@ -4,11 +4,12 @@ export const emcData = {
   icon: "🟠",
   sections: [
     {
-      name: "La vie démocratique (BO 2024)",
+      name: "La démocratie et l'engagement",
       chapters: [
-        "Débat démocratique", "Délibération", "Prise de décision", 
-        "Information et opinion", "Médias et réseaux sociaux", "Éthique de la discussion", 
-        "Participation citoyenne", "Institutions démocratiques", "Citoyenneté", "Engagement"
+        "Pluralisme des opinions, débat démocratique et réseaux sociaux (infox, polarisation)",
+        "L'engagement politique, associatif et syndical : formes et limites",
+        "La défense et la sécurité nationale face aux cybermenaces et terrorismes",
+        "L'égalité, la laïcité et la citoyenneté dans la République"
       ]
     }
   ]

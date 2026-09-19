@@ -6,28 +6,28 @@ export const sesData = {
     {
       name: "Science économique",
       chapters: [
-        "Quelles sont les sources et les défis de la croissance économique ?",
-        "Quels sont les fondements du commerce international et de l'internationalisation de la production ?",
-        "Comment lutter contre le chômage ?",
-        "Comment expliquer les crises financières et réguler le système financier ?",
-        "Quelles politiques économiques dans le cadre européen ?"
+        "Croissance économique, productivité globale des facteurs (PGF) et progrès technique",
+        "Fondements du commerce international et avantages comparatifs",
+        "Chômage structurel vs conjoncturel, politiques de l'emploi",
+        "Crises financières, bulles spéculatives et régulation bancaire",
+        "Politiques économiques européennes (règles budgétaires, politiques monétaires de la BCE)"
       ]
     },
     {
       name: "Sociologie et science politique",
       chapters: [
-        "Comment est structurée la société française actuelle ?",
-        "Quelle action de l'École sur les destins individuels et sur l'évolution de la société ?",
-        "Quelles sont les caractéristiques contemporaines et les facteurs de la mobilité sociale ?",
-        "Quelles mutations du travail et de l'emploi ?",
-        "Comment expliquer l'engagement politique dans les sociétés démocratiques ?"
+        "Structure sociale de la France (classes sociales, distance interclasses)",
+        "Rôle de l'École dans la reproduction ou l'émancipation sociale",
+        "Mobilité sociale intergénérationnelle (tables de mobilité, fluidité)",
+        "Mutations du travail (polarisation des emplois, précarité, quête de sens)",
+        "Engagement politique (répertoire d'action politique, paradoxe de l'action collective)"
       ]
     },
     {
       name: "Regards croisés",
       chapters: [
-        "Quelles inégalités sont compatibles avec les différentes conceptions de la justice sociale ?",
-        "Quelle action publique pour l'environnement ?"
+        "Justice sociale (égalitarisme, méritocratie, libertarisme) et protection sociale",
+        "Action publique pour l'environnement (taxe carbone, quotas d'émission, marchés de quotas)"
       ]
     }
   ]
