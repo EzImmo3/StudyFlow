@@ -1,354 +1,40 @@
 <!DOCTYPE html>
-<html lang="fr" class="light">
+<html lang="fr" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudyFlow Avant-Garde - Objectif Mention TB</title>
+    <title>StudyFlow - Terminale</title>
+    <!-- Lien vers le manifest PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        darkbg: '#090d16',
-                        darkcard: '#131c31',
-                    }
-                }
-            }
-        }
-    </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="p-3 md:p-6 min-h-screen transition-colors duration-300 bg-slate-50 dark:bg-darkbg text-slate-800 dark:text-slate-100 font-['Plus_Jakarta_Sans']">
-    <div class="max-w-7xl mx-auto space-y-6">
-        
-        <!-- Header Avant-Garde -->
-        <header class="glass rounded-3xl p-6 shadow-2xl flex flex-col lg:flex-row justify-between items-center gap-6 border border-white/40 dark:border-slate-800 dark:bg-darkcard/90 backdrop-blur-xl">
-            <div class="flex items-center space-x-4">
-                <div class="p-3.5 bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 rounded-2xl text-white shadow-xl shadow-indigo-500/25">
-                    <i class="fa-solid fa-microchip text-2xl"></i>
-                </div>
-                <div>
-                    <div class="flex items-center gap-2">
-                        <h1 class="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600">StudyFlow Pro</h1>
-                        <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 bg-indigo-100 dark:bg-indigo-950/80 text-indigo-600 dark:text-indigo-400 rounded-full border border-indigo-200 dark:border-indigo-800">AI Engine</span>
-                    </div>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Système Adaptatif Intelligent • Objectif 16+/20</p>
-                </div>
-            </div>
-            
-            <div class="flex flex-wrap items-center justify-center gap-3">
-                <!-- Recherche Globale -->
-                <div class="relative">
-                    <input type="text" id="globalSearchInput" placeholder="Rechercher une notion..." class="px-3 py-2 text-xs rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 w-44 md:w-56 text-slate-700 dark:text-slate-200">
-                    <div id="globalSearchResults" class="absolute top-full mt-2 left-0 w-80 bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-3 hidden z-50 max-h-64 overflow-y-auto space-y-2"></div>
-                </div>
-                <!-- Dark Mode Toggle -->
-                <button id="darkModeToggle" class="p-2.5 bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-amber-400 rounded-xl hover:scale-105 transition shadow-sm border border-slate-200 dark:border-slate-800" title="Changer de thème">
-                    <i class="fa-solid fa-moon dark:hidden"></i>
-                    <i class="fa-solid fa-sun hidden dark:block"></i>
-                </button>
-                <!-- Streak -->
-                <div class="flex items-center gap-2 bg-amber-50 dark:bg-amber-950/40 px-3 py-2 rounded-xl border border-amber-200 dark:border-amber-900/50">
-                    <i class="fa-solid fa-fire text-amber-500 text-lg animate-pulse"></i>
-                    <div class="flex flex-col">
-                        <span class="text-[9px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Streak</span>
-                        <span class="text-xs font-black text-amber-700 dark:text-amber-300" id="streakDisplay">1 jour</span>
-                    </div>
-                </div>
-                <!-- Compteur Bac -->
-                <div class="flex flex-col items-end px-3 py-1.5 bg-white/70 dark:bg-slate-900/70 rounded-xl border border-slate-200/80 dark:border-slate-800 shadow-sm">
-                    <span id="dateDisplay" class="text-[11px] font-semibold text-slate-600 dark:text-slate-400"></span>
-                    <span id="bacCountdown" class="text-[11px] font-black text-rose-500"></span>
-                </div>
-            </div>
-        </header>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans">
 
-        <!-- Barre de navigation des Matières -->
-        <section class="glass rounded-2xl p-4 shadow-lg overflow-x-auto dark:border-slate-800 dark:bg-darkcard/80 backdrop-blur-md">
-            <div class="flex items-center gap-2 min-w-max" id="subjectFilter"></div>
-        </section>
-
-        <!-- Main Workspace -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            
-            <!-- Zone Centrale : Apprentissage & Outils -->
-            <main class="lg:col-span-2 space-y-6">
-                <div class="glass rounded-3xl p-6 shadow-2xl space-y-6 border border-white/30 dark:border-slate-800 dark:bg-darkcard/90 backdrop-blur-xl">
-                    
-                    <!-- Navigation des Onglets (24 fonctionnalités regroupées) -->
-                    <div class="flex border-b border-slate-200 dark:border-slate-800 gap-4 overflow-x-auto pb-1">
-                        <button class="tab-btn active text-indigo-600 dark:text-indigo-400 font-bold pb-2 border-b-2 border-indigo-600 flex items-center gap-2 transition min-w-max text-xs" data-target="flashcards">
-                            <i class="fa-solid fa-layer-group"></i> Flashcards & Répétition
-                        </button>
-                        <button class="tab-btn text-slate-500 dark:text-slate-400 hover:text-slate-700 font-semibold pb-2 border-b-2 border-transparent flex items-center gap-2 transition min-w-max text-xs" data-target="courses">
-                            <i class="fa-solid fa-book-open"></i> Fiches & Maîtrise
-                        </button>
-                        <button class="tab-btn text-slate-500 dark:text-slate-400 hover:text-slate-700 font-semibold pb-2 border-b-2 border-transparent flex items-center gap-2 transition min-w-max text-xs" data-target="quiz">
-                            <i class="fa-solid fa-brain"></i> Quiz & Mode Bac
-                        </button>
-                        <button class="tab-btn text-slate-500 dark:text-slate-400 hover:text-slate-700 font-semibold pb-2 border-b-2 border-transparent flex items-center gap-2 transition min-w-max text-xs" data-target="errors">
-                            <i class="fa-solid fa-triangle-exclamation text-rose-500"></i> Carnet d'Erreurs <span id="errorBadgeCount" class="text-[10px] px-1.5 py-0.2 bg-rose-100 text-rose-600 rounded-full font-extrabold">0</span>
-                        </button>
-                        <button class="tab-btn text-slate-500 dark:text-slate-400 hover:text-slate-700 font-semibold pb-2 border-b-2 border-transparent flex items-center gap-2 transition min-w-max text-xs" data-target="planning">
-                            <i class="fa-solid fa-robot text-purple-500"></i> Planning IA & Échéances
-                        </button>
-                        <button class="tab-btn text-slate-500 dark:text-slate-400 hover:text-slate-700 font-semibold pb-2 border-b-2 border-transparent flex items-center gap-2 transition min-w-max text-xs" data-target="settings">
-                            <i class="fa-solid fa-sliders text-indigo-500"></i> Données & Backup
-                        </button>
-                    </div>
-
-                    <!-- 1. Flashcards & Répétition Espacée -->
-                    <div id="flashcards" class="tab-content active space-y-4">
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center gap-2">
-                                <h2 class="text-base font-extrabold text-slate-800 dark:text-white" id="currentSubjectLabel">Chargement...</h2>
-                                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300" id="spacedModeIndicator">Mode Normal</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <button id="openCardModalBtn" class="px-3 py-1.5 bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-300 hover:bg-indigo-100 rounded-xl text-xs font-bold transition flex items-center gap-1.5 border border-indigo-200 dark:border-indigo-800">
-                                    <i class="fa-solid fa-plus"></i> Créer
-                                </button>
-                                <span id="cardCounter" class="text-xs font-extrabold px-2.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 border border-indigo-200/50">0 / 0</span>
-                            </div>
-                        </div>
-
-                        <!-- Flashcard 3D Interactive -->
-                        <div class="flashcard-container min-h-[300px] cursor-pointer" id="flashcard">
-                            <div class="flashcard-inner relative w-full h-full min-h-[300px] transition-transform duration-500 rounded-2xl">
-                                <div class="flashcard-front absolute inset-0 glass rounded-2xl p-8 flex flex-col justify-between items-center text-center shadow-lg bg-white/90 dark:bg-slate-900/90 dark:border-slate-800 border border-indigo-100">
-                                    <span id="cardSubjectBadge" class="text-[10px] font-extrabold uppercase px-3 py-1 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300">Matière</span>
-                                    <p id="cardQuestion" class="text-lg font-bold text-slate-800 dark:text-slate-100 my-auto">Sélectionne une matière</p>
-                                    <span class="text-[11px] text-slate-400 font-medium"><i class="fa-solid fa-rotate mr-1"></i> Clique pour voir la réponse</span>
-                                </div>
-                                <div class="flashcard-back absolute inset-0 glass rounded-2xl p-8 flex flex-col justify-between items-center text-center shadow-xl bg-gradient-to-br from-indigo-900 to-purple-950 text-white border border-indigo-700 overflow-y-auto">
-                                    <span class="text-[10px] font-extrabold uppercase px-3 py-1 rounded-full bg-indigo-800/80 text-indigo-200">Réponse & Correction</span>
-                                    <p id="cardAnswer" class="text-base font-medium text-indigo-50 my-auto whitespace-pre-line">--</p>
-                                    <span class="text-[10px] text-indigo-300">Répétition active validée</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Boutons d'évaluation de la mémorisation (Spaced Repetition SM-2 simplifié) -->
-                        <div class="grid grid-cols-3 gap-3 pt-1" id="spacedButtons">
-                            <button onclick="rateCard(1)" class="py-2.5 bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100 text-rose-700 dark:text-rose-300 rounded-xl font-bold text-xs border border-rose-200 dark:border-rose-900 transition flex items-center justify-content gap-1.5">
-                                <i class="fa-solid fa-xmark"></i> À revoir (1j)
-                            </button>
-                            <button onclick="rateCard(2)" class="py-2.5 bg-amber-50 dark:bg-amber-950/40 hover:bg-amber-100 text-amber-700 dark:text-amber-300 rounded-xl font-bold text-xs border border-amber-200 dark:border-amber-900 transition flex items-center justify-content gap-1.5">
-                                <i class="fa-solid fa-check"></i> Moyen (3j)
-                            </button>
-                            <button onclick="rateCard(3)" class="py-2.5 bg-emerald-50 dark:bg-emerald-950/40 hover:bg-emerald-100 text-emerald-700 dark:text-emerald-300 rounded-xl font-bold text-xs border border-emerald-200 dark:border-emerald-900 transition flex items-center justify-content gap-1.5">
-                                <i class="fa-solid fa-bolt"></i> Maîtrisé (7j)
-                            </button>
-                        </div>
-
-                        <div class="flex gap-4 pt-1">
-                            <button id="prevBtn" class="flex-1 py-2.5 bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 text-slate-700 dark:text-slate-300 rounded-xl font-semibold transition flex items-center justify-center gap-2 text-xs disabled:opacity-40 border border-slate-200 dark:border-slate-800"><i class="fa-solid fa-arrow-left"></i> Précédent</button>
-                            <button id="nextBtn" class="flex-1 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold transition flex items-center justify-center gap-2 text-xs shadow-md shadow-indigo-500/20">Suivant <i class="fa-solid fa-arrow-right"></i></button>
-                        </div>
-                    </div>
-
-                    <!-- 2. Fiches & Maîtrise des chapitres -->
-                    <div id="courses" class="tab-content hidden space-y-4">
-                        <div class="flex items-center justify-between bg-indigo-50/60 dark:bg-slate-900/80 p-4 rounded-2xl border border-indigo-100 dark:border-slate-800">
-                            <div>
-                                <h4 class="font-bold text-slate-800 dark:text-white text-xs">Statut de Maîtrise du Chapitre</h4>
-                                <p class="text-[11px] text-slate-500 dark:text-slate-400">Suivi individuel par matière pour viser le 16/20.</p>
-                            </div>
-                            <select id="masterySelect" class="bg-white dark:bg-slate-900 px-3 py-1.5 rounded-xl text-xs font-bold text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-slate-800 focus:outline-none shadow-sm">
-                                <option value="À débuter">🔴 À débuter</option>
-                                <option value="En cours">🟡 En cours d'acquisition</option>
-                                <option value="Maîtrisé">🟢 Maîtrisé (16+ visé)</option>
-                            </select>
-                        </div>
-                        <div class="bg-white/80 dark:bg-slate-900/80 p-6 rounded-2xl border border-white/60 dark:border-slate-800 shadow-sm h-[320px] overflow-y-auto prose dark:prose-invert prose-indigo max-w-none text-xs leading-relaxed" id="courseContent"></div>
-                    </div>
-
-                    <!-- 3. Quiz & Exercices Type Bac -->
-                    <div id="quiz" class="tab-content hidden space-y-4">
-                        <div class="bg-white/80 dark:bg-slate-900/80 p-6 rounded-2xl border border-white/60 dark:border-slate-800 shadow-sm min-h-[350px] flex flex-col justify-between" id="quizContainer">
-                            <div id="quizStartScreen" class="text-center my-auto space-y-4">
-                                <div class="w-14 h-14 bg-indigo-100 dark:bg-indigo-950/80 rounded-2xl flex items-center justify-center mx-auto text-indigo-600 dark:text-indigo-400 text-xl shadow-inner">
-                                    <i class="fa-solid fa-graduation-cap"></i>
-                                </div>
-                                <h3 class="text-lg font-bold text-slate-800 dark:text-white">Validation & Exercices Type Bac</h3>
-                                <p class="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">Chaque erreur est enregistrée et analysée par l'IA pour ajuster vos révisions.</p>
-                                <button id="startQuizBtn" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-indigo-500/25 transition text-xs">Lancer le Quiz Adaptatif</button>
-                            </div>
-                            <div id="quizActiveScreen" class="hidden flex-col h-full space-y-3">
-                                <div class="flex justify-between items-center">
-                                    <span class="text-[11px] font-extrabold text-indigo-600 bg-indigo-50 dark:bg-indigo-950 dark:text-indigo-300 px-2.5 py-1 rounded-lg" id="quizProgress">Question 1/3</span>
-                                    <span class="text-[11px] font-extrabold text-emerald-600 dark:text-emerald-400" id="quizScoreDisplay">Score : 0</span>
-                                </div>
-                                <h3 class="text-sm font-bold text-slate-800 dark:text-white leading-snug" id="quizQuestionText">Question ?</h3>
-                                <div class="space-y-2.5 flex-1" id="quizOptionsContainer"></div>
-                                <button id="nextQuizBtn" class="w-full py-3 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold rounded-xl hidden transition hover:bg-slate-300 text-xs">Question Suivante</button>
-                            </div>
-                            <div id="quizResultScreen" class="hidden text-center my-auto space-y-4">
-                                <div class="text-4xl mb-1" id="quizResultIcon">🏆</div>
-                                <h3 class="text-xl font-bold text-slate-800 dark:text-white" id="quizResultTitle">Session Validée !</h3>
-                                <p class="text-sm text-slate-600 dark:text-slate-300">Score obtenu : <span class="font-black text-indigo-600 dark:text-indigo-400" id="quizFinalScore">3/3</span></p>
-                                <button id="restartQuizBtn" class="px-6 py-2.5 bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-200 font-bold rounded-xl transition text-xs border border-indigo-200 dark:border-indigo-800">Recommencer</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 4. Carnet d'Erreurs intelligent -->
-                    <div id="errors" class="tab-content hidden space-y-4">
-                        <div class="bg-white/80 dark:bg-slate-900/80 p-6 rounded-2xl border border-white/60 dark:border-slate-800 shadow-sm h-[380px] overflow-y-auto space-y-3">
-                            <div class="flex justify-between items-center">
-                                <h3 class="font-bold text-slate-800 dark:text-white text-xs flex items-center gap-2">
-                                    <i class="fa-solid fa-triangle-exclamation text-rose-500"></i> Carnet de Faiblesses IA
-                                </h3>
-                                <button onclick="clearErrors()" class="text-[10px] text-slate-400 hover:text-rose-500 font-bold">Tout effacer</button>
-                            </div>
-                            <div id="errorListContent" class="space-y-2"></div>
-                        </div>
-                    </div>
-
-                    <!-- 5. Planning IA & Échéances -->
-                    <div id="planning" class="tab-content hidden space-y-4">
-                        <div class="bg-white/80 dark:bg-slate-900/80 p-6 rounded-2xl border border-white/60 dark:border-slate-800 shadow-sm h-[380px] overflow-y-auto space-y-4">
-                            <div class="flex justify-between items-center">
-                                <h3 class="font-bold text-slate-800 dark:text-white text-xs flex items-center gap-2">
-                                    <i class="fa-solid fa-robot text-purple-500"></i> Planning Automatique & Contrôles
-                                </h3>
-                                <button id="openControlModalBtn" class="px-3 py-1.5 bg-purple-50 dark:bg-purple-950 text-purple-600 dark:text-purple-300 rounded-xl text-xs font-bold transition border border-purple-200 dark:border-purple-800">Ajouter un contrôle</button>
-                            </div>
-                            <div class="bg-purple-50/50 dark:bg-purple-950/30 p-3 rounded-xl border border-purple-100 dark:border-purple-900/40 text-[11px] text-purple-800 dark:text-purple-300 flex items-start gap-2.5">
-                                <i class="fa-solid fa-lightbulb text-purple-500 mt-0.5"></i>
-                                <div><b>Recommandation StudyFlow :</b> L'algorithme priorise automatiquement tes révisions 48h avant chaque épreuve enregistrée ci-dessous.</div>
-                            </div>
-                            <div id="controlListContainer" class="space-y-2"></div>
-                        </div>
-                    </div>
-
-                    <!-- 6. Paramètres, Import / Export -->
-                    <div id="settings" class="tab-content hidden space-y-4">
-                        <div class="bg-white/80 dark:bg-slate-900/80 p-6 rounded-2xl border border-white/60 dark:border-slate-800 shadow-sm h-[380px] overflow-y-auto space-y-4">
-                            <h3 class="font-bold text-slate-800 dark:text-white text-xs"><i class="fa-solid fa-database text-indigo-600 mr-2"></i> Gestion des données & Sauvegarde</h3>
-                            <p class="text-[11px] text-slate-500 dark:text-slate-400">Sauvegarde tes flashcards personnalisées ou importe un fichier de révision externe.</p>
-                            
-                            <div class="flex flex-wrap gap-3 pt-2">
-                                <button onclick="exportData()" class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition shadow-sm flex items-center gap-2">
-                                    <i class="fa-solid fa-download"></i> Exporter mes données (JSON)
-                                </button>
-                                <label class="px-4 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-2 border border-slate-200 dark:border-slate-700">
-                                    <i class="fa-solid fa-upload"></i> Importer un profil
-                                    <input type="file" id="importFile" accept=".json" class="hidden" onchange="importData(event)">
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </main>
-
-            <!-- Sidebar : Dashboard, Analyse & Productivité -->
-            <aside class="space-y-6">
-                <!-- Dashboard Analyse Performance & Objectif 16 -->
-                <div class="glass rounded-3xl p-6 shadow-2xl border border-white/30 dark:border-slate-800 dark:bg-darkcard/90 backdrop-blur-xl space-y-4">
-                    <h3 class="font-extrabold text-slate-800 dark:text-white flex items-center gap-2 text-xs uppercase tracking-wider">
-                        <i class="fa-solid fa-chart-pie text-indigo-600"></i> Performance Objectif 16+
-                    </h3>
-                    
-                    <div class="space-y-3">
-                        <div class="flex justify-between items-center text-xs">
-                            <span class="text-slate-500 dark:text-slate-400">Chapitres Maîtrisés</span>
-                            <span class="font-bold text-emerald-600 dark:text-emerald-400" id="statMasteredCount">0 / 10</span>
-                        </div>
-                        <div class="w-full bg-slate-100 dark:bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-200 dark:border-slate-800">
-                            <div id="masteryProgressBar" class="bg-gradient-to-r from-indigo-500 to-emerald-500 h-full w-[0%] transition-all duration-500"></div>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-3 pt-2 text-center">
-                        <div class="bg-white/60 dark:bg-slate-900/60 p-3 rounded-2xl border border-slate-200/60 dark:border-slate-800 shadow-sm">
-                            <span class="text-[9px] text-slate-400 font-extrabold block uppercase">Quiz validés</span>
-                            <span class="text-base font-black text-indigo-600 dark:text-indigo-400" id="statTotalQuizzes">0</span>
-                        </div>
-                        <div class="bg-white/60 dark:bg-slate-900/60 p-3 rounded-2xl border border-slate-200/60 dark:border-slate-800 shadow-sm">
-                            <span class="text-[9px] text-slate-400 font-extrabold block uppercase">Cartes Révisées</span>
-                            <span class="text-base font-black text-purple-600 dark:text-purple-400" id="statTotalCardsViewed">0</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Pomodoro de Deep Work & Timer Spécial -->
-                <div class="glass rounded-3xl p-6 shadow-2xl border border-white/30 dark:border-slate-800 dark:bg-darkcard/90 backdrop-blur-xl text-center space-y-4">
-                    <div class="flex justify-between items-center">
-                        <h3 class="font-extrabold text-slate-800 dark:text-white flex items-center gap-2 text-xs uppercase tracking-wider"><i class="fa-solid fa-stopwatch text-indigo-600"></i> Deep Work</h3>
-                        <select id="pomodoroDuration" class="text-[11px] bg-slate-100 dark:bg-slate-900 dark:text-slate-300 px-2 py-1 rounded-xl border border-slate-200 dark:border-slate-800 font-bold focus:outline-none">
-                            <option value="25">25 min (Focus)</option>
-                            <option value="45">45 min (Spécialité)</option>
-                            <option value="60">60 min (Annales)</option>
-                        </select>
-                    </div>
-                    <div class="text-4xl font-black text-slate-800 dark:text-white tracking-tight my-1 font-mono" id="timerDisplay">25:00</div>
-                    <div class="flex justify-center gap-2">
-                        <button id="startTimer" class="py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold transition flex-1 text-xs shadow-md shadow-indigo-500/20"><i class="fa-solid fa-play mr-1"></i> Démarrer</button>
-                        <button id="resetTimer" class="py-2 px-3 bg-white dark:bg-slate-900 hover:bg-slate-50 text-slate-600 dark:text-slate-300 rounded-xl font-bold transition text-xs border border-slate-200 dark:border-slate-800"><i class="fa-solid fa-rotate-right"></i></button>
-                    </div>
-                </div>
-
-                <!-- Plan d'action du jour (To-Do) -->
-                <div class="glass rounded-3xl p-6 shadow-2xl border border-white/30 dark:border-slate-800 dark:bg-darkcard/90 backdrop-blur-xl space-y-3">
-                    <h3 class="font-extrabold text-slate-800 dark:text-white flex items-center gap-2 text-xs uppercase tracking-wider"><i class="fa-solid fa-list-check text-indigo-600"></i> Tâches Prioritaires</h3>
-                    <form id="todoForm" class="flex gap-2">
-                        <input type="text" id="todoInput" placeholder="Ex: Faire les annales de Maths..." required class="flex-1 px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white/50 dark:bg-slate-900 dark:text-white">
-                        <button type="submit" class="bg-indigo-600 text-white font-bold px-3 py-2 rounded-xl text-xs transition shadow-sm"><i class="fa-solid fa-plus"></i></button>
-                    </form>
-                    <ul id="todoList" class="space-y-2 max-h-36 overflow-y-auto pr-1"></ul>
-                </div>
-            </aside>
+    <!-- En-tête de l'application -->
+    <header class="bg-slate-800 border-b border-slate-700 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" class="flex items-center space-x-2">
+                <span class="text-2xl">⚡</span>
+                <span class="text-xl font-bold bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">StudyFlow</span>
+            </a>
+            <span class="text-xs bg-blue-600/30 text-blue-400 border border-blue-500/30 px-3 py-1 rounded-full font-medium">Mode Hors-ligne Actif</span>
         </div>
-    </div>
+    </header>
 
-    <!-- MODAL : Créer / Ajouter une Flashcard -->
-    <div id="cardModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
-        <div class="glass bg-white dark:bg-slate-900 p-6 rounded-3xl w-full max-w-md space-y-4 border border-slate-200 dark:border-slate-800 shadow-2xl">
-            <div class="flex justify-between items-center">
-                <h3 class="font-bold text-slate-800 dark:text-white text-sm">Ajouter une Flashcard Avancée</h3>
-                <button id="closeCardModal" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-base"></i></button>
-            </div>
-            <form id="addCardForm" class="space-y-3">
-                <div>
-                    <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Question / Notions</label>
-                    <textarea id="newCardQ" rows="2" required class="w-full p-2.5 text-xs rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
-                </div>
-                <div>
-                    <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Réponse & Explication détaillée</label>
-                    <textarea id="newCardA" rows="3" required class="w-full p-2.5 text-xs rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
-                </div>
-                <button type="submit" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-xs transition shadow-md">Enregistrer la carte</button>
-            </form>
-        </div>
-    </div>
+    <!-- Contenu dynamique géré par le routeur et app.js -->
+    <main id="app" class="flex-grow max-w-6xl w-full mx-auto">
+        <!-- Les matières et chapitres s'injecteront ici -->
+    </main>
 
-    <!-- MODAL : Ajouter un Contrôle / Échéance -->
-    <div id="controlModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
-        <div class="glass bg-white dark:bg-slate-900 p-6 rounded-3xl w-full max-w-md space-y-4 border border-slate-200 dark:border-slate-800 shadow-2xl">
-            <div class="flex justify-between items-center">
-                <h3 class="font-bold text-slate-800 dark:text-white text-sm">Planifier une Échéance / Contrôle</h3>
-                <button id="closeControlModal" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-base"></i></button>
-            </div>
-            <form id="addControlForm" class="space-y-3">
-                <div>
-                    <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Intitulé (Ex: Bac Blanc Maths)</label>
-                    <input type="text" id="ctrlTitle" required class="w-full p-2.5 text-xs rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 dark:text-white focus:outline-none">
-                </div>
-                <div>
-                    <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Date limite</label>
-                    <input type="date" id="ctrlDate" required class="w-full p-2.5 text-xs rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 dark:text-white focus:outline-none">
-                </div>
-                <button type="submit" class="w-full py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl text-xs transition shadow-md">Ajouter au Planning IA</button>
-            </form>
-        </div>
-    </div>
+    <!-- Pied de page -->
+    <footer class="bg-slate-800 border-t border-slate-700 py-4 text-center text-xs text-slate-400">
+        <p>StudyFlow &copy; 2026-2027 — Votre compagnon de révision pour le Bac</p>
+    </footer>
 
-    <script src="script.js"></script>
+    <!-- Script principal en tant que module ES6 -->
+    <script type="module" src="js/app.js"></script>
 </body>
 </html>
