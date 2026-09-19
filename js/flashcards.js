@@ -1,4 +1,6 @@
-// Module de Flashcards & Répétition Espacée enrichi pour StudyFlow Terminale
+// StudyFlow - Module de Flashcards & Répétition Espacée enrichi
+
+import { StudyStore } from './store.js';
 
 const DEFAULT_FLASHCARDS = [
     // --- MATHÉMATIQUES ---
@@ -100,12 +102,18 @@ const DEFAULT_FLASHCARDS = [
 
 export const FlashcardManager = {
     getCards() {
-        const saved = localStorage.getItem('studyflow_flashcards');
-        return saved ? JSON.parse(saved) : DEFAULT_FLASHCARDS;
+        const state = StudyStore.getState();
+        if (!state.flashcards || state.flashcards.length === 0) {
+            state.flashcards = DEFAULT_FLASHCARDS;
+            StudyStore.saveState(state);
+        }
+        return state.flashcards;
     },
 
     saveCards(cards) {
-        localStorage.setItem('studyflow_flashcards', JSON.stringify(cards));
+        const state = StudyStore.getState();
+        state.flashcards = cards;
+        StudyStore.saveState(state);
     },
 
     updateCardReview(cardId, performance) {
@@ -113,19 +121,40 @@ export const FlashcardManager = {
         const card = cards.find(c => c.id === cardId);
         if (!card) return;
 
+        const state = StudyStore.getState();
+
         if (performance === 'hard') {
             card.interval = 1;
             card.repetitions = 0;
         } else if (performance === 'medium') {
             card.interval = Math.max(1, card.interval * 2);
             card.repetitions += 1;
+            // Booste un peu la maîtrise du programme si relié
+            this.boostMastery(state, card.chapter, 10);
         } else if (performance === 'easy') {
             card.interval = Math.max(1, card.interval * 4);
             card.repetitions += 2;
+            // Booste plus fortement la maîtrise
+            this.boostMastery(state, card.chapter, 20);
         }
 
         card.nextReview = Date.now() + (card.interval * 24 * 60 * 60 * 1000);
         this.saveCards(cards);
+        StudyStore.saveState(state);
+    },
+
+    boostMastery(state, chapterName, amount) {
+        if (!state.program) return;
+        state.program.forEach(subject => {
+            subject.chapters.forEach(chap => {
+                if (chap.title.toLowerCase().includes(chapterName.toLowerCase()) || chapterName.toLowerCase().includes(chap.title.toLowerCase())) {
+                    chap.notions.forEach(notion => {
+                        notion.mastery = Math.min(100, notion.mastery + amount);
+                        if (notion.mastery >= 50) notion.status = "correct";
+                    });
+                }
+            });
+        });
     },
 
     renderReviewUI(container, chapterName = null) {
@@ -134,12 +163,89 @@ export const FlashcardManager = {
             cards = cards.filter(c => c.chapter === chapterName);
         }
 
+        container.innerHTML = `
+            <div class="max-w-2xl mx-auto p-6 space-y-6 text-white">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h1 class="text-3xl font-extrabold">🧠 Flashcards & Répétition</h1>
+                        <p class="text-slate-400 text-sm mt-1">Ancre tes connaissances durablement en mémoire active.</p>
+                    </div>
+                    <button id="btn-toggle-add" class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer shadow">
+                        + Créer une carte
+                    </button>
+                </div>
+
+                <!-- Formulaire d'ajout (masqué par défaut) -->
+                <div id="add-card-modal" class="hidden bg-slate-800 border border-slate-700 p-6 rounded-2xl shadow-xl space-y-4">
+                    <h2 class="text-lg font-bold">Ajouter une nouvelle flashcard</h2>
+                    <form id="form-new-card" class="space-y-3">
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">Matière / ID</label>
+                            <input type="text" id="new-subject" required placeholder="ex: maths, ses..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">Chapitre / Notion</label>
+                            <input type="text" id="new-chapter" required placeholder="ex: Suites, Dérivation..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">Question (Recto)</label>
+                            <textarea id="new-question" required rows="2" placeholder="Écris ta question ici..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-white"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">Réponse (Verso)</label>
+                            <textarea id="new-answer" required rows="2" placeholder="Écris la réponse attendue..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-white"></textarea>
+                        </div>
+                        <div class="flex justify-end gap-2 pt-2">
+                            <button type="submit" class="bg-emerald-600 hover:bg-emerald-500 px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer">Enregistrer</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="flashcard-container">
+                    <!-- Contenu de la session injecté dynamiquement -->
+                </div>
+            </div>
+        `;
+
+        // Gestionnaire d'affichage du formulaire d'ajout
+        const modal = document.getElementById('add-card-modal');
+        document.getElementById('btn-toggle-add').addEventListener('click', () => {
+            modal.classList.toggle('hidden');
+        });
+
+        document.getElementById('form-new-card').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const sub = document.getElementById('new-subject').value.trim();
+            const chap = document.getElementById('new-chapter').value.trim();
+            const q = document.getElementById('new-question').value.trim();
+            const a = document.getElementById('new-answer').value.trim();
+
+            const allCards = this.getCards();
+            const newCard = {
+                id: Date.now(),
+                subject: sub,
+                chapter: chap,
+                question: q,
+                answer: a,
+                interval: 1,
+                repetitions: 0,
+                nextReview: Date.now()
+            };
+
+            allCards.push(newCard);
+            this.saveCards(allCards);
+            modal.classList.add('hidden');
+            this.renderReviewUI(container, chapterName); // Recharger
+        });
+
+        const cardContainer = document.getElementById('flashcard-container');
+
         if (cards.length === 0) {
-            container.innerHTML = `
-                <div class="p-8 text-center bg-slate-800 rounded-2xl border border-slate-700 max-w-lg mx-auto my-10">
-                    <p class="text-xl text-white font-bold">🎉 Aucune flashcard pour ce filtre !</p>
-                    <p class="text-slate-400 mt-2">Toutes tes cartes ont été révisées ou aucune n'est associée à ce chapitre.</p>
-                    <a href="#" class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded-xl font-bold">Retour au Cockpit</a>
+            cardContainer.innerHTML = `
+                <div class="p-8 text-center bg-slate-800 rounded-2xl border border-slate-700 shadow-xl space-y-3">
+                    <span class="text-4xl">🎉</span>
+                    <p class="text-xl font-bold">Aucune flashcard disponible !</p>
+                    <p class="text-slate-400 text-sm">Crée ta première carte ci-dessus pour lancer une session.</p>
                 </div>
             `;
             return;
@@ -149,41 +255,42 @@ export const FlashcardManager = {
 
         const showCard = (index) => {
             if (index >= cards.length) {
-                container.innerHTML = `
-                    <div class="p-8 text-center bg-slate-800 rounded-2xl border border-slate-700 max-w-lg mx-auto my-10 space-y-4">
+                cardContainer.innerHTML = `
+                    <div class="p-8 text-center bg-slate-800 rounded-2xl border border-slate-700 shadow-xl space-y-4">
                         <span class="text-5xl">🔥</span>
-                        <h2 class="text-2xl font-bold text-white">Séance de révision terminée !</h2>
-                        <p class="text-slate-300">Tu as renforcé ta mémorisation active pour cette session.</p>
-                        <a href="#" class="inline-block bg-blue-600 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-blue-500 transition">Retour au tableau de bord</a>
+                        <h2 class="text-2xl font-bold">Séance de révision terminée !</h2>
+                        <p class="text-slate-300 text-sm">Tu as renforcé ta mémorisation active pour cette session.</p>
+                        <button id="btn-restart" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition cursor-pointer shadow">Relancer une session</button>
                     </div>
                 `;
+                document.getElementById('btn-restart').addEventListener('click', () => showCard(0));
                 return;
             }
 
             const card = cards[index];
-            container.innerHTML = `
-                <div class="max-w-xl mx-auto p-6 space-y-6">
-                    <div class="flex justify-between items-center">
-                        <a href="#" class="text-blue-400 hover:underline text-sm">&larr; Quitter la session</a>
-                        <span class="text-xs bg-slate-700 text-slate-300 px-3 py-1 rounded-full">Carte ${index + 1} / ${cards.length}</span>
+            cardContainer.innerHTML = `
+                <div class="space-y-6">
+                    <div class="flex justify-between items-center text-xs text-slate-400">
+                        <span>Chapitre : <strong class="text-slate-200">${card.chapter}</strong></span>
+                        <span>Carte ${index + 1} / ${cards.length}</span>
                     </div>
 
                     <div id="flashcard" class="bg-slate-800 border border-slate-700 p-8 rounded-2xl shadow-xl min-h-[220px] flex flex-col justify-between cursor-pointer select-none transition-all hover:border-blue-500/50">
                         <div>
-                            <span class="text-xs font-bold uppercase tracking-wider text-blue-400">${card.chapter}</span>
+                            <span class="text-xs font-bold uppercase tracking-wider text-blue-400">${card.subject}</span>
                             <h3 class="text-xl font-bold text-white mt-3">${card.question}</h3>
                         </div>
                         <div id="answer-container" class="hidden mt-6 pt-6 border-t border-slate-700">
-                            <p class="text-sm text-slate-400 mb-1 font-semibold">Réponse attendue :</p>
+                            <p class="text-xs text-slate-400 mb-1 font-semibold uppercase tracking-wider">Réponse attendue :</p>
                             <p class="text-emerald-300 text-base leading-relaxed">${card.answer}</p>
                         </div>
                         <p class="text-xs text-slate-500 text-center mt-6">Clique sur la carte pour révéler la réponse</p>
                     </div>
 
                     <div id="rating-buttons" class="hidden grid grid-cols-3 gap-3">
-                        <button data-perf="hard" class="rate-btn bg-rose-600/20 border border-rose-500/40 text-rose-300 hover:bg-rose-600 hover:text-white p-3 rounded-xl font-bold transition">🔴 À revoir (J+1)</button>
-                        <button data-perf="medium" class="rate-btn bg-yellow-600/20 border border-yellow-500/40 text-yellow-300 hover:bg-yellow-600 hover:text-white p-3 rounded-xl font-bold transition">🟡 Moyen (J+3)</button>
-                        <button data-perf="easy" class="rate-btn bg-emerald-600/20 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-600 hover:text-white p-3 rounded-xl font-bold transition">🟢 Maîtrisé (J+7+)</button>
+                        <button data-perf="hard" class="rate-btn bg-rose-600/20 border border-rose-500/40 text-rose-300 hover:bg-rose-600 hover:text-white p-3 rounded-xl font-bold text-xs transition cursor-pointer shadow">🔴 À revoir (J+1)</button>
+                        <button data-perf="medium" class="rate-btn bg-amber-600/20 border border-amber-500/40 text-amber-300 hover:bg-amber-600 hover:text-white p-3 rounded-xl font-bold transition text-xs cursor-pointer shadow">🟡 Moyen (J+3)</button>
+                        <button data-perf="easy" class="rate-btn bg-emerald-600/20 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-600 hover:text-white p-3 rounded-xl font-bold transition text-xs cursor-pointer shadow">🟢 Maîtrisé (J+7+)</button>
                     </div>
                 </div>
             `;
@@ -199,7 +306,7 @@ export const FlashcardManager = {
 
             document.querySelectorAll('.rate-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
-                    const perf = e.target.getAttribute('data-perf');
+                    const perf = e.currentTarget.getAttribute('data-perf');
                     this.updateCardReview(card.id, perf);
                     showCard(currentIndex + 1);
                 });
@@ -209,3 +316,6 @@ export const FlashcardManager = {
         showCard(0);
     }
 };
+
+// Rétrocompatibilité
+export const FlashcardsManager = FlashcardManager;

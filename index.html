@@ -34,7 +34,7 @@
 
     <!-- Top Global Navigation Bar -->
     <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50 px-6 py-3.5 flex justify-between items-center shadow-lg">
-        <div class="flex items-center space-x-3">
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="router.navigate('cockpit')">
             <span class="text-2xl">🚀</span>
             <span class="font-extrabold tracking-wider text-xl bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">STUDYFLOW</span>
             <span class="text-xs bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2.5 py-0.5 rounded-full font-bold">Terminale 2026</span>
@@ -55,20 +55,20 @@
 
     <!-- Bottom Navigation Bar for Mobile & Quick Access -->
     <nav class="border-t border-slate-800 bg-slate-900/90 backdrop-blur sticky bottom-0 z-40 px-6 py-3 flex justify-around items-center text-xs font-bold text-slate-400 shadow-2xl">
-        <button onclick="router.navigate('cockpit')" class="hover:text-blue-400 transition flex flex-col items-center space-y-1">
+        <button onclick="router.navigate('cockpit')" class="nav-btn hover:text-blue-400 transition flex flex-col items-center space-y-1" data-route="cockpit">
             <span class="text-lg">🏠</span> Cockpit
         </button>
-        <button onclick="router.navigate('program')" class="hover:text-blue-400 transition flex flex-col items-center space-y-1">
+        <button onclick="router.navigate('program')" class="nav-btn hover:text-blue-400 transition flex flex-col items-center space-y-1" data-route="program">
             <span class="text-lg">📚</span> Programme
         </button>
-        <button onclick="router.navigate('errors')" class="hover:text-blue-400 transition flex flex-col items-center space-y-1">
+        <button onclick="router.navigate('errors')" class="nav-btn hover:text-blue-400 transition flex flex-col items-center space-y-1" data-route="errors">
             <span class="text-lg">❌</span> Erreurs <span id="badge-errors" class="bg-rose-500 text-white px-1.5 py-0.2 rounded-full text-[10px]">3</span>
         </button>
-        <button onclick="router.navigate('stats')" class="hover:text-blue-400 transition flex flex-col items-center space-y-1">
-            <span class="text-lg">📊</span> Stats
+        <button onclick="router.navigate('flashcards')" class="nav-btn hover:text-blue-400 transition flex flex-col items-center space-y-1" data-route="flashcards">
+            <span class="text-lg">🃏</span> Flashcards
         </button>
-        <button onclick="router.navigate('assistant')" class="hover:text-blue-400 transition flex flex-col items-center space-y-1">
-            <span class="text-lg">🤖</span> AI Engine
+        <button onclick="router.navigate('focus')" class="nav-btn hover:text-blue-400 transition flex flex-col items-center space-y-1" data-route="focus">
+            <span class="text-lg">⏱️</span> Deep Work
         </button>
     </nav>
 
@@ -102,10 +102,15 @@
                 { id: 1, subject: 'Mathématiques', title: "Forme indéterminée en l'infini", type: 'Calcul', status: 'active', level: '🔴' },
                 { id: 2, subject: 'SES', title: "Confusion PGF et accumulation du capital", type: 'Méthode', status: 'active', level: '🟠' },
                 { id: 3, subject: 'Philosophie', title: "Oubli de citation précise de l'auteur", type: 'Rédaction', status: 'active', level: '🟡' }
+            ],
+            flashcards: [
+                { id: 1, question: "Qu'est-ce qu'une suite arithmétique ?", answer: "Une suite où chaque terme s'obtient en ajoutant un nombre fixe r (la raison) au terme précédent." },
+                { id: 2, question: "Que dire d'une suite croissante majorée ?", answer: "Elle converge nécessairement vers une limite finie." },
+                { id: 3, question: "Quelles sont les conditions d'une loi binomiale ?", answer: "Répétition d'épreuves de Bernoulli identiques, indépendantes et à deux issues." }
             ]
         };
 
-        // Router Engine
+        // Router Engine with Hash Management
         const router = {
             currentRoute: 'cockpit',
             navigate(route, param = null) {
@@ -113,6 +118,20 @@
                 window.location.hash = route;
                 renderApp(param);
                 window.scrollTo(0, 0);
+            },
+            init() {
+                const handleHash = () => {
+                    const hash = window.location.hash.replace('#', '') || 'cockpit';
+                    this.currentRoute = hash;
+                    renderApp();
+                };
+                window.addEventListener('hashchange', handleHash);
+                // Load initial route from hash if present
+                if (window.location.hash) {
+                    handleHash();
+                } else {
+                    renderApp();
+                }
             }
         };
 
@@ -120,7 +139,7 @@
             document.documentElement.classList.toggle('dark');
         }
 
-        // --- Render Views ---
+        // --- Render Views Dispatcher ---
         function renderApp(param = null) {
             const container = document.getElementById('app');
             const route = router.currentRoute;
@@ -132,20 +151,29 @@
             else if (route === 'stats') container.innerHTML = renderStatsView();
             else if (route === 'assistant') container.innerHTML = renderAssistantView();
             else if (route === 'planner') container.innerHTML = renderPlannerView();
-            else if (route === 'exam') container.innerHTML = renderExamView();
-            else if (route === 'graph') container.innerHTML = renderGraphView();
+            else if (route === 'flashcards') container.innerHTML = renderFlashcardsView();
+            else if (route === 'focus') container.innerHTML = renderFocusView();
             else if (route === 'settings') container.innerHTML = renderSettingsView();
             else if (route === 'search') container.innerHTML = renderSearchView();
             else container.innerHTML = renderCockpitView();
 
+            // Update badge error count
             document.getElementById('badge-errors').innerText = AppState.errors.filter(e => e.status === 'active').length;
+            
+            // Highlight active nav icon
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if (btn.getAttribute('data-route') === route) {
+                    btn.classList.add('text-blue-400');
+                } else {
+                    btn.classList.remove('text-blue-400');
+                }
+            });
         }
 
-        // 1. Cockpit View (Exact match requested)
+        // 1. Cockpit View
         function renderCockpitView() {
             return `
                 <div class="max-w-4xl mx-auto space-y-6">
-                    <!-- Dashboard Header Card -->
                     <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl space-y-6 relative overflow-hidden">
                         <div class="absolute -right-10 -top-10 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
                         
@@ -166,7 +194,6 @@
                             </div>
                         </div>
 
-                        <!-- Progress Bar & KPIs -->
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-2">
                             <div class="bg-slate-800/60 border border-slate-700/50 p-4 rounded-2xl">
                                 <p class="text-xs text-slate-400 font-semibold">📚 Programme</p>
@@ -195,7 +222,6 @@
                         </div>
                     </div>
 
-                    <!-- Recommended Session Block (StudyFlow Engine) -->
                     <div class="bg-gradient-to-r from-blue-900/90 via-indigo-950 to-slate-900 border border-blue-500/40 rounded-3xl p-6 shadow-xl space-y-4">
                         <div class="flex justify-between items-center">
                             <span class="text-xs bg-blue-500/20 text-blue-300 px-3 py-1 rounded-full font-bold uppercase tracking-wider">🎯 À faire maintenant — StudyFlow Engine</span>
@@ -223,22 +249,21 @@
                                 <span class="bg-rose-600/20 text-rose-400 text-xs px-3 py-1.5 rounded-xl font-bold">10 min</span>
                             </div>
                         </div>
-                        <button onclick="alert('Session lancée avec succès ! Le minuteur Deep Work est actif.')" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 rounded-2xl transition shadow-lg text-sm">
-                            [ COMMENCER MA SESSION ]
+                        <button onclick="router.navigate('focus')" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 rounded-2xl transition shadow-lg text-sm cursor-pointer">
+                            [ COMMENCER MA SESSION DEEP WORK ]
                         </button>
                     </div>
 
-                    <!-- Quick Navigation Cards -->
                     <div class="grid grid-cols-3 gap-4">
-                        <button onclick="router.navigate('program')" class="bg-slate-900 hover:bg-slate-850 border border-slate-800 p-4 rounded-2xl text-center transition space-y-1">
+                        <button onclick="router.navigate('program')" class="bg-slate-900 hover:bg-slate-850 border border-slate-800 p-4 rounded-2xl text-center transition space-y-1 cursor-pointer">
                             <span class="text-2xl">📚</span>
                             <p class="font-bold text-white text-xs">Programme</p>
                         </button>
-                        <button onclick="router.navigate('stats')" class="bg-slate-900 hover:bg-slate-850 border border-slate-800 p-4 rounded-2xl text-center transition space-y-1">
+                        <button onclick="router.navigate('stats')" class="bg-slate-900 hover:bg-slate-850 border border-slate-800 p-4 rounded-2xl text-center transition space-y-1 cursor-pointer">
                             <span class="text-2xl">📊</span>
                             <p class="font-bold text-white text-xs">Progression</p>
                         </button>
-                        <button onclick="router.navigate('planner')" class="bg-slate-900 hover:bg-slate-850 border border-slate-800 p-4 rounded-2xl text-center transition space-y-1">
+                        <button onclick="router.navigate('planner')" class="bg-slate-900 hover:bg-slate-850 border border-slate-800 p-4 rounded-2xl text-center transition space-y-1 cursor-pointer">
                             <span class="text-2xl">🗓️</span>
                             <p class="font-bold text-white text-xs">Planificateur</p>
                         </button>
@@ -256,7 +281,7 @@
                             <span class="text-xs text-blue-400 font-bold uppercase tracking-wider">Programme Officiel</span>
                             <h1 class="text-3xl font-extrabold text-white mt-1">Toutes tes Matières</h1>
                         </div>
-                        <button onclick="router.navigate('cockpit')" class="text-slate-400 hover:text-white text-sm font-semibold">&larr; Retour</button>
+                        <button onclick="router.navigate('cockpit')" class="text-slate-400 hover:text-white text-sm font-semibold cursor-pointer">&larr; Retour</button>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -279,12 +304,12 @@
             `;
         }
 
-        // 3. Notion Detail & Unified Hub
+        // 3. Notion Detail View
         function renderNotionDetailView(notionId) {
             return `
                 <div class="max-w-4xl mx-auto space-y-6">
                     <div class="flex justify-between items-center">
-                        <button onclick="router.navigate('program')" class="text-blue-400 hover:underline text-sm font-semibold">&larr; Retour aux matières</button>
+                        <button onclick="router.navigate('program')" class="text-blue-400 hover:underline text-sm font-semibold cursor-pointer">&larr; Retour aux matières</button>
                         <span class="text-xs bg-orange-500/20 text-orange-300 px-3 py-1 rounded-full font-bold">🟠 Notion Fragile</span>
                     </div>
 
@@ -294,20 +319,19 @@
                             <h1 class="text-3xl font-extrabold text-white mt-1">Limite d'une fonction & asymptotes</h1>
                         </div>
 
-                        <!-- 9 Tabs hub for the notion -->
                         <div class="grid grid-cols-3 md:grid-cols-5 gap-2 pt-2">
-                            <button onclick="alert('Ouverture du Cours complet')" class="bg-slate-800 hover:bg-slate-750 p-3 rounded-2xl text-xs font-bold text-center text-white border border-slate-700">📖 Cours</button>
-                            <button onclick="alert('Chargement de l\'Essentiel')" class="bg-slate-800 hover:bg-slate-750 p-3 rounded-2xl text-xs font-bold text-center text-white border border-slate-700">⚡ L'essentiel</button>
-                            <button onclick="alert('Flashcards chargées')" class="bg-slate-800 hover:bg-slate-750 p-3 rounded-2xl text-xs font-bold text-center text-white border border-slate-700">🃏 Flashcards</button>
-                            <button onclick="alert('Exercices progressifs')" class="bg-slate-800 hover:bg-slate-750 p-3 rounded-2xl text-xs font-bold text-center text-white border border-slate-700">✍️ Exercices</button>
-                            <button onclick="router.navigate('assistant')" class="bg-slate-800 hover:bg-slate-750 p-3 rounded-2xl text-xs font-bold text-center text-white border border-slate-700">🗣️ Feynman</button>
+                            <button onclick="alert('Ouverture du Cours complet')" class="bg-slate-800 hover:bg-slate-750 p-3 rounded-2xl text-xs font-bold text-center text-white border border-slate-700 cursor-pointer">📖 Cours</button>
+                            <button onclick="alert('Chargement de l\'Essentiel')" class="bg-slate-800 hover:bg-slate-750 p-3 rounded-2xl text-xs font-bold text-center text-white border border-slate-700 cursor-pointer">⚡ L'essentiel</button>
+                            <button onclick="router.navigate('flashcards')" class="bg-slate-800 hover:bg-slate-750 p-3 rounded-2xl text-xs font-bold text-center text-white border border-slate-700 cursor-pointer">🃏 Flashcards</button>
+                            <button onclick="alert('Exercices progressifs')" class="bg-slate-800 hover:bg-slate-750 p-3 rounded-2xl text-xs font-bold text-center text-white border border-slate-700 cursor-pointer">✍️ Exercices</button>
+                            <button onclick="router.navigate('assistant')" class="bg-slate-800 hover:bg-slate-750 p-3 rounded-2xl text-xs font-bold text-center text-white border border-slate-700 cursor-pointer">🗣️ Feynman</button>
                         </div>
 
                         <div class="bg-slate-950 border border-slate-800 p-6 rounded-2xl space-y-4 text-sm text-slate-300">
                             <h3 class="font-bold text-white text-base">Rappel de cours synthétique</h3>
-                            <p>Une limite explicite l'comportement d'une fonction lorsque la variable tend vers une valeur finie ou vers l'infini. Pour lever une forme indéterminée (ex: $\frac{0}{0}$ ou $\frac{\infty}{\infty}$), on utilise la factorisation ou le nombre dérivé.</p>
+                            <p>Une limite explicite le comportement d'une fonction lorsque la variable tend vers une valeur finie ou vers l'infini. Pour lever une forme indéterminée, on utilise la factorisation ou le nombre dérivé.</p>
                             <div class="bg-blue-950/40 border border-blue-500/30 p-4 rounded-xl text-blue-200">
-                                💡 **Astuce StudyFlow :** Ne confonds pas limite en l'infini et valeur interdite.
+                                💡 <strong>Astuce StudyFlow :</strong> Ne confonds pas limite en l'infini et valeur interdite.
                             </div>
                         </div>
                     </div>
@@ -315,16 +339,16 @@
             `;
         }
 
-        // 6. Errors View
+        // 4. Errors View
         function renderErrorsView() {
             return `
                 <div class="max-w-4xl mx-auto space-y-6">
                     <div class="flex justify-between items-center">
                         <div>
                             <span class="text-xs text-rose-400 font-bold uppercase tracking-wider">Carnet d'Erreurs Intelligent</span>
-                            <h1 class="text-3xl font-extrabold text-white mt-1">23 Erreurs Actives</h1>
+                            <h1 class="text-3xl font-extrabold text-white mt-1">${AppState.errors.length} Erreurs Actives</h1>
                         </div>
-                        <button onclick="router.navigate('cockpit')" class="text-slate-400 hover:text-white text-sm font-semibold">&larr; Retour</button>
+                        <button onclick="router.navigate('cockpit')" class="text-slate-400 hover:text-white text-sm font-semibold cursor-pointer">&larr; Retour</button>
                     </div>
 
                     <div class="space-y-3">
@@ -337,7 +361,7 @@
                                         <p class="text-xs text-slate-400 mt-0.5">${err.subject} • Type : ${err.type}</p>
                                     </div>
                                 </div>
-                                <button onclick="alert('Erreur marquée comme réparée !')" class="bg-slate-800 hover:bg-emerald-600 hover:text-white text-slate-300 text-xs px-4 py-2 rounded-xl font-bold transition border border-slate-700">Réparer &check;</button>
+                                <button onclick="alert('Erreur marquée comme réparée !')" class="bg-slate-800 hover:bg-emerald-600 hover:text-white text-slate-300 text-xs px-4 py-2 rounded-xl font-bold transition border border-slate-700 cursor-pointer">Réparer &check;</button>
                             </div>
                         `).join('')}
                     </div>
@@ -345,7 +369,60 @@
             `;
         }
 
-        // 9. Stats View
+        // 5. Flashcards View
+        function renderFlashcardsView() {
+            return `
+                <div class="max-w-2xl mx-auto space-y-6">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <span class="text-xs text-blue-400 font-bold uppercase tracking-wider">Mémorisation Active</span>
+                            <h1 class="text-3xl font-extrabold text-white mt-1">Flashcards & Répétition</h1>
+                        </div>
+                        <button onclick="router.navigate('cockpit')" class="text-slate-400 hover:text-white text-sm font-semibold cursor-pointer">&larr; Retour</button>
+                    </div>
+
+                    <div class="bg-slate-900 border border-slate-800 p-8 rounded-3xl shadow-xl space-y-6 text-center">
+                        <span class="text-xs bg-blue-500/20 text-blue-300 px-3 py-1 rounded-full font-bold">Carte 1 / ${AppState.flashcards.length}</span>
+                        <h2 class="text-xl font-bold text-white mt-4">${AppState.flashcards[0].question}</h2>
+                        <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-sm text-emerald-400">
+                            <p class="text-xs text-slate-400 font-semibold mb-1">Réponse :</p>
+                            ${AppState.flashcards[0].answer}
+                        </div>
+                        <div class="grid grid-cols-3 gap-3 pt-4">
+                            <button onclick="alert('Carte planifiée pour J+1')" class="bg-rose-600/20 text-rose-300 border border-rose-500/40 p-3 rounded-xl font-bold text-xs cursor-pointer">🔴 À revoir</button>
+                            <button onclick="alert('Carte planifiée pour J+3')" class="bg-amber-600/20 text-amber-300 border border-amber-500/40 p-3 rounded-xl font-bold text-xs cursor-pointer">🟡 Moyen</button>
+                            <button onclick="alert('Carte maîtrisée !')" class="bg-emerald-600/20 text-emerald-300 border border-emerald-500/40 p-3 rounded-xl font-bold text-xs cursor-pointer">🟢 Maîtrisé</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 6. Deep Work / Focus View
+        function renderFocusView() {
+            return `
+                <div class="max-w-xl mx-auto space-y-6 text-center">
+                    <div class="flex justify-between items-center text-left">
+                        <div>
+                            <span class="text-xs text-amber-400 font-bold uppercase tracking-wider">Mode Concentration</span>
+                            <h1 class="text-3xl font-extrabold text-white mt-1">Deep Work Session</h1>
+                        </div>
+                        <button onclick="router.navigate('cockpit')" class="text-slate-400 hover:text-white text-sm font-semibold cursor-pointer">&larr; Retour</button>
+                    </div>
+
+                    <div class="bg-slate-900 border border-slate-800 p-10 rounded-3xl shadow-xl space-y-6">
+                        <div class="text-6xl font-extrabold tracking-widest text-amber-400">25:00</div>
+                        <p class="text-xs text-slate-400">Bloque les distractions, plonge dans ta notion.</p>
+                        <div class="flex justify-center space-x-4 pt-2">
+                            <button onclick="alert('Minuteur démarré !')" class="bg-emerald-600 hover:bg-emerald-500 px-6 py-3 rounded-2xl text-xs font-bold text-white transition cursor-pointer">Démarrer</button>
+                            <button onclick="alert('Minuteur mis en pause.')" class="bg-slate-800 hover:bg-slate-750 px-6 py-3 rounded-2xl text-xs font-bold text-slate-300 transition cursor-pointer border border-slate-700">Pause</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 7. Stats View
         function renderStatsView() {
             return `
                 <div class="max-w-4xl mx-auto space-y-6">
@@ -354,7 +431,7 @@
                             <span class="text-xs text-blue-400 font-bold uppercase tracking-wider">Statistiques & Analyse</span>
                             <h1 class="text-3xl font-extrabold text-white mt-1">Progression Granulaire</h1>
                         </div>
-                        <button onclick="router.navigate('cockpit')" class="text-slate-400 hover:text-white text-sm font-semibold">&larr; Retour</button>
+                        <button onclick="router.navigate('cockpit')" class="text-slate-400 hover:text-white text-sm font-semibold cursor-pointer">&larr; Retour</button>
                     </div>
 
                     <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl space-y-6 shadow-xl">
@@ -377,7 +454,7 @@
             `;
         }
 
-        // 14. StudyFlow AI Assistant & Feynman Mode
+        // 8. Assistant View
         function renderAssistantView() {
             return `
                 <div class="max-w-3xl mx-auto space-y-6">
@@ -386,15 +463,15 @@
                             <span class="text-xs text-purple-400 font-bold uppercase tracking-wider">StudyFlow AI & Feynman</span>
                             <h1 class="text-3xl font-extrabold text-white mt-1">Assistant Pédagogique</h1>
                         </div>
-                        <button onclick="router.navigate('cockpit')" class="text-slate-400 hover:text-white text-sm font-semibold">&larr; Retour</button>
+                        <button onclick="router.navigate('cockpit')" class="text-slate-400 hover:text-white text-sm font-semibold cursor-pointer">&larr; Retour</button>
                     </div>
 
                     <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-xl space-y-4">
                         <div class="bg-purple-950/40 border border-purple-500/30 p-4 rounded-2xl text-purple-200 text-sm">
-                            🤖 **Mode Feynman :** Explique avec tes propres mots une notion de ton choix. L'assistant analysera si ta compréhension est correcte.
+                            🤖 <strong>Mode Feynman :</strong> Explique avec tes propres mots une notion de ton choix. L'assistant analysera si ta compréhension est correcte.
                         </div>
                         <textarea class="w-full h-40 bg-slate-950 border border-slate-800 rounded-2xl p-4 text-white text-sm focus:outline-none focus:border-purple-500" placeholder="Écris ton explication ici..."></textarea>
-                        <button onclick="alert('Analyse de l\'assistant : Ton explication est claire et rigoureuse ! Félicitations.')" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-3.5 rounded-2xl transition shadow-lg text-sm">
+                        <button onclick="alert('Analyse de l\'assistant : Ton explication est claire et rigoureuse !')" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-3.5 rounded-2xl transition shadow-lg text-sm cursor-pointer">
                             Analyser mon explication &rarr;
                         </button>
                     </div>
@@ -402,26 +479,20 @@
             `;
         }
 
-        // Placeholder views for Planner, Exam, Graph, Settings, Search
+        // Placeholders for other routes
         function renderPlannerView() {
-            return `<div class="max-w-3xl mx-auto space-y-6"><h1 class="text-2xl font-bold">Planificateur de Contrôles</h1><button onclick="router.navigate('cockpit')" class="text-blue-400">&larr; Retour</button></div>`;
-        }
-        function renderExamView() {
-            return `<div class="max-w-3xl mx-auto space-y-6"><h1 class="text-2xl font-bold">Mode Examen Bac</h1><button onclick="router.navigate('cockpit')" class="text-blue-400">&larr; Retour</button></div>`;
-        }
-        function renderGraphView() {
-            return `<div class="max-w-3xl mx-auto space-y-6"><h1 class="text-2xl font-bold">Graphe de Connaissances</h1><button onclick="router.navigate('cockpit')" class="text-blue-400">&larr; Retour</button></div>`;
+            return `<div class="max-w-3xl mx-auto space-y-6 text-white"><h1 class="text-2xl font-bold">Planificateur de Contrôles</h1><button onclick="router.navigate('cockpit')" class="text-blue-400 cursor-pointer">&larr; Retour</button></div>`;
         }
         function renderSettingsView() {
-            return `<div class="max-w-3xl mx-auto space-y-6"><h1 class="text-2xl font-bold">Paramètres & Sauvegarde Locale</h1><button onclick="router.navigate('cockpit')" class="text-blue-400">&larr; Retour</button></div>`;
+            return `<div class="max-w-3xl mx-auto space-y-6 text-white"><h1 class="text-2xl font-bold">Paramètres & Sauvegarde Locale</h1><button onclick="router.navigate('cockpit')" class="text-blue-400 cursor-pointer">&larr; Retour</button></div>`;
         }
         function renderSearchView() {
-            return `<div class="max-w-3xl mx-auto space-y-6"><h1 class="text-2xl font-bold">Recherche Universelle</h1><input type="text" placeholder="Rechercher une notion, un cours, une erreur..." class="w-full bg-slate-900 border border-slate-800 p-4 rounded-2xl text-white"><button onclick="router.navigate('cockpit')" class="text-blue-400 mt-4 block">&larr; Retour</button></div>`;
+            return `<div class="max-w-3xl mx-auto space-y-6 text-white"><h1 class="text-2xl font-bold">Recherche Universelle</h1><input type="text" placeholder="Rechercher une notion, un cours..." class="w-full bg-slate-900 border border-slate-800 p-4 rounded-2xl text-white"><button onclick="router.navigate('cockpit')" class="text-blue-400 mt-4 block cursor-pointer">&larr; Retour</button></div>`;
         }
 
-        // Initial launch
+        // Initialize App on load
         window.addEventListener('DOMContentLoaded', () => {
-            renderApp();
+            router.init();
         });
     </script>
 </body>
