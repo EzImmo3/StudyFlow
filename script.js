@@ -1,41 +1,192 @@
-// Base de données complète ultra-riche
+// Base de données complète et ultra-développée (Contenu de cours, flashcards et quiz type bac)
 const defaultDatabase = {
     "math-spe": {
         title: "Mathématiques Spé", icon: "fa-calculator",
         cards: [
-            { q: "Qu'est-ce qu'une démonstration par récurrence ?", a: "1. Initialisation : P(n0) vraie.\n2. Hérédité : Si P(k) vraie, alors P(k+1) vraie.\n3. Conclusion.", interval: 1 },
-            { q: "Étude de la convexité d'une fonction", a: "On étudie le signe de f''(x) (dérivée seconde).\nSi f''(x) ≥ 0, f est convexe.", interval: 1 }
+            { q: "Qu'est-ce qu'une démonstration par récurrence ?", a: "1. Initialisation : Prouver que P(n0) est vraie.\n2. Hérédité : Supposer P(k) vraie pour un entier k ≥ n0, et montrer que P(k+1) est vraie.\n3. Conclusion : Par récurrence, P(n) est vraie pour tout n ≥ n0.", interval: 1 },
+            { q: "Étude de la convexité d'une fonction", a: "Une fonction f dérivable est convexe sur un intervalle si sa dérivée f' est croissante, ce qui équivaut à f''(x) ≥ 0. Le graphe est alors situé au-dessus de ses tangentes.", interval: 1 },
+            { q: "Théorème des Valeurs Intermédiaires (TVI)", a: "Si f est continue sur [a, b], alors pour tout réel k compris entre f(a) et f(b), l'équation f(x) = k admet au moins une solution c dans [a, b].", interval: 1 },
+            { q: "Limite d'une suite géométrique (q^n)", a: "- Si q > 1 : lim = +∞\n- Si -1 < q < 1 : lim = 0\n- Si q = 1 : lim = 1\n- Si q ≤ -1 : pas de limite.", interval: 1 }
         ],
-        course: "<h3 class='text-base font-bold text-indigo-600 dark:text-indigo-400 mb-2'>Analyse & Suites</h3><p class='mb-2'><b>TVI (Théorème des Valeurs Intermédiaires) :</b> Si f est continue sur [a,b], pour tout k compris entre f(a) et f(b), l'équation f(x)=k admet au moins une solution sur [a,b].</p>",
+        course: `
+            <h3 class='text-base font-bold text-indigo-600 dark:text-indigo-400 mb-3'>📚 Cours Complet : Analyse, Suites & Fonctions</h3>
+            <div class='space-y-3 text-slate-700 dark:text-slate-300'>
+                <p><b>1. Suites numériques et récurrence :</b> Le raisonnement par récurrence est un outil fondamental en terminale pour valider des propriétés sur les entiers naturels. Il est impératif de bien rédiger l'étape d'hérédité en précisant clairement l'hypothèse de récurrence.</p>
+                <p><b>2. Continuité et Convexité :</b> La convexité permet d'analyser la courbure d'une fonction. Un point d'inflexion est un point où la convexité change (où la dérivée seconde s'annule en changeant de signe).</p>
+                <p><b>3. Logarithme népérien et exponentielle :</b> Maîtriser les croissances comparées : lim (e^x / x) = +∞ en +∞, et lim (x * ln(x)) = 0 en 0+.</p>
+            </div>
+        `,
         quizzes: [
-            { q: "Quelle est la dérivée de ln(x) sur ]0, +∞[ ?", options: ["e^x", "1/x", "x", "-1/x²"], correct: 1 },
-            { q: "Une fonction f est convexe si sa dérivée seconde f''(x) est :", options: ["Nulle", "Négative", "Positive", "Constante"], correct: 2 }
+            { q: "Quelle est la dérivée de la fonction x ↦ ln(u(x)) ?", options: ["u'(x) / u(x)", "u'(x) * e^u(x)", "1 / u(x)", "u''(x) / u'(x)"], correct: 0 },
+            { q: "Si une suite (u_n) est majorée et croissante, alors :", options: ["Elle diverge vers +∞", "Elle est nécessairement minorée par 0", "Elle converge vers un nombre réel L", "Elle est alternée"], correct: 2 },
+            { q: "Soit f une fonction dont la dérivée seconde est strictement positive sur R. Sa courbe représentative est :", options: ["Concave", "Convexe", "Constante", "Une droite affine"], correct: 1 }
         ]
     },
     "math-exp": {
         title: "Maths Expertes", icon: "fa-square-root-variable",
-        cards: [{ q: "Formule de Moivre", a: "(cos θ + i sin θ)^n = cos(nθ) + i sin(nθ)", interval: 1 }],
-        course: "<h3 class='text-base font-bold text-indigo-600 dark:text-indigo-400 mb-2'>Nombres Complexes</h3><p>Forme exponentielle : z = r * e^(iθ)</p>",
-        quizzes: [{ q: "Quel est le module de z = 3 + 4i ?", options: ["5", "7", "12", "25"], correct: 0 }]
+        cards: [
+            { q: "Forme exponentielle d'un nombre complexe", a: "z = r * e^(iθ) où r = |z| est le module et θ = arg(z) est un argument.", interval: 1 },
+            { q: "Formule de Moivre", a: "(cos θ + i sin θ)^n = cos(nθ) + i sin(nθ) pour tout entier n.", interval: 1 },
+            { q: "Divisibilité dans Z", a: "On dit que a divise b (a | b) s'il existe un entier k tel que b = a * k.", interval: 1 }
+        ],
+        course: `
+            <h3 class='text-base font-bold text-indigo-600 dark:text-indigo-400 mb-3'>📚 Cours Complet : Nombres Complexes & Arithmétique</h3>
+            <div class='space-y-3 text-slate-700 dark:text-slate-300'>
+                <p><b>1. Nombres complexes (partie 2) :</b> Les racines n-ièmes de l'unité et la résolution d'équations polynomiales dans C s'appuient fortement sur la forme trigonométrique et exponentielle.</p>
+                <p><b>2. Arithmétique :</b> Le théorème de Bézout et le théorème de Gauss sont les piliers pour résoudre les équations diophantiennes et étudier les congruences.</p>
+            </div>
+        `,
+        quizzes: [
+            { q: "Quel est le module du nombre complexe z = 3 - 4i ?", options: ["1", "5", "7", "25"], correct: 1 },
+            { q: "Que vaut i^2 ?", options: ["1", "-1", "i", "-i"], correct: 1 }
+        ]
     },
     "ses": {
         title: "SES Spé", icon: "fa-chart-line",
-        cards: [{ q: "Progrès technique endogène", a: "Généré par l'investissement des agents (R&D, capital humain, innovations).", interval: 1 }],
-        course: "<h3 class='text-base font-bold text-indigo-600 dark:text-indigo-400 mb-2'>Croissance Économique</h3><p>Accumulation des facteurs + Productivité Globale des Facteurs (PGF).</p>",
-        quizzes: [{ q: "Quel auteur a théorisé les 'avantages comparatifs' ?", options: ["Adam Smith", "David Ricardo", "Marx", "Keynes"], correct: 1 }]
+        cards: [
+            { q: "Qu'est-ce que la PGF (Productivité Globale des Facteurs) ?", a: "C'est la part de la croissance économique qui ne s'explique pas par l'augmentation de la quantité de travail ou de capital, mais par le progrès technique.", interval: 1 },
+            { q: "Qu'appelle-t-on défaillance du marché ?", a: "Une situation où le marché alloue les ressources de manière sous-optimale (ex: externalités, biens publics, asymétries d'information).", interval: 1 },
+            { q: "Politique conjoncturelle vs Structurelle", a: "Conjoncturelle : action à court terme (stabilisation de l'économie). Structurelle : action à long terme (modification du cadre de l'économie).", interval: 1 }
+        ],
+        course: `
+            <h3 class='text-base font-bold text-indigo-600 dark:text-indigo-400 mb-3'>📚 Cours Complet : Croissance, Crises & Politiques Économiques</h3>
+            <div class='space-y-3 text-slate-700 dark:text-slate-300'>
+                <p><b>1. Sources de la croissance :</b> Accumulation du capital physique, humain et technologique (progrès technique endogène selon Schumpeter et la destruction créatrice).</p>
+                <p><b>2. Justice sociale et inégalités :</b> Rôle de la protection sociale, de la fiscalité redistributive et des services collectifs dans la réduction des inégalités.</p>
+            </div>
+        `,
+        quizzes: [
+            { q: "Lequel de ces biens est un bien collectif pur (non-excluable et non-rival) ?", options: ["Une place de cinéma", "L'éclairage public", "Une voiture", "Un abonnement Netflix"], correct: 1 },
+            { q: "Qui est l'auteur du concept de 'destruction créatrice' ?", options: ["John Maynard Keynes", "Joseph Schumpeter", "Adam Smith", "Thomas Piketty"], correct: 1 }
+        ]
     },
     "philo": {
         title: "Philosophie", icon: "fa-brain",
-        cards: [{ q: "Légal vs Légitime", a: "Légal = conforme au droit positif. Légitime = conforme à la justice morale.", interval: 1 }],
-        course: "<h3 class='text-base font-bold text-indigo-600 dark:text-indigo-400 mb-2'>La Liberté & La Justice</h3><p>Descartes : Cogito ergo sum. Spinoza : La liberté c'est la conscience de la nécessité.</p>",
-        quizzes: [{ q: "Qui a écrit 'L'homme est condamné à être libre' ?", options: ["Kant", "Descartes", "Sartre", "Spinoza"], correct: 2 }]
+        cards: [
+            { q: "Légal vs Légitime", a: "Légal = ce qui est conforme aux lois écrites d'un État (droit positif). Légitime = ce qui est conforme à la justice morale et universelle.", interval: 1 },
+            { q: "Déterminisme vs Libre-arbitre", a: "Déterminisme : tout effet est causé par des lois naturelles/sociales. Libre-arbitre : capacité de la volonté à s'autodéterminer indépendamment des contraintes.", interval: 1 },
+            { q: "La conscience selon Descartes", a: "'Cogito, ergo sum' (Je pense, donc je suis). La conscience est la certitude première de l'existence du sujet pensant.", interval: 1 }
+        ],
+        course: `
+            <h3 class='text-base font-bold text-indigo-600 dark:text-indigo-400 mb-3'>📚 Cours Complet : Notions Fondamentales du Baccalauréat</h3>
+            <div class='space-y-3 text-slate-700 dark:text-slate-300'>
+                <p><b>1. La Vérité & La Raison :</b> Distinction entre la vérité scientifique (démontrée/vérifiée) et les croyances ou opinions (doxa). Rôle de la méthode cartésienne.</p>
+                <p><b>2. La Liberté :</b> Spinoza définit la liberté non comme une absence de cause, mais comme la conscience de la nécessité et l'affranchissement des passions tristes.</p>
+            </div>
+        `,
+        quizzes: [
+            { q: "Quel philosophe a affirmé 'On ne naît pas femme, on le devient' ?", options: ["Jean-Paul Sartre", "Simone de Beauvoir", "Hannah Arendt", "René Descartes"], correct: 1 },
+            { q: "Pour Emmanuel Kant, le devoir moral repose sur :", options: ["La recherche du bonheur personnel", "L'impératif catégorique", "L'utilité sociale", "La crainte de la loi pénale"], correct: 1 }
+        ]
     },
-    "hist-geo": { title: "Histoire-Géo", icon: "fa-earth-americas", cards: [{ q: "Maritimisation", a: "Processus d'accroissement des échanges par voie maritime.", interval: 1 }], course: "<h3 class='text-base font-bold text-indigo-600 dark:text-indigo-400 mb-2'>Mondialisation</h3><p>Interdépendance accrue des économies et des territoires.</p>", quizzes: [{ q: "Date de signature du traité de Maastricht ?", options: ["1957", "1992", "2002", "1989"], correct: 1 }] },
-    "emc": { title: "EMC", icon: "fa-scale-balanced", cards: [{ q: "Rôle du Conseil Constitutionnel", a: "Vérifier la conformité des lois à la Constitution.", interval: 1 }], course: "<h3 class='text-base font-bold text-indigo-600 dark:text-indigo-400 mb-2'>La Démocratie</h3><p>Souveraineté populaire et séparation des pouvoirs.</p>", quizzes: [{ q: "Combien de membres composent le Conseil Constitutionnel ?", options: ["9", "12", "15", "577"], correct: 0 }] },
-    "espagnol": { title: "Espagnol", icon: "fa-comments", cards: [{ q: "Conditionnel hypothétique", a: "Si + Imparfait du subjonctif → Conditionnel simple.", interval: 1 }], course: "<h3 class='text-base font-bold text-indigo-600 dark:text-indigo-400 mb-2'>Argumentation</h3><p>Expresiones de contraste : Sin embargo, A pesar de todo.</p>", quizzes: [{ q: "Traduire 'Malgré tout'", options: ["Sin embargo", "A pesar de todo", "Por lo tanto", "Aunque"], correct: 1 }] },
-    "anglais": { title: "Anglais", icon: "fa-language", cards: [{ q: "Nuance de contraste", a: "However, Nevertheless, Whereas, Although.", interval: 1 }], course: "<h3 class='text-base font-bold text-indigo-600 dark:text-indigo-400 mb-2'>Essay Writing</h3><p>Structure : Introduction with Hook, Thesis statement, Body paragraphs, Conclusion.</p>", quizzes: [{ q: "Lequel exprime une cause ?", options: ["Therefore", "Due to / Because of", "Although", "Meanwhile"], correct: 1 }] },
-    "ens-svt": { title: "Ens. Sc. SVT", icon: "fa-dna", cards: [{ q: "Effet de Serre additionnel", a: "Amplification par les activités humaines (GES : CO2, CH4, N2O).", interval: 1 }], course: "<h3 class='text-base font-bold text-indigo-600 dark:text-indigo-400 mb-2'>Climat & Durabilité</h3><p>Bilan radiatif de la Terre.</p>", quizzes: [{ q: "Quel gaz n'est pas considéré comme un GES majeur ?", options: ["Dioxyde de carbone", "Méthane", "Azote (N2)", "Vapeur d'eau"], correct: 2 }] },
-    "ens-pc": { title: "Ens. Sc. PC", icon: "fa-atom", cards: [{ q: "Relation Énergie-Puissance", a: "E = P * Δt (Énergie en Joules, Puissance en Watts, Temps en secondes).", interval: 1 }], course: "<h3 class='text-base font-bold text-indigo-600 dark:text-indigo-400 mb-2'>Son & Lumière</h3><p>Intensité sonore et niveau d'intensité en décibels (dB).</p>", quizzes: [{ q: "Quelle est l'unité de la puissance électrique ?", options: ["Joule", "Volt", "Watt", "Ampère"], correct: 2 }] }
+    "hist-geo": {
+        title: "Histoire-Géo", icon: "fa-earth-americas",
+        cards: [
+            { q: "Qu'est-ce que la maritimisation ?", a: "Le processus d'accroissement des échanges internationaux par voie maritime, illustrant la littoralisation des hommes et des activités.", interval: 1 },
+            { q: "La bipolarisation de la Guerre Froide", a: "Opposition entre le bloc occidental (États-Unis, capitalisme) et le bloc soviétique (URSS, communisme) de 1947 à 1991.", interval: 1 }
+        ],
+        course: `
+            <h3 class='text-base font-bold text-indigo-600 dark:text-indigo-400 mb-3'>📚 Cours Complet : Mondes en mutation & Géopolitique</h3>
+            <div class='space-y-3 text-slate-700 dark:text-slate-300'>
+                <p><b>1. Histoire :</b> Les relations internationales depuis 1945, la construction européenne, et les nouveaux enjeux de puissance au XXIe siècle.</p>
+                <p><b>2. Géographie :</b> Les espaces maritimes, enjeux géostratégiques et environnementaux (la 'mer, nouveau territoire mondial').</p>
+            </div>
+        `,
+        quizzes: [
+            { q: "En quelle année s'effondre le mur de Berlin ?", options: ["1989", "1991", "1975", "1961"], correct: 0 },
+            { q: "Quel canal stratégique relie la mer Méditerranée à la mer Rouge ?", options: ["Canal de Panama", "Canal de Suez", "Canal de Kiel", "Canal de Corinthe"], correct: 1 }
+        ]
+    },
+    "emc": {
+        title: "EMC", icon: "fa-scale-balanced",
+        cards: [
+            { q: "Le rôle du Conseil Constitutionnel en France", a: "Il veille à la conformité des lois à la Constitution (contrôle de constitutionnalité a priori et a posteriori via la QPC).", interval: 1 },
+            { q: "Qu'est-ce que la QPC ?", a: "La Question Prioritaire de Constitutionnalité permet à tout justiciable de contester la constitutionnalité d'une loi applicable à son litige.", interval: 1 }
+        ],
+        course: `
+            <h3 class='text-base font-bold text-indigo-600 dark:text-indigo-400 mb-3'>📚 Cours Complet : La Démocratie & l'Engagement</h3>
+            <div class='space-y-3 text-slate-700 dark:text-slate-300'>
+                <p><b>1. Principes démocratiques :</b> Séparation des pouvoirs (exécutif, législatif, judiciaire), pluralisme politique et respect des libertés fondamentales.</p>
+                <p><b>2. L'engagement :</b> Formes de participation citoyenne (vote, militantisme, association, service civique).</p>
+            </div>
+        `,
+        quizzes: [
+            { q: "Combien de membres (les 'sages') composent le Conseil Constitutionnel ?", options: ["5", "9", "12", "15"], correct: 1 },
+            { q: "Que garantit la Déclaration des Droits de l'Homme et du Citoyen de 1789 ?", options: ["Les impôts locaux", "Les libertés individuelles et l'égalité en droits", "La gratuité des transports", "Le monopole bancaire"], correct: 1 }
+        ]
+    },
+    "espagnol": {
+        title: "Espagnol", icon: "fa-comments",
+        cards: [
+            { q: "Concordance des temps au subjonctif (hypothèse)", a: "Si + Imparfait du subjonctif (si tuviera) → Conditionnel simple (tendría).", interval: 1 },
+            { q: "Marqueurs de concession", a: "A pesar de que + subjonctif / indicatif, Aunque + subjonctif (si l'action est incertaine).", interval: 1 }
+        ],
+        course: `
+            <h3 class='text-base font-bold text-indigo-600 dark:text-indigo-400 mb-3'>📚 Cours Complet : Grammaire & Expression Écrite</h3>
+            <div class='space-y-3 text-slate-700 dark:text-slate-300'>
+                <p><b>1. Maîtrise du subjonctif :</b> Obligatoire après les verbes de volonté, de doute, d'émotion et les conjonctions de temps (cuando, hasta que) lorsqu'elles se projettent dans le futur.</p>
+                <p><b>2. Thématiques culturelles :</b> L'engagement artistique, la mémoire historique et les défis environnementaux en Espagne et en Amérique latine.</p>
+            </div>
+        `,
+        quizzes: [
+            { q: "Traduire 'Bien qu'il pleuve' :", options: ["Aunque llueve", "Aunque llueva", "A pesar de que llueve", "Por mucho que llueve"], correct: 1 },
+            { q: "Quel temps utilise-t-on après 'Ojalá que...' ?", options: ["Indicatif présent", "Subjonctif présent", "Infinitif", "Conditionnel"], correct: 1 }
+        ]
+    },
+    "anglais": {
+        title: "Anglais", icon: "fa-language",
+        cards: [
+            { q: "Connecteurs logiques de contraste haut niveau", a: "However, Nevertheless, Nonetheless, Whereas, Albeit, On the flip side.", interval: 1 },
+            { q: "Exprimer une hypothèse complexe", a: "Had I known (Si j'avais su), Provided that (À condition que), Unless (À moins que).", interval: 1 }
+        ],
+        course: `
+            <h3 class='text-base font-bold text-indigo-600 dark:text-indigo-400 mb-3'>📚 Cours Complet : Essay Writing & Idiomatic Structures</h3>
+            <div class='space-y-3 text-slate-700 dark:text-slate-300'>
+                <p><b>1. Structure de l'essai :</b> Introduction accrocheuse (hook), problématisation claire, arguments nuancés dans les paragraphes de développement, et conclusion ouverte.</p>
+                <p><b>2. Lexique thématique :</b> Innovation technology, environmental crisis, media influence, global citizenship.</p>
+            </div>
+        `,
+        quizzes: [
+            { q: "Lequel de ces mots exprime une cause (Because of) ?", options: ["Consequently", "Owing to", "Whereas", "In spite of"], correct: 1 },
+            { q: "Traduire 'À moins que tu ne viennes' :", options: ["If you come", "Unless you come", "Provided you come", "As long as you come"], correct: 1 }
+        ]
+    },
+    "ens-svt": {
+        title: "Ens. Sc. SVT", icon: "fa-dna",
+        cards: [
+            { q: "Le bilan radiatif de la Terre", a: "Équilibre entre l'énergie solaire absorbée par la Terre et l'énergie infrarouge réémise vers l'espace. Les GES retiennent une partie de cette chaleur.", interval: 1 },
+            { q: "L'effet de serre additionnel", a: "Amplification de l'effet de serre naturel due aux émissions massives de gaz à effet de serre (CO2, CH4) par les activités humaines.", interval: 1 }
+        ],
+        course: `
+            <h3 class='text-base font-bold text-indigo-600 dark:text-indigo-400 mb-3'>📚 Cours Complet : Climat, Énergie & Cellule</h3>
+            <div class='space-y-3 text-slate-700 dark:text-slate-300'>
+                <p><b>1. Un climat à construire :</b> Variations climatiques passées et modélisations climatiques futures.</p>
+                <p><b>2. Le futur énergétique :</b> Choix énergétiques, énergies renouvelables et stockage de l'énergie.</p>
+            </div>
+        `,
+        quizzes: [
+            { q: "Quel gaz contribue le plus à l'effet de serre d'origine anthropique ?", options: ["L'azote (N2)", "Le dioxyde de carbone (CO2)", "L'argon", "L'oxygène (O2)"], correct: 1 },
+            { q: "Quelle est l'unité du flux thermique terrestre moyen ?", options: ["Watts par mètre carré (W/m²)", "Joules par seconde", "Volts", "Pascal"], correct: 0 }
+        ]
+    },
+    "ens-pc": {
+        title: "Ens. Sc. PC", icon: "fa-atom",
+        cards: [
+            { q: "Relation Énergie, Puissance et Temps", a: "E = P × Δt (Énergie en Joules ou kWh, Puissance en Watts ou kW, Temps en secondes ou heures).", interval: 1 },
+            { q: "Niveau d'intensité sonore en décibels (dB)", a: "L = 10 * log(I / I_0) où I est l'intensité sonore et I_0 = 10^-12 W/m² (seuil d'audibilité).", interval: 1 }
+        ],
+        course: `
+            <h3 class='text-base font-bold text-indigo-600 dark:text-indigo-400 mb-3'>📚 Cours Complet : Son, Lumière & Énergie</h3>
+            <div class='space-y-3 text-slate-700 dark:text-slate-300'>
+                <p><b>1. Son et musique :</b> Fréquence, hauteur d'un son, timbre et intensité acoustique.</p>
+                <p><b>2. Image, son et informatique :</b> Numérisation, pixels, quantification et compression des données.</p>
+            </div>
+        `,
+        quizzes: [
+            { q: "Si la puissance d'un appareil est de 1000 W et qu'il fonctionne pendant 2 heures, quelle est l'énergie consommée ?", options: ["2000 Joules", "2 kWh", "500 Wh", "200 W"], correct: 1 },
+            { q: "L'atténuation géométrique d'une onde sonore dépend de :", options: ["La couleur du son", "La distance à la source", "La température de l'eau", "La masse volumique de l'air"], correct: 1 }
+        ]
+    }
 };
 
 // Stockage centralisé et persistant
