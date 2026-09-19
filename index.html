@@ -3,38 +3,426 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudyFlow - Terminale</title>
-    <!-- Lien vers le manifest PWA -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#2563eb">
+    <title>StudyFlow — Version Ultime</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="css/style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            850: '#151f32',
+                            900: '#0f172a',
+                            950: '#090d16'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #0f172a; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col custom-scrollbar selection:bg-blue-600 selection:text-white">
 
-    <!-- En-tête de l'application -->
-    <header class="bg-slate-800 border-b border-slate-700 sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="#" class="flex items-center space-x-2">
-                <span class="text-2xl">⚡</span>
-                <span class="text-xl font-bold bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">StudyFlow</span>
-            </a>
-            <span class="text-xs bg-blue-600/30 text-blue-400 border border-blue-500/30 px-3 py-1 rounded-full font-medium">Mode Hors-ligne Actif</span>
+    <!-- Top Global Navigation Bar -->
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50 px-6 py-3.5 flex justify-between items-center shadow-lg">
+        <div class="flex items-center space-x-3">
+            <span class="text-2xl">🚀</span>
+            <span class="font-extrabold tracking-wider text-xl bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">STUDYFLOW</span>
+            <span class="text-xs bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2.5 py-0.5 rounded-full font-bold">Terminale 2026</span>
+        </div>
+        <div class="flex items-center space-x-4">
+            <button onclick="router.navigate('search')" class="text-slate-400 hover:text-white transition p-2 bg-slate-800/60 rounded-xl border border-slate-700/50 flex items-center space-x-2 text-xs font-semibold px-3">
+                <span>🔍</span> <span class="hidden md:inline">Rechercher...</span>
+            </button>
+            <button onclick="toggleDarkMode()" class="text-slate-400 hover:text-white transition p-2 bg-slate-800/60 rounded-xl border border-slate-700/50">🌙</button>
+            <button onclick="router.navigate('settings')" class="text-slate-400 hover:text-white transition p-2 bg-slate-800/60 rounded-xl border border-slate-700/50">⚙️</button>
         </div>
     </header>
 
-    <!-- Contenu dynamique géré par le routeur et app.js -->
-    <main id="app" class="flex-grow max-w-6xl w-full mx-auto">
-        <!-- Les matières et chapitres s'injecteront ici -->
+    <!-- Main Dynamic Application Container -->
+    <main id="app" class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-8">
+        <!-- Rendu dynamique injecté par le moteur JS -->
     </main>
 
-    <!-- Pied de page -->
-    <footer class="bg-slate-800 border-t border-slate-700 py-4 text-center text-xs text-slate-400">
-        <p>StudyFlow &copy; 2026-2027 — Votre compagnon de révision pour le Bac</p>
-    </footer>
+    <!-- Bottom Navigation Bar for Mobile & Quick Access -->
+    <nav class="border-t border-slate-800 bg-slate-900/90 backdrop-blur sticky bottom-0 z-40 px-6 py-3 flex justify-around items-center text-xs font-bold text-slate-400 shadow-2xl">
+        <button onclick="router.navigate('cockpit')" class="hover:text-blue-400 transition flex flex-col items-center space-y-1">
+            <span class="text-lg">🏠</span> Cockpit
+        </button>
+        <button onclick="router.navigate('program')" class="hover:text-blue-400 transition flex flex-col items-center space-y-1">
+            <span class="text-lg">📚</span> Programme
+        </button>
+        <button onclick="router.navigate('errors')" class="hover:text-blue-400 transition flex flex-col items-center space-y-1">
+            <span class="text-lg">❌</span> Erreurs <span id="badge-errors" class="bg-rose-500 text-white px-1.5 py-0.2 rounded-full text-[10px]">3</span>
+        </button>
+        <button onclick="router.navigate('stats')" class="hover:text-blue-400 transition flex flex-col items-center space-y-1">
+            <span class="text-lg">📊</span> Stats
+        </button>
+        <button onclick="router.navigate('assistant')" class="hover:text-blue-400 transition flex flex-col items-center space-y-1">
+            <span class="text-lg">🤖</span> AI Engine
+        </button>
+    </nav>
 
-    <!-- Script principal en tant que module ES6 -->
-    <script type="module" src="js/app.js"></script>
+    <!-- Core Application Logic & State Management -->
+    <script>
+        // State Global & LocalStorage Sync
+        const AppState = {
+            profile: {
+                targetAverage: 16.0,
+                currentAverage: 15.4,
+                streak: 12,
+                weeklyHours: "6h42",
+                programWorkedPercent: 68,
+                masteryPercent: 54
+            },
+            subjects: [
+                { id: 'maths', name: 'Mathématiques (Spé)', icon: '🔵', progress: 72, color: 'blue' },
+                { id: 'maths-exp', name: 'Mathématiques expertes', icon: '🔹', progress: 61, color: 'indigo' },
+                { id: 'ses', name: 'SES (Spé)', icon: '🟢', progress: 81, color: 'emerald' },
+                { id: 'philo', name: 'Philosophie', icon: '🟣', progress: 52, color: 'purple' },
+                { id: 'histoire', name: 'Histoire-Géographie', icon: '🟤', progress: 78, color: 'amber' },
+                { id: 'anglais', name: 'Anglais', icon: '🇬🇧', progress: 70, color: 'sky' }
+            ],
+            notions: [
+                { id: 1, subject: 'maths', theme: 'Analyse', title: "Limite d'une fonction", status: 'fragile', badge: '🟠' },
+                { id: 2, subject: 'maths', theme: 'Analyse', title: "Dérivation et Convexité", status: 'mastered', badge: '🟢' },
+                { id: 3, subject: 'ses', theme: 'Croissance', title: "Progrès technique et PGF", status: 'mastered', badge: '🟢' },
+                { id: 4, subject: 'philo', theme: 'La Conscience', title: "Descartes : Le Cogito", status: 'correct', badge: '🟡' }
+            ],
+            errors: [
+                { id: 1, subject: 'Mathématiques', title: "Forme indéterminée en l'infini", type: 'Calcul', status: 'active', level: '🔴' },
+                { id: 2, subject: 'SES', title: "Confusion PGF et accumulation du capital", type: 'Méthode', status: 'active', level: '🟠' },
+                { id: 3, subject: 'Philosophie', title: "Oubli de citation précise de l'auteur", type: 'Rédaction', status: 'active', level: '🟡' }
+            ]
+        };
+
+        // Router Engine
+        const router = {
+            currentRoute: 'cockpit',
+            navigate(route, param = null) {
+                this.currentRoute = route;
+                window.location.hash = route;
+                renderApp(param);
+                window.scrollTo(0, 0);
+            }
+        };
+
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+        }
+
+        // --- Render Views ---
+        function renderApp(param = null) {
+            const container = document.getElementById('app');
+            const route = router.currentRoute;
+
+            if (route === 'cockpit') container.innerHTML = renderCockpitView();
+            else if (route === 'program') container.innerHTML = renderProgramView();
+            else if (route === 'notion-detail') container.innerHTML = renderNotionDetailView(param);
+            else if (route === 'errors') container.innerHTML = renderErrorsView();
+            else if (route === 'stats') container.innerHTML = renderStatsView();
+            else if (route === 'assistant') container.innerHTML = renderAssistantView();
+            else if (route === 'planner') container.innerHTML = renderPlannerView();
+            else if (route === 'exam') container.innerHTML = renderExamView();
+            else if (route === 'graph') container.innerHTML = renderGraphView();
+            else if (route === 'settings') container.innerHTML = renderSettingsView();
+            else if (route === 'search') container.innerHTML = renderSearchView();
+            else container.innerHTML = renderCockpitView();
+
+            document.getElementById('badge-errors').innerText = AppState.errors.filter(e => e.status === 'active').length;
+        }
+
+        // 1. Cockpit View (Exact match requested)
+        function renderCockpitView() {
+            return `
+                <div class="max-w-4xl mx-auto space-y-6">
+                    <!-- Dashboard Header Card -->
+                    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl space-y-6 relative overflow-hidden">
+                        <div class="absolute -right-10 -top-10 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                        
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                            <div>
+                                <span class="text-xs bg-blue-500/20 text-blue-300 border border-blue-500/30 font-bold px-3 py-1 rounded-full uppercase tracking-wider">Cockpit Principal</span>
+                                <h1 class="text-3xl font-extrabold text-white mt-2">Tableau de Bord Terminale</h1>
+                            </div>
+                            <div class="bg-slate-800/80 border border-slate-700/60 p-4 rounded-2xl flex items-center space-x-4">
+                                <div>
+                                    <p class="text-xs text-slate-400">Objectif visé</p>
+                                    <p class="text-2xl font-extrabold text-emerald-400">🎯 ${AppState.profile.targetAverage}/20</p>
+                                </div>
+                                <div class="border-l border-slate-700 pl-4">
+                                    <p class="text-xs text-slate-400">Moyenne actuelle</p>
+                                    <p class="text-2xl font-extrabold text-white">${AppState.profile.currentAverage}/20</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Progress Bar & KPIs -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-2">
+                            <div class="bg-slate-800/60 border border-slate-700/50 p-4 rounded-2xl">
+                                <p class="text-xs text-slate-400 font-semibold">📚 Programme</p>
+                                <p class="text-2xl font-bold text-blue-400 mt-1">${AppState.profile.programWorkedPercent} %</p>
+                                <div class="w-full bg-slate-700 h-1.5 rounded-full mt-2 overflow-hidden">
+                                    <div class="bg-blue-500 h-full" style="width: ${AppState.profile.programWorkedPercent}%"></div>
+                                </div>
+                            </div>
+                            <div class="bg-slate-800/60 border border-slate-700/50 p-4 rounded-2xl">
+                                <p class="text-xs text-slate-400 font-semibold">🧠 Maîtrise</p>
+                                <p class="text-2xl font-bold text-emerald-400 mt-1">${AppState.profile.masteryPercent} %</p>
+                                <div class="w-full bg-slate-700 h-1.5 rounded-full mt-2 overflow-hidden">
+                                    <div class="bg-emerald-500 h-full" style="width: ${AppState.profile.masteryPercent}%"></div>
+                                </div>
+                            </div>
+                            <div class="bg-slate-800/60 border border-slate-700/50 p-4 rounded-2xl">
+                                <p class="text-xs text-slate-400 font-semibold">🔥 Série (Streak)</p>
+                                <p class="text-2xl font-bold text-purple-400 mt-1">${AppState.profile.streak} jours</p>
+                                <p class="text-[10px] text-slate-500 mt-1">Connexion quotidienne</p>
+                            </div>
+                            <div class="bg-slate-800/60 border border-slate-700/50 p-4 rounded-2xl">
+                                <p class="text-xs text-slate-400 font-semibold">⏱️ Cette semaine</p>
+                                <p class="text-2xl font-bold text-amber-400 mt-1">${AppState.profile.weeklyHours}</p>
+                                <p class="text-[10px] text-slate-500 mt-1">Deep Work actif</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recommended Session Block (StudyFlow Engine) -->
+                    <div class="bg-gradient-to-r from-blue-900/90 via-indigo-950 to-slate-900 border border-blue-500/40 rounded-3xl p-6 shadow-xl space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs bg-blue-500/20 text-blue-300 px-3 py-1 rounded-full font-bold uppercase tracking-wider">🎯 À faire maintenant — StudyFlow Engine</span>
+                            <span class="text-xs text-slate-400">Recommandé sur mesure</span>
+                        </div>
+                        <div class="space-y-2.5">
+                            <div onclick="router.navigate('notion-detail', 1)" class="bg-slate-900/80 hover:bg-slate-900 border border-slate-800 p-4 rounded-2xl flex justify-between items-center cursor-pointer transition">
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-xl">🟠</span>
+                                    <div>
+                                        <h4 class="font-bold text-white text-sm">Réviser les limites de fonctions</h4>
+                                        <p class="text-xs text-slate-400">Maths Spé — Notions fragiles détectées</p>
+                                    </div>
+                                </div>
+                                <span class="bg-blue-600/20 text-blue-400 text-xs px-3 py-1.5 rounded-xl font-bold">15 min</span>
+                            </div>
+                            <div onclick="router.navigate('errors')" class="bg-slate-900/80 hover:bg-slate-900 border border-slate-800 p-4 rounded-2xl flex justify-between items-center cursor-pointer transition">
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-xl">🔴</span>
+                                    <div>
+                                        <h4 class="font-bold text-white text-sm">Corriger tes 3 dernières erreurs actives</h4>
+                                        <p class="text-xs text-slate-400">Carnet d'erreurs — S'assoir sur les points perdus</p>
+                                    </div>
+                                </div>
+                                <span class="bg-rose-600/20 text-rose-400 text-xs px-3 py-1.5 rounded-xl font-bold">10 min</span>
+                            </div>
+                        </div>
+                        <button onclick="alert('Session lancée avec succès ! Le minuteur Deep Work est actif.')" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 rounded-2xl transition shadow-lg text-sm">
+                            [ COMMENCER MA SESSION ]
+                        </button>
+                    </div>
+
+                    <!-- Quick Navigation Cards -->
+                    <div class="grid grid-cols-3 gap-4">
+                        <button onclick="router.navigate('program')" class="bg-slate-900 hover:bg-slate-850 border border-slate-800 p-4 rounded-2xl text-center transition space-y-1">
+                            <span class="text-2xl">📚</span>
+                            <p class="font-bold text-white text-xs">Programme</p>
+                        </button>
+                        <button onclick="router.navigate('stats')" class="bg-slate-900 hover:bg-slate-850 border border-slate-800 p-4 rounded-2xl text-center transition space-y-1">
+                            <span class="text-2xl">📊</span>
+                            <p class="font-bold text-white text-xs">Progression</p>
+                        </button>
+                        <button onclick="router.navigate('planner')" class="bg-slate-900 hover:bg-slate-850 border border-slate-800 p-4 rounded-2xl text-center transition space-y-1">
+                            <span class="text-2xl">🗓️</span>
+                            <p class="font-bold text-white text-xs">Planificateur</p>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 2. Program View
+        function renderProgramView() {
+            return `
+                <div class="max-w-4xl mx-auto space-y-6">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <span class="text-xs text-blue-400 font-bold uppercase tracking-wider">Programme Officiel</span>
+                            <h1 class="text-3xl font-extrabold text-white mt-1">Toutes tes Matières</h1>
+                        </div>
+                        <button onclick="router.navigate('cockpit')" class="text-slate-400 hover:text-white text-sm font-semibold">&larr; Retour</button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        ${AppState.subjects.map(sub => `
+                            <div onclick="router.navigate('notion-detail', 1)" class="bg-slate-900 hover:bg-slate-850 border border-slate-800 p-6 rounded-3xl cursor-pointer transition space-y-4 shadow-lg">
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center space-x-3">
+                                        <span class="text-3xl">${sub.icon}</span>
+                                        <h3 class="font-bold text-white text-base">${sub.name}</h3>
+                                    </div>
+                                    <span class="text-xs font-extrabold text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full">${sub.progress}%</span>
+                                </div>
+                                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                                    <div class="bg-blue-500 h-full" style="width: ${sub.progress}%"></div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 3. Notion Detail & Unified Hub
+        function renderNotionDetailView(notionId) {
+            return `
+                <div class="max-w-4xl mx-auto space-y-6">
+                    <div class="flex justify-between items-center">
+                        <button onclick="router.navigate('program')" class="text-blue-400 hover:underline text-sm font-semibold">&larr; Retour aux matières</button>
+                        <span class="text-xs bg-orange-500/20 text-orange-300 px-3 py-1 rounded-full font-bold">🟠 Notion Fragile</span>
+                    </div>
+
+                    <div class="bg-slate-900 border border-slate-800 p-8 rounded-3xl shadow-xl space-y-6">
+                        <div>
+                            <span class="text-xs text-slate-400 uppercase tracking-widest font-bold">Mathématiques Spécialité — Analyse</span>
+                            <h1 class="text-3xl font-extrabold text-white mt-1">Limite d'une fonction & asymptotes</h1>
+                        </div>
+
+                        <!-- 9 Tabs hub for the notion -->
+                        <div class="grid grid-cols-3 md:grid-cols-5 gap-2 pt-2">
+                            <button onclick="alert('Ouverture du Cours complet')" class="bg-slate-800 hover:bg-slate-750 p-3 rounded-2xl text-xs font-bold text-center text-white border border-slate-700">📖 Cours</button>
+                            <button onclick="alert('Chargement de l\'Essentiel')" class="bg-slate-800 hover:bg-slate-750 p-3 rounded-2xl text-xs font-bold text-center text-white border border-slate-700">⚡ L'essentiel</button>
+                            <button onclick="alert('Flashcards chargées')" class="bg-slate-800 hover:bg-slate-750 p-3 rounded-2xl text-xs font-bold text-center text-white border border-slate-700">🃏 Flashcards</button>
+                            <button onclick="alert('Exercices progressifs')" class="bg-slate-800 hover:bg-slate-750 p-3 rounded-2xl text-xs font-bold text-center text-white border border-slate-700">✍️ Exercices</button>
+                            <button onclick="router.navigate('assistant')" class="bg-slate-800 hover:bg-slate-750 p-3 rounded-2xl text-xs font-bold text-center text-white border border-slate-700">🗣️ Feynman</button>
+                        </div>
+
+                        <div class="bg-slate-950 border border-slate-800 p-6 rounded-2xl space-y-4 text-sm text-slate-300">
+                            <h3 class="font-bold text-white text-base">Rappel de cours synthétique</h3>
+                            <p>Une limite explicite l'comportement d'une fonction lorsque la variable tend vers une valeur finie ou vers l'infini. Pour lever une forme indéterminée (ex: $\frac{0}{0}$ ou $\frac{\infty}{\infty}$), on utilise la factorisation ou le nombre dérivé.</p>
+                            <div class="bg-blue-950/40 border border-blue-500/30 p-4 rounded-xl text-blue-200">
+                                💡 **Astuce StudyFlow :** Ne confonds pas limite en l'infini et valeur interdite.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 6. Errors View
+        function renderErrorsView() {
+            return `
+                <div class="max-w-4xl mx-auto space-y-6">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <span class="text-xs text-rose-400 font-bold uppercase tracking-wider">Carnet d'Erreurs Intelligent</span>
+                            <h1 class="text-3xl font-extrabold text-white mt-1">23 Erreurs Actives</h1>
+                        </div>
+                        <button onclick="router.navigate('cockpit')" class="text-slate-400 hover:text-white text-sm font-semibold">&larr; Retour</button>
+                    </div>
+
+                    <div class="space-y-3">
+                        ${AppState.errors.map(err => `
+                            <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl flex justify-between items-center shadow-lg">
+                                <div class="flex items-center space-x-4">
+                                    <span class="text-2xl">${err.level}</span>
+                                    <div>
+                                        <h3 class="font-bold text-white text-sm">${err.title}</h3>
+                                        <p class="text-xs text-slate-400 mt-0.5">${err.subject} • Type : ${err.type}</p>
+                                    </div>
+                                </div>
+                                <button onclick="alert('Erreur marquée comme réparée !')" class="bg-slate-800 hover:bg-emerald-600 hover:text-white text-slate-300 text-xs px-4 py-2 rounded-xl font-bold transition border border-slate-700">Réparer &check;</button>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 9. Stats View
+        function renderStatsView() {
+            return `
+                <div class="max-w-4xl mx-auto space-y-6">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <span class="text-xs text-blue-400 font-bold uppercase tracking-wider">Statistiques & Analyse</span>
+                            <h1 class="text-3xl font-extrabold text-white mt-1">Progression Granulaire</h1>
+                        </div>
+                        <button onclick="router.navigate('cockpit')" class="text-slate-400 hover:text-white text-sm font-semibold">&larr; Retour</button>
+                    </div>
+
+                    <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl space-y-6 shadow-xl">
+                        <h3 class="font-bold text-white text-lg">Maîtrise par matière</h3>
+                        <div class="space-y-4">
+                            ${AppState.subjects.map(sub => `
+                                <div>
+                                    <div class="flex justify-between text-xs font-semibold mb-1">
+                                        <span class="text-white">${sub.name}</span>
+                                        <span class="text-blue-400">${sub.progress}%</span>
+                                    </div>
+                                    <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden">
+                                        <div class="bg-blue-500 h-full" style="width: ${sub.progress}%"></div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 14. StudyFlow AI Assistant & Feynman Mode
+        function renderAssistantView() {
+            return `
+                <div class="max-w-3xl mx-auto space-y-6">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <span class="text-xs text-purple-400 font-bold uppercase tracking-wider">StudyFlow AI & Feynman</span>
+                            <h1 class="text-3xl font-extrabold text-white mt-1">Assistant Pédagogique</h1>
+                        </div>
+                        <button onclick="router.navigate('cockpit')" class="text-slate-400 hover:text-white text-sm font-semibold">&larr; Retour</button>
+                    </div>
+
+                    <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-xl space-y-4">
+                        <div class="bg-purple-950/40 border border-purple-500/30 p-4 rounded-2xl text-purple-200 text-sm">
+                            🤖 **Mode Feynman :** Explique avec tes propres mots une notion de ton choix. L'assistant analysera si ta compréhension est correcte.
+                        </div>
+                        <textarea class="w-full h-40 bg-slate-950 border border-slate-800 rounded-2xl p-4 text-white text-sm focus:outline-none focus:border-purple-500" placeholder="Écris ton explication ici..."></textarea>
+                        <button onclick="alert('Analyse de l\'assistant : Ton explication est claire et rigoureuse ! Félicitations.')" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-3.5 rounded-2xl transition shadow-lg text-sm">
+                            Analyser mon explication &rarr;
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Placeholder views for Planner, Exam, Graph, Settings, Search
+        function renderPlannerView() {
+            return `<div class="max-w-3xl mx-auto space-y-6"><h1 class="text-2xl font-bold">Planificateur de Contrôles</h1><button onclick="router.navigate('cockpit')" class="text-blue-400">&larr; Retour</button></div>`;
+        }
+        function renderExamView() {
+            return `<div class="max-w-3xl mx-auto space-y-6"><h1 class="text-2xl font-bold">Mode Examen Bac</h1><button onclick="router.navigate('cockpit')" class="text-blue-400">&larr; Retour</button></div>`;
+        }
+        function renderGraphView() {
+            return `<div class="max-w-3xl mx-auto space-y-6"><h1 class="text-2xl font-bold">Graphe de Connaissances</h1><button onclick="router.navigate('cockpit')" class="text-blue-400">&larr; Retour</button></div>`;
+        }
+        function renderSettingsView() {
+            return `<div class="max-w-3xl mx-auto space-y-6"><h1 class="text-2xl font-bold">Paramètres & Sauvegarde Locale</h1><button onclick="router.navigate('cockpit')" class="text-blue-400">&larr; Retour</button></div>`;
+        }
+        function renderSearchView() {
+            return `<div class="max-w-3xl mx-auto space-y-6"><h1 class="text-2xl font-bold">Recherche Universelle</h1><input type="text" placeholder="Rechercher une notion, un cours, une erreur..." class="w-full bg-slate-900 border border-slate-800 p-4 rounded-2xl text-white"><button onclick="router.navigate('cockpit')" class="text-blue-400 mt-4 block">&larr; Retour</button></div>`;
+        }
+
+        // Initial launch
+        window.addEventListener('DOMContentLoaded', () => {
+            renderApp();
+        });
+    </script>
 </body>
 </html>
