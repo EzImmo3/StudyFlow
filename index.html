@@ -1,88 +1,142 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BacPremière — Révise ton bac</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyFlow - Ton espace de révision sur-mesure</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <header class="site-header">
-    <div class="header-inner">
-      <a href="index.html" class="logo">BAC<span>1ère</span></a>
-      <nav class="main-nav">
-        <a href="pages/francais-ecrit.html">Français écrit</a>
-        <a href="pages/francais-oral.html">Français oral</a>
-        <a href="pages/mathematiques.html">Mathématiques</a>
-      </nav>
-      <div class="nav-badge">Terminale Générale</div>
+<body class="p-4 md:p-8 min-h-screen">
+    <div class="max-w-6xl mx-auto space-y-8">
+        
+        <!-- Header -->
+        <header class="glass rounded-2xl p-6 shadow-xl flex flex-col md:flex-row justify-between items-center gap-4 border border-white/20">
+            <div class="flex items-center space-x-3">
+                <div class="p-3 bg-indigo-600 rounded-xl text-white shadow-lg shadow-indigo-500/30">
+                    <i class="fa-solid fa-graduation-cap text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">StudyFlow</h1>
+                    <p class="text-xs text-slate-500 font-medium">Espace révision - Terminale</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-3">
+                <span id="dateDisplay" class="text-xs font-semibold px-3 py-1.5 rounded-full bg-slate-100/80 text-slate-600"></span>
+            </div>
+        </header>
+
+        <!-- Dynamic Navigation: Subjects Bar -->
+        <section class="glass rounded-2xl p-4 shadow-lg overflow-x-auto">
+            <div class="flex items-center gap-2 min-w-max" id="subjectFilter">
+                <!-- Injected via JS -->
+            </div>
+        </section>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Column 1 & 2: Flashcards & Active Learning -->
+            <main class="lg:col-span-2 space-y-6">
+                <div class="glass rounded-2xl p-6 shadow-xl space-y-6 border border-white/20">
+                    <div class="flex justify-between items-center flex-wrap gap-2">
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-layer-group text-indigo-600"></i>
+                                Cartes de Révision
+                            </h2>
+                            <p class="text-sm text-slate-500" id="currentSubjectLabel">Chargement...</p>
+                        </div>
+                        <span id="cardCounter" class="text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-600">
+                            0 / 0
+                        </span>
+                    </div>
+
+                    <!-- Flashcard 3D Container -->
+                    <div class="flashcard-container min-h-[260px] cursor-pointer" id="flashcard">
+                        <div class="flashcard-inner relative w-full h-full min-h-[260px] transition-transform duration-500 rounded-2xl">
+                            <!-- Recto -->
+                            <div class="flashcard-front absolute inset-0 glass rounded-2xl p-8 flex flex-col justify-between items-center text-center shadow-md bg-white/70 border border-indigo-100">
+                                <span id="cardSubjectBadge" class="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-indigo-100 text-indigo-700">Matière</span>
+                                <p id="cardQuestion" class="text-lg md:text-xl font-medium text-slate-800 my-auto">Sélectionne une matière pour démarrer</p>
+                                <span class="text-xs text-slate-400 flex items-center gap-1">
+                                    <i class="fa-solid fa-rotate text-xs"></i> Clique pour retourner la carte
+                                </span>
+                            </div>
+                            <!-- Verso -->
+                            <div class="flashcard-back absolute inset-0 glass rounded-2xl p-8 flex flex-col justify-between items-center text-center shadow-lg bg-indigo-900 text-white border border-indigo-700">
+                                <span class="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-indigo-800 text-indigo-200">Réponse / Définition</span>
+                                <p id="cardAnswer" class="text-base md:text-lg font-medium text-indigo-50 my-auto">--</p>
+                                <span class="text-xs text-indigo-300/60">Consolidé dans ta mémoire !</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Flashcard Controls -->
+                    <div class="flex justify-between items-center gap-4 pt-2">
+                        <button id="prevBtn" class="flex-1 py-3 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold transition flex items-center justify-center gap-2 text-sm disabled:opacity-40">
+                            <i class="fa-solid fa-arrow-left"></i> Précédent
+                        </button>
+                        <button id="nextBtn" class="flex-1 py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition shadow-md shadow-indigo-500/20 flex items-center justify-center gap-2 text-sm">
+                            Suivant <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Column 3: Productivity Tools -->
+            <aside class="space-y-6">
+                <!-- Pomodoro Timer -->
+                <div class="glass rounded-2xl p-6 shadow-xl border border-white/20 text-center space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-clock text-indigo-600"></i> Session Focus
+                        </h3>
+                        <span id="timerMode" class="text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700">Travail</span>
+                    </div>
+
+                    <div class="text-5xl font-black text-slate-800 tracking-tight my-2 font-mono" id="timerDisplay">
+                        25:00
+                    </div>
+
+                    <div class="flex justify-center gap-2">
+                        <button id="startTimer" class="py-2.5 px-5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow-md shadow-indigo-500/20 transition text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-play"></i> Lancer
+                        </button>
+                        <button id="resetTimer" class="py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl font-semibold transition text-sm">
+                            <i class="fa-solid fa-rotate-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- To-Do List -->
+                <div class="glass rounded-2xl p-6 shadow-xl border border-white/20 space-y-4">
+                    <h3 class="font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-indigo-600"></i> Objectifs de Révision
+                    </h3>
+
+                    <form id="todoForm" class="flex gap-2">
+                        <input type="text" id="todoInput" placeholder="Ex: Réviser la récurrence..." required class="flex-1 px-3 py-2 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white/50">
+                        <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-3 py-2 rounded-xl text-sm transition">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </form>
+
+                    <ul id="todoList" class="space-y-2 max-h-48 overflow-y-auto pr-1">
+                        <!-- Items dynamiques -->
+                    </ul>
+                </div>
+            </aside>
+        </div>
     </div>
-  </header>
-  <main>
-    <section class="hero">
-      <div class="hero-tag">Bac de Première · Session 2025</div>
-      <h1>Révise.<br/>Comprends.<br/><em>Réussis.</em></h1>
-      <p class="hero-sub">Fiches, quiz, flashcards et annales pour le bac de première — Français écrit, Français oral, Mathématiques.</p>
-      <div class="hero-cta">
-        <a href="pages/francais-ecrit.html" class="btn-primary">Commencer à réviser</a>
-        <a href="#matieres" class="btn-ghost">Voir les matières</a>
-      </div>
-      <div class="hero-stats">
-        <div class="stat"><span class="stat-n">16</span><span class="stat-l">textes au programme</span></div>
-        <div class="stat"><span class="stat-n">4</span><span class="stat-l">parcours littéraires</span></div>
-        <div class="stat"><span class="stat-n">6</span><span class="stat-l">chapitres de maths</span></div>
-      </div>
-    </section>
-    <section class="matieres" id="matieres">
-      <a href="pages/francais-ecrit.html" class="matiere-card card-fr">
-        <div class="card-label">Matière 01</div>
-        <h2>Français<br/>Écrit</h2>
-        <p>4 parcours · 16 textes · Commentaire · Dissertation · Quiz & Flashcards</p>
-        <div class="card-arrow">→</div>
-        <div class="card-parcours">
-          <span>Émancipations poétiques</span>
-          <span>Personnage en marge</span>
-          <span>Défendre la liberté</span>
-          <span>Théâtre & Dispute</span>
-        </div>
-      </a>
-      <a href="pages/francais-oral.html" class="matiere-card card-oral">
-        <div class="card-label">Matière 02</div>
-        <h2>Français<br/>Oral</h2>
-        <p>La Princesse de Clèves · Explication linéaire · Grammaire · Entretien</p>
-        <div class="card-arrow">→</div>
-        <div class="card-parcours">
-          <span>Explication linéaire</span>
-          <span>Question de grammaire</span>
-          <span>Préparation entretien</span>
-          <span>Flashcards œuvre</span>
-        </div>
-      </a>
-      <a href="pages/mathematiques.html" class="matiere-card card-math">
-        <div class="card-label">Matière 03</div>
-        <h2>Mathé-<br/>matiques</h2>
-        <p>6 chapitres · Fiches · Quiz · Annales corrigées</p>
-        <div class="card-arrow">→</div>
-        <div class="card-parcours">
-          <span>Équation 2nd degré</span>
-          <span>Suites numériques</span>
-          <span>Probabilités</span>
-          <span>Exponentielle & ln</span>
-        </div>
-      </a>
-    </section>
-    <section class="outils-section">
-      <h2 class="section-title">Tous les outils de révision</h2>
-      <div class="outils-grid">
-        <div class="outil-card"><div class="outil-icon">📄</div><h3>Fiches de révision</h3><p>Synthèses claires et structurées pour chaque texte, notion et chapitre.</p></div>
-        <div class="outil-card"><div class="outil-icon">✅</div><h3>Quiz interactifs</h3><p>Questions à choix multiples avec correction immédiate et explication détaillée.</p></div>
-        <div class="outil-card"><div class="outil-icon">🃏</div><h3>Flashcards</h3><p>Cartes retournables pour mémoriser les notions clés, figures de style et formules.</p></div>
-        <div class="outil-card"><div class="outil-icon">📝</div><h3>Annales corrigées</h3><p>Sujets type bac avec éléments de correction détaillés, à révéler à la demande.</p></div>
-      </div>
-    </section>
-  </main>
-  <footer class="site-footer"><p>BacPremière · Révision Terminale Générale · 2025</p></footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
